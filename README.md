@@ -17,8 +17,7 @@
 
 <img src="https://github.com/ddooing/soldesk_artme/assets/118183105/4fe106c0-1289-4365-a2c8-61f1eb6aa09c" width="850" height="350"/>
 
-
-
+<br/><br/>
 
 ## 👨‍💻 팀원 구성
 임승연 - 결제 기능 ,장바구니 기능 , 결제 내역 관리 기능
@@ -29,7 +28,7 @@
 
 
 
-
+<br/><br/>
 ## ⚙ 개발환경
 프레임워크 - Spring, Servlet&Jsp
 
@@ -43,7 +42,7 @@ Tool - GitHub, Git , Eclipse
 
 - Java 1.8
 
-
+<br/><br/><br/>
 
 
 
@@ -56,11 +55,11 @@ Tool - GitHub, Git , Eclipse
 
 
 
-<img src="(https://github.com/ddooing/soldesk_artme/assets/118183105/2f0d8792-e5b7-4f0b-8c25-cea9d57f6ccb"/>
+<img src="https://github.com/ddooing/soldesk_artme/assets/118183105/2f0d8792-e5b7-4f0b-8c25-cea9d57f6ccb"/>
 
 
 
-<img src="(https://github.com/ddooing/soldesk_artme/assets/118183105/5f71e774-1f0d-441c-b0ca-6a592fc7df1d"/>
+<img src="https://github.com/ddooing/soldesk_artme/assets/118183105/5f71e774-1f0d-441c-b0ca-6a592fc7df1d"/>
 
 
 
