@@ -42,13 +42,12 @@ Tool - GitHub, Git , Eclipse
 
 - Java 1.8
 
-<br/><br/><br/>
-
-
+<br/><br/>
 
 
 ## 🖱 주요 기능 소개 
 
+DB SQL - https://docs.google.com/document/d/1z4kMLRqeCtlCd4i54VIi5uSG3bURXZyQIEHiLao6Tu8/edit?usp=sharing <br/>
 
 
 <img src="https://github.com/ddooing/soldesk_artme/assets/118183105/fdc053d9-a7c8-4fcc-a59f-180fb88775f9" />
@@ -89,6 +88,6 @@ Tool - GitHub, Git , Eclipse
 
 <img src="https://github.com/ddooing/soldesk_artme/assets/118183105/c63ec5b7-157e-4b6b-bd76-f0c5d8e0cef8"/>
 
-
+<br/><br/>
 
 
