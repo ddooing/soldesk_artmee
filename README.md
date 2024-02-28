@@ -15,7 +15,7 @@
 2024.02.05 ~ 2024.02.23
 
 
-<img src="https://github.com/ddooing/soldesk_artme/assets/118183105/4fe106c0-1289-4365-a2c8-61f1eb6aa09c" width="200" height="200"/>
+<img src="https://github.com/ddooing/soldesk_artme/assets/118183105/4fe106c0-1289-4365-a2c8-61f1eb6aa09c" width="850" height="350"/>
 
 
 
@@ -42,6 +42,8 @@ DB - Oracle
 Tool - GitHub, Git , Eclipse
 
 - Java 1.8
+
+
 
 
 
