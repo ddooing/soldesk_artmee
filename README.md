@@ -13,7 +13,9 @@
 
 ## 📅 개발기간 
 2024.02.05 ~ 2024.02.23
-![슬라이드9](https://github.com/ddooing/soldesk_artme/assets/118183105/4fe106c0-1289-4365-a2c8-61f1eb6aa09c)
+
+
+<img src="https://github.com/ddooing/soldesk_artme/assets/118183105/4fe106c0-1289-4365-a2c8-61f1eb6aa09c" width="200" height="200"/>
 
 
 
@@ -24,6 +26,8 @@
 노승찬 - 전시회 등록 신청, 배너 신청 ( 관리자 페이지 포함)
 최재호 - 공지사항 기능, 로그인, 회원가입 ( 관리자 페이지 포함)
 모두 - DB 설계, 프론트 디자인 설계
+
+
 
 
 ## ⚙ 개발환경
@@ -40,28 +44,50 @@ Tool - GitHub, Git , Eclipse
 - Java 1.8
 
 
+
+
 ## 🖱 주요 기능 소개 
 
 
 
 <img src="https://github.com/ddooing/soldesk_artme/assets/118183105/fdc053d9-a7c8-4fcc-a59f-180fb88775f9" />
 
+
+
 <img src="(https://github.com/ddooing/soldesk_artme/assets/118183105/2f0d8792-e5b7-4f0b-8c25-cea9d57f6ccb"/>
+
+
 
 <img src="(https://github.com/ddooing/soldesk_artme/assets/118183105/5f71e774-1f0d-441c-b0ca-6a592fc7df1d"/>
 
+
+
 <img src="https://github.com/ddooing/soldesk_artme/assets/118183105/330fd766-302d-49a3-9d98-bf4ca79cda60"/>
+
+
 
 <img src="https://github.com/ddooing/soldesk_artme/assets/118183105/405d6d3d-3943-4cb5-8f54-dca2519aaae2"/>
 
+
+
 <img src="https://github.com/ddooing/soldesk_artme/assets/118183105/76c7fbff-1ec8-4ffa-9df4-ff828601c4b5"/>
+
+
 
 <img src="https://github.com/ddooing/soldesk_artme/assets/118183105/1d2781bb-0446-4842-9b65-39417dd8b0e9"/>
 
+
+
 <img src="https://github.com/ddooing/soldesk_artme/assets/118183105/4515b4ee-1c2e-4bf6-ba5c-502cf3063e9b"/>
+
+
 
 <img src="https://github.com/ddooing/soldesk_artme/assets/118183105/2f66632a-9f92-4ee1-85af-5952c6b14b5b"/>
 
+
+
 <img src="https://github.com/ddooing/soldesk_artme/assets/118183105/c63ec5b7-157e-4b6b-bd76-f0c5d8e0cef8"/>
+
+
 
 
