@@ -1,9 +1,12 @@
 package kr.co.softsoldesk.Service;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,38 +44,105 @@ public class BannerService {
 	@Value("${admin.paginationcnt}")
 	private int admin_paginationcnt;
 	
+	 // FTP 서버 정보 설정
+    private String server = "timtory.synology.me";
+    private int port = 3060;
+    private String user = "soldeskdream";
+    private String pass = "Rladnxo12@";
 	
+    
+    
 	private String saveMainBannerUploadFile(MultipartFile upload_file) {	// 메인 배너 업로드 경로
-		
-		String file_name = System.currentTimeMillis() + "_" + FilenameUtils.getBaseName(upload_file.getOriginalFilename()) 
-						   + "." + FilenameUtils.getExtension(upload_file.getOriginalFilename());
-		
-		
-		// 파일 저장 위치에 저장하기 
-		try {
-			upload_file.transferTo(new File(path_mainbannerupload+"/"+file_name));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return file_name;
+		FTPClient ftpClient = new FTPClient();
+        String file_name = System.currentTimeMillis() + "_" + FilenameUtils.getBaseName(upload_file.getOriginalFilename()) + "." + FilenameUtils.getExtension(upload_file.getOriginalFilename());
+        ftpClient.setControlEncoding("UTF-8");
+        
+        String ftpUploadDirectory = "/docker/tomcat/webapps/ROOT/WEB-INF/resources/img/main_banner/";
+        
+        try {
+        	ftpClient.connect(server, port);
+            ftpClient.login(user, pass);
+            ftpClient.enterLocalPassiveMode();
+
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+
+            boolean done = ftpClient.storeFile(ftpUploadDirectory + file_name, upload_file.getInputStream());
+            if (done) {
+                System.out.println("The file is uploaded successfully.");
+            } else {
+                System.out.println("Could not upload the file.");
+            }
+        } catch (IOException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (ftpClient.isConnected()) {
+                    ftpClient.logout();
+                    ftpClient.disconnect();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return file_name;
 	}
 	
-	private String saveSubBannerUploadFile(MultipartFile upload_file) {	// 서브 배너 업로드 경로
-		
-		String file_name = System.currentTimeMillis() + "_" + FilenameUtils.getBaseName(upload_file.getOriginalFilename()) 
-						   + "." + FilenameUtils.getExtension(upload_file.getOriginalFilename());
-		
-		
-		// 파일 저장 위치에 저장하기 
-		try {
-			upload_file.transferTo(new File(path_subbannerupload+"/"+file_name));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return file_name;
-	}
+	public String saveSubBannerUploadFile(MultipartFile upload_file) {
+        FTPClient ftpClient = new FTPClient();
+        String file_name = System.currentTimeMillis() + "_" + FilenameUtils.getBaseName(upload_file.getOriginalFilename()) + "." + FilenameUtils.getExtension(upload_file.getOriginalFilename());
+        ftpClient.setControlEncoding("UTF-8");
+        
+        String ftpUploadDirectory = "/docker/tomcat/webapps/ROOT/WEB-INF/resources/img/sub_banner/";
+        
+        try {
+        	ftpClient.connect(server, port);
+            ftpClient.login(user, pass);
+            ftpClient.enterLocalPassiveMode();
+
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+
+            boolean done = ftpClient.storeFile(ftpUploadDirectory + file_name, upload_file.getInputStream());
+            if (done) {
+                System.out.println("The file is uploaded successfully.");
+            } else {
+                System.out.println("Could not upload the file.");
+            }
+        } catch (IOException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (ftpClient.isConnected()) {
+                    ftpClient.logout();
+                    ftpClient.disconnect();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return file_name;
+    }
+	
+	
+	
+	/*
+	 * private String saveSubBannerUploadFile(MultipartFile upload_file) { // 서브 배너
+	 * 업로드 경로
+	 * 
+	 * String file_name = System.currentTimeMillis() + "_" +
+	 * FilenameUtils.getBaseName(upload_file.getOriginalFilename()) + "." +
+	 * FilenameUtils.getExtension(upload_file.getOriginalFilename());
+	 * 
+	 * 
+	 * // 파일 저장 위치에 저장하기 try { upload_file.transferTo(new
+	 * File(path_subbannerupload+"/"+file_name)); } catch (Exception e) {
+	 * e.printStackTrace(); }
+	 * 
+	 * return file_name; }
+	 */
 	// 메인 배너 신청시 배너 파일 저장
 	public void addfiletableBannerBannerApplyFormBean(BannerApplyFormBean bannerApplyFormBean) {
 		MultipartFile main_banner_upload_file  = bannerApplyFormBean.getBanner_file();
@@ -82,7 +152,7 @@ public class BannerService {
 			
 			// file_table name, path set
 			bannerApplyFormBean.setName(main_banner_file_name);
-			bannerApplyFormBean.setPath("/Spring_Project_Dream/img/main_banner/");
+			bannerApplyFormBean.setPath("../img/main_banner/");
 				
 			// file_table 에 저장
 			bannerDao.addfiletableBanner1(bannerApplyFormBean);
@@ -101,7 +171,7 @@ public class BannerService {
 				
 				// file_table name, path set
 				bannerApplyFormBean.setName(main_banner_file_name);
-				bannerApplyFormBean.setPath("/Spring_Project_Dream/img/sub_banner/");
+				bannerApplyFormBean.setPath("../img/sub_banner/");
 					
 				// file_table 에 저장
 				bannerDao.addfiletableBanner1(bannerApplyFormBean);

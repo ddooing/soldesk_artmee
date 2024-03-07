@@ -1,9 +1,12 @@
 package kr.co.softsoldesk.Service;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,41 +52,105 @@ public class AdminService {
 	@Value("${admin.paginationcnt}")
 	private int admin_paginationcnt;
 	
+	 // FTP 서버 정보 설정
+    private String server = "timtory.synology.me";
+    private int port = 3060;
+    private String user = "soldeskdream";
+    private String pass = "Rladnxo12@";
+	
+	
 	// ============================파일 처리 =====================================
 	
 	
 	
+	public String saveSubBannerUploadFile(MultipartFile upload_file) {
+        FTPClient ftpClient = new FTPClient();
+        String file_name = System.currentTimeMillis() + "_" + FilenameUtils.getBaseName(upload_file.getOriginalFilename()) + "." + FilenameUtils.getExtension(upload_file.getOriginalFilename());
+        ftpClient.setControlEncoding("UTF-8");
+        String ftpUploadDirectory = "/docker/tomcat/webapps/ROOT/WEB-INF/resources/img/sub_banner/";
+        
+        try {
+        	ftpClient.connect(server, port);
+            ftpClient.login(user, pass);
+            ftpClient.enterLocalPassiveMode();
+            
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+
+            boolean done = ftpClient.storeFile(ftpUploadDirectory + file_name, upload_file.getInputStream());
+            if (done) {
+                System.out.println("The file is uploaded successfully.");
+            } else {
+                System.out.println("Could not upload the file.");
+            }
+        } catch (IOException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (ftpClient.isConnected()) {
+                    ftpClient.logout();
+                    ftpClient.disconnect();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return file_name;
+    }
 	
-	private String saveSubBannerUploadFile(MultipartFile upload_file) {	// 서브 배너 업로드 경로
-		
-		String file_name = System.currentTimeMillis() + "_" + FilenameUtils.getBaseName(upload_file.getOriginalFilename()) 
-						   + "." + FilenameUtils.getExtension(upload_file.getOriginalFilename());
-		
-		
-		// 파일 저장 위치에 저장하기 
-		try {
-			upload_file.transferTo(new File(path_subbannerupload+"/"+file_name));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return file_name;
-	}
+	
+	
+	/*
+	 * private String saveSubBannerUploadFile(MultipartFile upload_file) { // 서브 배너
+	 * 업로드 경로
+	 * 
+	 * String file_name = System.currentTimeMillis() + "_" +
+	 * FilenameUtils.getBaseName(upload_file.getOriginalFilename()) + "." +
+	 * FilenameUtils.getExtension(upload_file.getOriginalFilename());
+	 * 
+	 * // 파일 저장 위치에 저장하기 try { upload_file.transferTo(new
+	 * File(path_subbannerupload+"/"+file_name)); } catch (Exception e) {
+	 * e.printStackTrace(); }
+	 * 
+	 * return file_name; }
+	 */
 	
 	private String saveMainBannerUploadFile(MultipartFile upload_file) {	// 메인 배너 업로드 경로
 			
-			String file_name = System.currentTimeMillis() + "_" + FilenameUtils.getBaseName(upload_file.getOriginalFilename()) 
-							   + "." + FilenameUtils.getExtension(upload_file.getOriginalFilename());
-			
-			
-			// 파일 저장 위치에 저장하기 
-			try {
-				upload_file.transferTo(new File(path_mainbannerupload+"/"+file_name));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			return file_name;
+		FTPClient ftpClient = new FTPClient();
+        String file_name = System.currentTimeMillis() + "_" + FilenameUtils.getBaseName(upload_file.getOriginalFilename()) + "." + FilenameUtils.getExtension(upload_file.getOriginalFilename());
+        ftpClient.setControlEncoding("UTF-8");
+        String ftpUploadDirectory = "/docker/tomcat/webapps/ROOT/WEB-INF/resources/img/main_banner/";
+        
+        try {
+        	ftpClient.connect(server, port);
+            ftpClient.login(user, pass);
+            ftpClient.enterLocalPassiveMode();
+            
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+
+            boolean done = ftpClient.storeFile(ftpUploadDirectory + file_name, upload_file.getInputStream());
+            if (done) {
+                System.out.println("파일업로드성공");
+            } else {
+                System.out.println("파일업로드실패");
+            }
+        } catch (IOException ex) {
+            System.out.println("오류코드: " + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (ftpClient.isConnected()) {
+                    ftpClient.logout();
+                    ftpClient.disconnect();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return file_name;
 		}
 
 		
@@ -156,7 +223,7 @@ public class AdminService {
 			
 			// file_table 메인포스터 이름 저장
 			mainBannerBean.setName(main_banner_file_name);
-			mainBannerBean.setPath("/Spring_Project_Dream/img/main_banner/");
+			mainBannerBean.setPath("../img/main_banner/");
 			
 			// file_table 상세포스터 이름 저장
 			adminDao.addfiletableBanner(mainBannerBean);
@@ -210,7 +277,7 @@ public class AdminService {
 			
 			// file_table name, path set
 			bannerApplyFormBean.setName(main_banner_file_name);
-			bannerApplyFormBean.setPath("/Spring_Project_Dream/img/main_banner/");
+			bannerApplyFormBean.setPath("../img/main_banner/");
 				
 			// file_table 에 저장
 			adminDao.addfiletableBanner1(bannerApplyFormBean);
@@ -229,7 +296,7 @@ public class AdminService {
 				
 				// file_table name, path set
 				bannerApplyFormBean.setName(main_banner_file_name);
-				bannerApplyFormBean.setPath("/Spring_Project_Dream/img/sub_banner/");
+				bannerApplyFormBean.setPath("../img/sub_banner/");
 					
 				// file_table 에 저장
 				adminDao.addfiletableBanner1(bannerApplyFormBean);
@@ -298,7 +365,7 @@ public class AdminService {
 			
 			// file_table name, path set
 			subBannerBean.setName(sub_banner_file_name);
-			subBannerBean.setPath("/Spring_Project_Dream/img/sub_banner/");
+			subBannerBean.setPath("../img/sub_banner/");
 			
 			// file_table 저정
 			adminDao.addfiletableBanner2(subBannerBean);

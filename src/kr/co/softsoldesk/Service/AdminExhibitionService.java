@@ -1,9 +1,12 @@
 package kr.co.softsoldesk.Service;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,39 +43,88 @@ public class AdminExhibitionService {
 	@Value("${admin.paginationcnt}")
 	private int admin_paginationcnt;
 	
+	 // FTP 서버 정보 설정
+    private String server = "timtory.synology.me";
+    private int port = 3060;
+    private String user = "soldeskdream";
+    private String pass = "Rladnxo12@";
 	
 	
 	private String saveMainPosterUploadFile(MultipartFile upload_file) {	// 메인 포스터 업로드 경로
 		
-		String file_name = System.currentTimeMillis() + "_" + FilenameUtils.getBaseName(upload_file.getOriginalFilename()) 
-						   + "." + FilenameUtils.getExtension(upload_file.getOriginalFilename());
-		
-		
-		// 파일 저장 위치에 저장하기 
-		try {
-			upload_file.transferTo(new File(path_mainupload+"/"+file_name));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return file_name;
+		FTPClient ftpClient = new FTPClient();
+        String file_name = System.currentTimeMillis() + "_" + FilenameUtils.getBaseName(upload_file.getOriginalFilename()) + "." + FilenameUtils.getExtension(upload_file.getOriginalFilename());
+        ftpClient.setControlEncoding("UTF-8");
+        
+        String ftpUploadDirectory = "/docker/tomcat/webapps/ROOT/WEB-INF/resources/img/main_poster/";
+        
+        try {
+        	ftpClient.connect(server, port);
+            ftpClient.login(user, pass);
+            ftpClient.enterLocalPassiveMode();
+
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+
+            boolean done = ftpClient.storeFile(ftpUploadDirectory + file_name, upload_file.getInputStream());
+            if (done) {
+                System.out.println("The file is uploaded successfully.");
+            } else {
+                System.out.println("Could not upload the file.");
+            }
+        } catch (IOException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (ftpClient.isConnected()) {
+                    ftpClient.logout();
+                    ftpClient.disconnect();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return file_name;
 	}	
 	
 	
 	private String saveDetailPosterUploadFile(MultipartFile upload_file) {	// 상세 포스터 업로드 경로
 			
-			String file_name = System.currentTimeMillis() + "_" + FilenameUtils.getBaseName(upload_file.getOriginalFilename()) 
-							   + "." + FilenameUtils.getExtension(upload_file.getOriginalFilename());
-			
-			
-			// 파일 저장 위치에 저장하기 
-			try {
-				upload_file.transferTo(new File(path_detailupload+"/"+file_name));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			return file_name;
+		FTPClient ftpClient = new FTPClient();
+        String file_name = System.currentTimeMillis() + "_" + FilenameUtils.getBaseName(upload_file.getOriginalFilename()) + "." + FilenameUtils.getExtension(upload_file.getOriginalFilename());
+        ftpClient.setControlEncoding("UTF-8");
+        
+        String ftpUploadDirectory = "/docker/tomcat/webapps/ROOT/WEB-INF/resources/img/detail_poster/";
+        
+        try {
+        	ftpClient.connect(server, port);
+            ftpClient.login(user, pass);
+            ftpClient.enterLocalPassiveMode();
+
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+
+            boolean done = ftpClient.storeFile(ftpUploadDirectory + file_name, upload_file.getInputStream());
+            if (done) {
+                System.out.println("The file is uploaded successfully.");
+            } else {
+                System.out.println("Could not upload the file.");
+            }
+        } catch (IOException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (ftpClient.isConnected()) {
+                    ftpClient.logout();
+                    ftpClient.disconnect();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return file_name;
 		}
 	
 	//=================================== 전시회 관리 ===========================
@@ -208,7 +260,7 @@ public class AdminExhibitionService {
 						
 						// file_table테이블 name, path 컬럼 set
 						exhibitionDetailBean.setName(main_poster_file_name);
-						exhibitionDetailBean.setPath("/Spring_Project_Dream/img/main_poster/");
+						exhibitionDetailBean.setPath("../img/main_poster/");
 						
 						// file_table 메인포스터 이름 저장
 						adminExhibitionDao.addfiletableExhibition(exhibitionDetailBean);
@@ -225,7 +277,7 @@ public class AdminExhibitionService {
 						
 						// file_table 메인포스터 이름 저장
 						exhibitionDetailBean.setName(detail_poster_file_name);
-						exhibitionDetailBean.setPath("/Spring_Project_Dream/img/detail_poster/");
+						exhibitionDetailBean.setPath("../img/detail_poster/");
 						
 						// file_table 상세포스터 이름 저장
 						adminExhibitionDao.addfiletableExhibition(exhibitionDetailBean);
@@ -248,7 +300,7 @@ public class AdminExhibitionService {
 							
 							// file_table테이블 name, path 컬럼 set
 							exhibitionDetailBean.setName(main_poster_file_name);
-							exhibitionDetailBean.setPath("/Spring_Project_Dream/img/main_poster/");
+							exhibitionDetailBean.setPath("../img/main_poster/");
 							
 							// file_table 메인포스터 이름 저장
 							adminExhibitionDao.addfiletableExhibition(exhibitionDetailBean);
@@ -271,7 +323,7 @@ public class AdminExhibitionService {
 							
 							// file_table 메인포스터 이름 저장
 							exhibitionDetailBean.setName(detail_poster_file_name);
-							exhibitionDetailBean.setPath("/Spring_Project_Dream/img/detail_poster/");
+							exhibitionDetailBean.setPath("../img/detail_poster/");
 							
 							// file_table 상세포스터 이름 저장
 							adminExhibitionDao.addfiletableExhibition(exhibitionDetailBean);

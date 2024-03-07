@@ -174,7 +174,6 @@ public class AdminController {
 			adminService.addfiletableBanner(mainBannerBean);
 		}
 		
-		
 		// expose_order 값 재정렬
 	    if (originalState != mainBannerBean.getState()) {
 	        if (mainBannerBean.getState() == 1) { // 숨김에서 노출로 변경

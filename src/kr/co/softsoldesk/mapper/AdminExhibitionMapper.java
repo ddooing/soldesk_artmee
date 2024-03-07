@@ -181,8 +181,8 @@ public interface AdminExhibitionMapper {
 				+ "    state = #{state}, \r\n"
 				+ "    price = #{price}, \r\n"
 				+ "    author = #{author}, \r\n"
-				+ "    exhibition_start = #{exhibition_start}, \r\n"
-				+ "    exhibition_end = #{exhibition_end}, \r\n"
+				+ "    exhibition_start = TO_DATE(#{exhibition_start}, 'YYYY-MM-DD'), \r\n"
+				+ "    exhibition_end = TO_DATE(#{exhibition_end}, 'YYYY-MM-DD'), \r\n"
 				+ "    open = #{open}, \r\n"
 				+ "    holiday = #{holiday}, \r\n"
 				+ "    address = #{address}, \r\n"
@@ -201,9 +201,8 @@ public interface AdminExhibitionMapper {
 		int getFileId(String name);
 		
 		// 전시회 관리자가 직접 추가 2번 exhibition 테이블
-		@Insert("INSERT INTO exhibition (exhibition_id, title, regdate, author, price, exhibition_start, exhibition_end, open, holiday, address, place, site, state, main_poster_file_id, detail_poster_file_id) VALUES (exhibition_id_seq.NEXTVAL, #{title}, sysdate, #{author}, #{price}, #{exhibition_start}, #{exhibition_end}, #{open}, #{holiday}, #{address}, #{place}, #{site}, #{state},#{main_poster_file_id}, #{detail_poster_file_id})")
+		@Insert("INSERT INTO exhibition (exhibition_id, title, regdate, author, price, exhibition_start, exhibition_end, open, holiday, address, place, site, state, main_poster_file_id, detail_poster_file_id) VALUES (exhibition_id_seq.NEXTVAL, #{title}, sysdate, #{author}, #{price}, TO_DATE(#{exhibition_start}, 'YYYY-MM-DD'), TO_DATE(#{exhibition_end}, 'YYYY-MM-DD'), #{open}, #{holiday}, #{address}, #{place}, #{site}, #{state},#{main_poster_file_id}, #{detail_poster_file_id})")
 		void addexhibitiontableExhibition(ExhibitionDetailBean exhibitiondetailBean);
-
 		
 		// ============================ 전시회 등록 신청 ============================
 		// 전시회 등록신청 관리자 페이지 리스트
@@ -254,7 +253,7 @@ public interface AdminExhibitionMapper {
 		ExhibitionDetailBean getOneEnrollExhitiion(int exhibition_enroll_id);
 		
 		// 전시회 등록 신청 -> 전시회 등록 하는 메소드
-		@Insert("INSERT INTO exhibition (exhibition_id, title, regdate, author, price, exhibition_start, exhibition_end, open, holiday, address, place, site, state, apply_person, main_poster_file_id, detail_poster_file_id) VALUES (exhibition_id_seq.NEXTVAL, #{title}, sysdate, #{author}, #{price}, #{exhibition_start}, #{exhibition_end}, #{open}, #{holiday}, #{address}, #{place}, #{site}, #{state}, #{apply_person},#{main_poster_file_id}, #{detail_poster_file_id})")
+		@Insert("INSERT INTO exhibition (exhibition_id, title, regdate, author, price, exhibition_start, exhibition_end, open, holiday, address, place, site, state, apply_person, main_poster_file_id, detail_poster_file_id) VALUES (exhibition_id_seq.NEXTVAL, #{title}, sysdate, #{author}, #{price}, TO_DATE(#{exhibition_start}, 'YYYY-MM-DD'),TO_DATE(#{exhibition_end}, 'YYYY-MM-DD'), #{open}, #{holiday}, #{address}, #{place}, #{site}, #{state}, #{apply_person},#{main_poster_file_id}, #{detail_poster_file_id})")
 		void addEnrollexhibitiontableExhibition(ExhibitionDetailBean exhibitiondetailBean);
 		
 		//전시회 등록 신청 -> 전시회 등록 완료 하면 exhibition_enroll 테이블 상태값 변경해주기

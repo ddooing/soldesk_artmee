@@ -186,7 +186,7 @@ public interface AdminMapper {
 	void addfiletableBanner(MainBannerBean mainBannerBean);
 	
 	// 배너 수정 업데이트
-	@Update("UPDATE main_banner SET state=#{state}, start_date=#{start_date}, end_date=#{end_date},expose_order=#{expose_order} ,banner_file_id=#{banner_file_id} where main_banner_id=#{main_banner_id}")
+	@Update("UPDATE main_banner SET state=#{state}, start_date=TO_DATE(#{start_date}, 'YYYY-MM-DD'), end_date=TO_DATE(#{end_date}, 'YYYY-MM-DD'), expose_order=#{expose_order}, banner_file_id=#{banner_file_id} WHERE main_banner_id=#{main_banner_id}")
 	void UpdateMainBanner(MainBannerBean mainBannerBean);
 	
 	// 배너 수정 업데이트시 state 값 변경 확인하려고 쓰는 메소드
@@ -204,7 +204,7 @@ public interface AdminMapper {
 	void UpdateExpose_order(@Param("order") int expose_order);
 	
 	// 메인 배너 관리자 직접 추가
-	@Insert("insert into main_banner (exhibition_id, start_date, end_date, expose_order, regdate, state, banner_file_id) values (#{exhibition_id},#{start_date},#{end_date},#{expose_order},sysdate,#{state},#{banner_file_id})")
+	@Insert("insert into main_banner (exhibition_id, start_date, end_date, expose_order, regdate, state, banner_file_id) values (#{exhibition_id},TO_DATE(#{start_date}, 'YYYY-MM-DD'),TO_DATE(#{end_date}, 'YYYY-MM-DD'),#{expose_order},sysdate,#{state},#{banner_file_id})")
 	void AddmanagerMainBanner(MainBannerBean mainBannerBean);
 	
 	// 배너 신청 페이지 신청한 apply_person이 신청한 전시회 목록 가져가기
@@ -221,7 +221,7 @@ public interface AdminMapper {
 	
 	
 	// 배너 신청 폼 테이블에 insert
-	@Insert("insert into banner_apply_form (apply_person_id, exhibition_id, start_date, end_date, command, approved_At, payment, state, banner_type, banner_file_id) values (#{apply_person_id}, #{exhibition_id}, #{start_date}, #{end_date}, #{command}, sysdate,#{payment} ,#{state}, #{banner_type}, #{banner_file_id})")
+	@Insert("insert into banner_apply_form (apply_person_id, exhibition_id, start_date, end_date, command, approved_At, payment, state, banner_type, banner_file_id) values (#{apply_person_id}, #{exhibition_id}, TO_DATE(#{start_date}, 'YYYY-MM-DD'), TO_DATE(#{end_date}, 'YYYY-MM-DD'), #{command}, sysdate,#{payment} ,#{state}, #{banner_type}, #{banner_file_id})")
 	void insertbanner_apply_form(BannerApplyFormBean bannerApplyFormBean);
 	
 	// 배너 신청 할때 파일테이블에 저장
@@ -379,11 +379,11 @@ public interface AdminMapper {
 	void UpdateSubBannerExpose_order(@Param("order") int expose_order);
 	
 	// 서브 배너 수정 업데이트
-	@Update("UPDATE sub_banner SET state=#{state}, start_date=#{start_date}, end_date=#{end_date},expose_order=#{expose_order} ,banner_file_id=#{banner_file_id} where sub_banner_id=#{sub_banner_id}")
+	@Update("UPDATE sub_banner SET state=#{state}, start_date=TO_DATE(#{start_date},'yyyy-mm-dd'), end_date=TO_DATE(#{end_date},'yyyy-mm-dd'),expose_order=#{expose_order} ,banner_file_id=#{banner_file_id} where sub_banner_id=#{sub_banner_id}")
 	void UpdateSubBanner(SubBannerBean subBannerBean);
 	
 	// 서브 배너 관리자 직접 추가
-	@Insert("insert into sub_banner (exhibition_id, start_date, end_date, expose_order, regdate, state, banner_file_id) values (#{exhibition_id},#{start_date},#{end_date},#{expose_order},sysdate,#{state},#{banner_file_id})")
+	@Insert("insert into sub_banner (exhibition_id, start_date, end_date, expose_order, regdate, state, banner_file_id) values (#{exhibition_id},TO_DATE(#{start_date},'yyyy-mm-dd'),TO_DATE(#{end_date},'yyyy-mm-dd'),#{expose_order},sysdate,#{state},#{banner_file_id})")
 	void AddmanagerSubBanner(SubBannerBean subBannerBean);
 	
 	// 서브 배너 순서 업데이트
@@ -686,11 +686,11 @@ public interface AdminMapper {
 		BannerApplyFormBean getBannerapplyDetail(int banner_apply_form_id);
 		
 		// 관리자 페이지 배너 신청 받은거 관리자가 확인하고 추가 (메인배너)
-		@Insert("INSERT INTO main_banner (exhibition_id, apply_person_id, start_date, end_date, expose_order, state, regdate, pay_money, banner_file_id) VALUES (#{exhibition_id}, #{apply_person_id}, #{start_date}, #{end_date}, #{expose_order}, #{state}, sysdate, #{pay_money}, #{banner_file_id})")
+		@Insert("INSERT INTO main_banner (exhibition_id, apply_person_id, start_date, end_date, expose_order, state, regdate, pay_money, banner_file_id) VALUES (#{exhibition_id}, #{apply_person_id}, TO_DATE(#{start_date}, 'YYYY-MM-DD'), TO_DATE(#{end_date}, 'YYYY-MM-DD'), #{expose_order}, #{state}, sysdate, #{pay_money}, #{banner_file_id})")
 		void addApplyMainBanner(MainBannerBean mainBannerBean);
 		
 		// 관리자 페이지 배너 신청 받은거 관리자가 확인하고 추가 (서브배너)
-		@Insert("INSERT INTO sub_banner (exhibition_id, apply_person_id, start_date, end_date, expose_order, state, regdate, pay_money, banner_file_id) VALUES (#{exhibition_id}, #{apply_person_id}, #{start_date}, #{end_date}, #{expose_order}, #{state}, sysdate, #{pay_money}, #{banner_file_id})")
+		@Insert("INSERT INTO sub_banner (exhibition_id, apply_person_id, start_date, end_date, expose_order, state, regdate, pay_money, banner_file_id) VALUES (#{exhibition_id}, #{apply_person_id}, TO_DATE(#{start_date}, 'YYYY-MM-DD'), TO_DATE(#{end_date}, 'YYYY-MM-DD'), #{expose_order}, #{state}, sysdate, #{pay_money}, #{banner_file_id})")
 		void addApplySubBanner(SubBannerBean subBannerBean);
 		
 		// 관리자 페이지 배너 신청 받은거 관리자가 확인하고 추가 후 banner_apply_form 테이블 상태값 변경 (메인, 서브배너 공통)
