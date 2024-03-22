@@ -106,6 +106,13 @@ public class ArchiveBean {
 	public void setMain_poster_path(String main_poster_path) {
 		this.main_poster_path = main_poster_path;
 	}
+	public int getExhibition_id() {
+		return exhibition_id;
+	}
+	public void setExhibition_id(int exhibition_id) {
+		this.exhibition_id = exhibition_id;
+	}
 
+	
 	
 }

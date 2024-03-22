@@ -91,7 +91,7 @@ public class MyPageController {
 			UserService.IncreaseExp(30, user_id);
 		}
 		
-		return "redirect:/mypage/archive?user_id=" + user_id;
+		return "redirect:/mypage/archive";
 	}
 	
 

@@ -115,7 +115,7 @@ public interface StaticsMapper {
 			+ "  SELECT TRUNC(create_date) AS review_date, COUNT(*) AS review_count\r\n"
 			+ "  FROM review\r\n"
 			+ "  WHERE create_date >= TRUNC(SYSDATE) - INTERVAL '6' DAY\r\n"
-			+ "    AND create_date < TRUNC(SYSDATE) + INTERVAL '1' DAY\r\n"
+			+ "    AND create_date < TRUNC(SYSDATE) + INTERVAL '1' DAY AND expose = 1 "
 			+ "  GROUP BY TRUNC(create_date)\r\n"
 			+ ") reviews ON dates.order_date = reviews.review_date\r\n"
 			+ "LEFT JOIN (\r\n"

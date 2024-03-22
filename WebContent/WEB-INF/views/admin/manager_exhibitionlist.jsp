@@ -126,7 +126,7 @@
 									</c:choose>
 									
 									<td style="width: 550px; text-align: left;"><a
-										href="${root }/exhibition/exhibition_click?exhibition_id=${exhibitionlist.exhibition_id}&user_id=${loginUserBean.user_id}"
+										href="${root }/admin/manager_exhibitionstatics?exhibition_id=${exhibitionlist.exhibition_id}"
 										style="color: black; text-align: left;">${exhibitionlist.title }</a></td>
 									<td style="width: 350px;">${exhibitionlist.exhibition_start }
 										~ ${exhibitionlist.exhibition_end }</td>
