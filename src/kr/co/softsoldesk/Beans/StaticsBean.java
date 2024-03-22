@@ -314,6 +314,44 @@ public class StaticsBean {
 	public void setFemale_Percentage(double female_Percentage) {
 		this.female_Percentage = female_Percentage;
 	}
+	public int getCanceled_count() {
+		return canceled_count;
+	}
+	public void setCanceled_count(int canceled_count) {
+		this.canceled_count = canceled_count;
+	}
+	public int getBoard_id() {
+		return board_id;
+	}
+	public void setBoard_id(int board_id) {
+		this.board_id = board_id;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getCreate_date() {
+		return create_date;
+	}
+	public void setCreate_date(String create_date) {
+		this.create_date = create_date;
+	}
+	public String getContents() {
+		return contents;
+	}
+	public void setContents(String contents) {
+		this.contents = contents;
+	}
+	public int getViews() {
+		return views;
+	}
+	public void setViews(int views) {
+		this.views = views;
+	}
 
+	
+	
 	
 }
