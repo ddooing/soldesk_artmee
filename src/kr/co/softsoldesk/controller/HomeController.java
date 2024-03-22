@@ -14,8 +14,11 @@ public class HomeController {
 	@Resource(name = "loginUserBean")
 	private UserBean loginUserBean;
 
+
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String home() {
 		return "redirect:/view/index";
 	}
+	
+	
 }

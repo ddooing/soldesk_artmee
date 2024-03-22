@@ -41,9 +41,7 @@ public class CartController {
 	public String cart_insert(@ModelAttribute("tempReserveBean") ReserveBean tempReserveBean,
 			HttpSession session,Model model,RedirectAttributes redirectAttributes) {
 		
-		//System.out.println("cart insert 컨트롤러 실행됨");
-		
-		
+
 	 ArrayList< CartBean > list = (ArrayList < CartBean > ) session.getAttribute("cart");
 	  //처음 이후에는 세션에 저장된 데이터를 불러옴 -> 맨 처음에만 메모리 할당을 하도록 한다.
 	  if (list == null) {
@@ -59,9 +57,8 @@ public class CartController {
 		 * System.out.println("cart insert 컨트롤러 실행됨"+tempReserveBean.getUser_id());
 		 */
 	  CartBean cvo = new CartBean();
-	  //System.out.println("cart insert 컨트롤러 실행됨 title : "+tempReserveBean.getExhibition_id());
+
 	  cvo.setExhibition_id(tempReserveBean.getExhibition_id());
-	 // cvo.setUser_id(tempReserveBean.getUser_id());
 	  cvo.setReserve_date(tempReserveBean.getReserve_date());
 	  cvo.setTicket_count(tempReserveBean.getTicket_count());
 		/*
@@ -137,7 +134,7 @@ public class CartController {
 	            System.out.println("cart select 티켓 가격 : " + avo.getTotal_price());
 	        }
 	    }
-	   //Collections.reverse(list); // 리스트를 역순으로 정렬
+
 	  //데이터 전송
 	  model.addAttribute("list", list);
 	

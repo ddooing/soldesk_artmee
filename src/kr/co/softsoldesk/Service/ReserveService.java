@@ -56,13 +56,6 @@ public class ReserveService {
 		reserveDao.paymentZeroReserveInfo(reserveInfo);
 	}
 
-	/*
-	public List<ReserveBean> getReserveList()
-	{
-		return reserveDao.getReserveList();
-	}
-	*/
-	
 	//첫 결제 내역 날짜 받기
 	public String getFirstPayDate()
 	{
@@ -73,15 +66,9 @@ public class ReserveService {
 	public PageBean getReserveListCnt(String startDate,String endDate,String payment_method,String exhibition_title,String user_name,int currentPage)
 	{
 		int searchautor_Cnt=  reserveDao.getReserveListCnt(startDate,endDate,payment_method,exhibition_title,user_name);
-		System.out.println("서비스 searchautor_Cnt : "+searchautor_Cnt);
-		PageBean pageBean = new PageBean(searchautor_Cnt, currentPage, admin_listcnt, admin_paginationcnt);
-		System.out.println("pageBean min : "+pageBean.getMin());
-		System.out.println("pageBean CurrentPage : "+pageBean.getCurrentPage());
-		System.out.println("pageBean max : "+pageBean.getMax());
-		System.out.println("pageBean cnt : "+pageBean.getPageCnt());
 		
-		System.out.println("pageBean prePage : "+pageBean.getPrevPage());
-		System.out.println("pageBean nextPage : "+pageBean.getNextPage());
+		PageBean pageBean = new PageBean(searchautor_Cnt, currentPage, admin_listcnt, admin_paginationcnt);
+		
 		return pageBean;
 	}
 	
@@ -89,6 +76,11 @@ public class ReserveService {
 	{
 		int start = (page - 1) * admin_listcnt;
 		RowBounds rowBounds = new RowBounds(start, admin_listcnt);
+		
+		System.out.println("Service - startDate value:"+ startDate);
+		System.out.println("Service -  endDate value: "+ endDate);
+		
+		
 		return reserveDao.getReserveList(startDate,endDate,payment_method,exhibition_title,user_name,rowBounds);
 	}
 	

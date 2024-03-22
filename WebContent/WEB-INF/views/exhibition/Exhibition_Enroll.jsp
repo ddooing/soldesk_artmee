@@ -358,11 +358,23 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 		</section>
 
 		<script>
+		var today = new Date();
+	    var dd = String(today.getDate()).padStart(2, '0');
+	    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+	    var yyyy = today.getFullYear();
+
+	    today = yyyy + '-' + mm + '-' + dd;
+
+	    document.getElementById("exhibition_end").setAttribute("min", today);
+		console.log("날짜 : ",today);
+	    // exhibition_end 필드의 최소 날짜를 오늘로 설정합니다.
+	    document.getElementById("exhibition_end").setAttribute("min", today);
 			// 시간 validation
 			var start = document.getElementById('exhibition_start');
 			var end = document.getElementById('exhibition_end');
 			
 			end.addEventListener('change', function() {
+
 				if (end.value < start.value) {
 					Swal.fire({
 						  icon: "error",
@@ -372,6 +384,7 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 					end.value = start.value;
 				}
 			});
+			
 			
 			// 시간 validation
 			var start_time = document.getElementById('open_time');

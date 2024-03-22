@@ -44,6 +44,7 @@
 
 <!-- CSS -->
 <link href="../css/board/write.css" rel="stylesheet" />
+<script src="https://cdn.ckeditor.com/ckeditor5/27.0.0/classic/ckeditor.js"></script>
 
 <!-- Carousel 자바스크립트-->
 <script src='https://www.gmarwaha.com/script/lib/jquery-1.11.1.js'></script>
@@ -57,6 +58,13 @@
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+<style>
+.ck-editor__editable_inline {
+    min-height: 400px; /* 또는 원하는 크기로 설정하세요 */
+    max-height: 600px; /* 또는 원하는 크기로 설정하세요 */
+    /* width도 설정 가능합니다. */
+  }
+</style>
 </head>
 <body>
 <body id="page-top">
@@ -79,11 +87,8 @@
 					<div class="form-group" style="margin-top: 20px;">
 						<form:label path="contents" class="font-weight-bold"
 							style="font-size:20px;">내용</form:label>
-						<!-- SmartEditor2 텍스트 에디터 -->
-						<%-- <form:input path="contents" class="form-control form-control-sm"
-							placeholder="내용을 입력하세요."
-							style="height:300px; width: 100%; padding:10px;" /> --%>
-						<form:textarea required="required" path="contents" style="width:100%; height:300px; resize: none; padding-top:10px; padding-left: 10px;" placeholder="내용을 입력하세요"></form:textarea>
+						
+						<form:textarea  id="editor" path="contents"></form:textarea>
 						<form:errors path="contents" />
 					</div>
 					<br />
@@ -120,28 +125,15 @@ function confirmExit() {
     });
 }
 </script>
-
-<!-- Smart Editor --><!-- 
-<script type="text/javascript">
-   var oEditors = [];
-   nhn.husky.EZCreator.createInIFrame({
-       oAppRef: oEditors,
-       elPlaceHolder: "smarteditor",
-       sSkinURI: "../se2/SmartEditor2Skin.html",
-       fCreator: "createSEditor2"
-   });
-    
-    function submitContents(elClickedObj) {
-        oEditors.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
-        try {
-            elClickedObj.form.submit();
-        } catch(e) {}
-    }
-    
-    function pasteHTML(filepath){
-        var sHTML = '<img src="${pageContext.request.contextPath}/uploadFolder/' + filepath + '">';
-        oEditors.getById["smarteditor"].exec("PASTE_HTML", [sHTML]);
-    }
+<script>
+  ClassicEditor
+    .create(document.querySelector('#editor'))
+    .then(editor => {
+      // The editor instance
+    })
+    .catch(error => {
+      console.error(error);
+    });
 </script>
  -->
 <!-- 푸터-->

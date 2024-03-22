@@ -38,7 +38,7 @@ public interface BannerMapper {
 			+ "INNER JOIN\r\n"
 			+ "    user_table u ON e.apply_person = u.user_id\r\n"
 			+ "WHERE\r\n"
-			+ "    u.user_id = #{user_id}")
+			+ "    u.user_id = #{user_id} AND e.exhibition_end >= CURRENT_DATE")
 	List<ExhibitionBean> getApply_personExhibitionlist(@Param("user_id") int user_id);
 	
 	
@@ -92,7 +92,7 @@ public interface BannerMapper {
 		        "INNER JOIN user_table u ON b.apply_person_id = u.user_id " +
 		        "WHERE b.state IS NOT NULL " +
 		        "<if test='startDate != null and endDate != null'>" +
-		        "AND b.requested_at BETWEEN #{startDate} AND #{endDate} </if> " +
+		        "AND b.requested_at BETWEEN TO_TIMESTAMP(#{startDate},'YYYY-MM-DD') AND TO_TIMESTAMP(#{endDate} || ' 23:59:59','YYYY-MM-DD HH24:MI:SS') </if>" +
 		        "<if test='payment_method != null'>AND b.payment_method = #{payment_method}</if> " +
 		        "<if test='banner_type != null &amp;&amp; banner_type != 3'>AND b.banner_type = #{banner_type}</if>"+
 		        "<if test='user_name != null'>AND u.name LIKE '%' || #{user_name} || '%' </if> " +
@@ -114,7 +114,7 @@ public interface BannerMapper {
 		        "INNER JOIN user_table u ON b.apply_person_id = u.user_id " +
 		        "WHERE b.state IS NOT NULL " +
 		        "<if test='startDate != null and endDate != null'>" +
-		        "AND b.requested_at BETWEEN #{startDate} AND #{endDate} </if> " +
+		        "AND b.requested_at BETWEEN TO_TIMESTAMP(#{startDate},'YYYY-MM-DD') AND TO_TIMESTAMP(#{endDate} || ' 23:59:59','YYYY-MM-DD HH24:MI:SS') </if>" +
 		        "<if test='payment_method != null'>AND b.payment_method = #{payment_method}</if> " +
 		        "<if test='banner_type != null &amp;&amp; banner_type != 3'>AND b.banner_type = #{banner_type}</if>"+
 		        "<if test='user_name != null'>AND u.name LIKE '%' || #{user_name} || '%' </if> " +

@@ -1,7 +1,7 @@
+
 package kr.co.softsoldesk.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -10,15 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.softsoldesk.Beans.BoardBean;
 import kr.co.softsoldesk.Beans.PageBean;
@@ -26,16 +22,11 @@ import kr.co.softsoldesk.Beans.SubBannerBean;
 import kr.co.softsoldesk.Beans.UserBean;
 import kr.co.softsoldesk.Service.AdminService;
 import kr.co.softsoldesk.Service.BoardService;
-import kr.co.softsoldesk.Service.UserService;
-import kr.co.softsoldesk.dao.BoardDao;
-import kr.co.softsoldesk.validator.UserValidator;
 
 @Controller
 @RequestMapping("/board")
 public class BoardController {
 
-	@Autowired
-	private BoardDao boardDao;
 
     @Autowired
     private BoardService boardService;

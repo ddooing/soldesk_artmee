@@ -73,8 +73,45 @@
 					</li>
 				</ul>
 
-				<ul class="navbar-nav ms-auto">
-
+				<ul class="navbar-nav ms-auto" style="align-items: center;">
+					<div style="display: inline-block; vertical-align: top; margin-right: 10px;">
+		              <form action="${root }/view/search" method="get" name="exhibitionSearch" onsubmit="return allSearchForm()">
+		                  <input type="text" name="allKeyword" placeholder="통합 검색" 
+		                 	 style="width: 280px; height: 40px; color: white; outline: none;
+							    border-radius: 15px;border: 2px solid white;
+							    padding: 10px;background: transparent;"id="allSearchKeyword" />
+		              </form>
+		              <script>
+				               
+					    var allKeywordInput = document.getElementById('allSearchKeyword');
+					
+						var urlParams =new URLSearchParams(window.location.search);
+		
+					    var allSearchParam = urlParams.get('allKeyword'); 
+		
+					    if (allSearchParam){
+					    	allKeywordInput.value = allSearchParam; 
+					    }
+					    
+						function allSearchForm() {
+		
+						    var allKeyword = allKeywordInput.value.trim(); 
+		
+						    if (allKeyword === "") {
+						    	Swal.fire({
+								    text: "검색어를 입력해주세요",
+								    icon: "warning",
+								    showCancelButton: true, 
+								    cancelButtonColor: "gray", 
+								    cancelButtonText: '닫기', 
+								    showConfirmButton: false,
+								});
+						        return false; 
+						    }
+						    return true; 
+						}
+						</script>
+		          </div>
 					<li class="nav-item mr-5">
 						<a class="nav-link" href="${root }/user/cart_list"><img src="../img/cart.png"
 								style="width: 30px; height: 30px; margin-right: 30px;" /></a>
@@ -82,7 +119,7 @@
 					<c:choose>
 					    <c:when test="${loginUserBean.userLogin == false}">
 					        <li class="nav-item"><a href="${root}/user/login" class="nav-link">로그인</a></li>
-					        <li class="nav-item"><a href="${root}/user/Signup" class="nav-link">회원가입</a></li>
+					        <li class="nav-item"><a href="${root}/user/signup" class="nav-link">회원가입</a></li>
 					    </c:when>
 					    
 					    <c:otherwise>
@@ -90,7 +127,7 @@
 					        <li class="nav-item"><a href="${root}/user/logout" class="nav-link">로그아웃</a></li>
 					        <c:choose>
 						        <c:when test="${loginUserBean.state == 3}">
-						            <li class="nav-item"><a href="${root}/admin/manager_accountmanager" class="nav-link">관리자 페이지</a></li>
+						            <li class="nav-item"><a href="${root}/admin/manager_dashboard"  class="nav-link">관리자 페이지</a></li>
 						        </c:when>
 					        </c:choose>
 					    </c:otherwise>

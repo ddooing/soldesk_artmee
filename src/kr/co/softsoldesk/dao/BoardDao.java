@@ -1,15 +1,14 @@
 package kr.co.softsoldesk.dao;
 
-import kr.co.softsoldesk.Beans.BoardBean;
-import kr.co.softsoldesk.Beans.CommentBean;
-import kr.co.softsoldesk.mapper.BoardMapper;
+import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Map;
+import kr.co.softsoldesk.Beans.BoardBean;
+import kr.co.softsoldesk.Beans.CommentBean;
+import kr.co.softsoldesk.mapper.BoardMapper;
 
 @Repository
 public class BoardDao {
@@ -107,5 +106,10 @@ public class BoardDao {
     // 검색 결과의 총 게시글 수 가져오기
     public int getSearchBoardsCnt(String searchType, String searchText) {
         return boardMapper.getSearchBoardsCnt(searchType, searchText);
+    }
+    
+    public List<BoardBean> allSearchBoards(String title)
+    {
+    	return boardMapper.allSearchBoards(title);
     }
 }

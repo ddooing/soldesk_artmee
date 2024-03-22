@@ -34,7 +34,7 @@
 	<!-- CSS -->
 	<link href="css/styles.css" rel="stylesheet" />
 	<link href="css/kakaomapapi.css" rel="stylesheet" />
-
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -61,10 +61,40 @@
                   style="color: lightgray; font-size: 25px; text-decoration: none; border: none; background-color: transparent; margin-left: 15px;">곧종료</button>
           </div>
           <div style="display: inline-block; vertical-align: top; margin-left:500px;">
-              <form action="${root }/exhibition/exhibition_search" method="get" name="exhibitionSearch">
-                  <input type="text" name="keyword" placeholder="키워드로 검색" style="width: 300px; height: 40px;" />
+              <form action="${root }/exhibition/exhibition_search" method="get" name="exhibitionSearch" onsubmit="return validateForm()">
+                  <input type="text" name="keyword" placeholder="검색어를 입력해주세요." style="width: 300px; height: 40px;" id="searchKeyword" />
                   <button type="submit" class="btn btn-dark" style="margin-left: 10px;">검색</button>
               </form>
+              <script>
+		               
+			    var keywordInput = document.getElementById('searchKeyword');
+			
+				var urlParams =new URLSearchParams(window.location.search);
+
+			    var searchParam = urlParams.get('keyword'); 
+
+			    if (searchParam){
+			    	keywordInput.value = searchParam; 
+			    }
+			    
+				function validateForm() {
+
+				    var keyword = keywordInput.value.trim(); 
+
+				    if (keyword === "") {
+				    	Swal.fire({
+						    text: "검색어를 입력해주세요",
+						    icon: "warning",
+						    showCancelButton: true, 
+						    cancelButtonColor: "gray", 
+						    cancelButtonText: '닫기', 
+						    showConfirmButton: false,
+						});
+				        return false; 
+				    }
+				    return true; 
+				}
+				</script>
           </div>
       </div>
    </section>

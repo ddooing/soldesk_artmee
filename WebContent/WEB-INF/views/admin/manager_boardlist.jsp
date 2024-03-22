@@ -23,6 +23,10 @@
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 <!-- JQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>	
+
+
 <script>
 $(document).ready(function(){
     $("#allcheck").click(function(){
@@ -47,8 +51,7 @@ $(document).ready(function(){
 					<div style="margin-top: 30px;">
 						<h3>게시판 관리</h3>
 					</div>
-					<div
-						style="position: relative; display: flex; justify-content: center; height: 80px; align-items: center; border: 0.2px solid black; background-color: white; margin-top: 20px;">
+					<div style="position: relative; display: flex; justify-content: center; height: 80px; align-items: center; border: 0.2px solid black; background-color: white; margin-top: 20px;">
 						<div style="position: absolute; left: 10px;">
 							<c:choose>
 								<c:when test="${!empty pageBean }">
@@ -65,46 +68,78 @@ $(document).ready(function(){
 								</c:when>
 							</c:choose>
 						</div>
-						<form action="${root }/admin/manager_boardlist" method="get" style="margin-top: 15px;">
-						<c:choose>
-							<c:when test="${type == 'title' }">
-								<select name="type" style="width: 150px; height: 40px; margin-right: 30px;">
-									<option value="" disabled >검색조건선택</option>
-									<option value="title"selected>제목</option>
-									<option value="titlecontents">제목+내용</option>
-									<option value="nickname">닉네임</option>
-								</select>
-							</c:when>
-							<c:when test="${type == 'titlecontents' }">
-								<select name="type" style="width: 150px; height: 40px; margin-right: 30px;">
-									<option value="" disabled >검색조건선택</option>
-									<option value="title">제목</option>
-									<option value="titlecontents"selected>제목+내용</option>
-									<option value="nickname">닉네임</option>
-								</select>
-							</c:when>
-							<c:when test="${type == 'nickname' }">
-								<select name="type" style="width: 150px; height: 40px; margin-right: 30px;">
-									<option value="" disabled >검색조건선택</option>
-									<option value="title">제목</option>
-									<option value="titlecontents">제목+내용</option>
-									<option value="nickname" selected>닉네임</option>
-								</select>
-							</c:when>
-						<c:otherwise>
-							<select name="type" style="width: 150px; height: 40px; margin-right: 30px;">
-								<option value="" disabled selected>검색조건선택</option>
+						<form action="${root }/admin/manager_boardlist" method="get" style="margin-top: 15px;" onsubmit="return validateForm()">
+						
+							<select name="type" id="selectCombo" style="width: 150px; height: 40px; margin-right: 30px;">
+								<option value="" disabled >검색조건선택</option>
 								<option value="title">제목</option>
 								<option value="titlecontents">제목+내용</option>
 								<option value="nickname">닉네임</option>
 							</select>
-						</c:otherwise>
-						</c:choose>
-								<input type="text" name="keyword" value="${keyword }"
-								style="width: 500px; height: 40px; margin-right: 30px;"
-								placeholder="검색어를 입력해주세요" />
+								
+							<input type="text" name="keyword" 
+							style="width: 500px; height: 40px; margin-right: 30px;"
+							placeholder="검색어를 입력해주세요" id="searchKeyword" value="${param.keyword}"/>
 							<button class="btn btn-dark" style="width: 80px; height: 40px;">검색</button>
 						</form>
+						
+						<script>
+		                var selectElement = document.getElementById('selectCombo');
+					    var keywordInput = document.getElementById('searchKeyword');
+					
+						var urlParams =new URLSearchParams(window.location.search);
+					    
+					    var typeParam = urlParams.get('type'); 
+
+					    if (typeParam){
+					    	selectElement.value = typeParam; 
+					    }else {
+					    	selectElement.getElementsByTagName('option')[0].selected = 'selected';
+					    }
+					    
+					    
+						function validateForm() {
+		
+						    var selectedType = selectElement.value;
+						    var keyword = keywordInput.value.trim(); 
+						    
+						
+						    if (selectedType === "") {
+						    	Swal.fire({
+								    text: "검색조건을 선택해주세요",
+								    icon: "warning",
+								    showCancelButton: true, 
+								    cancelButtonColor: "gray", 
+								    cancelButtonText: '닫기',
+								    showConfirmButton: false, 
+								});
+						        return false; 
+						    }
+						    if (keyword === "") {
+						    	Swal.fire({
+								    text: "검색어를 입력해주세요",
+								    icon: "warning",
+								    showCancelButton: true, 
+								    cancelButtonColor: "gray", 
+								    cancelButtonText: '닫기', 
+								    showConfirmButton: false,
+								});
+						        return false; 
+						    }
+						    return true; 
+						}
+						</script>
+						<button class="button-39" id="resetButton" role="button" style="width: 80px; height: 44px;  margin-left: 30px;">초기화</button>
+						
+						<script>
+						    document.addEventListener('DOMContentLoaded', function() {
+						        var resetButton = document.getElementById('resetButton');
+
+						        resetButton.addEventListener('click', function() {
+						            window.location.href = '${root}/admin/manager_boardlist';
+						        });
+						    });
+						</script>
 					</div>
 					<div style="background-color: white; margin-top: 30px;">
 						<table class="table table-striped" style="text-align: center; ">

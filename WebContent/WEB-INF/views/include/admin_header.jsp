@@ -74,6 +74,12 @@
 				style="border-right: 1px solid black;">
 				<div class="sb-sidenav-menu">
 					<div class="nav">
+						<div class="sb-sidenav-menu-heading">대시보드</div>
+						<a class="nav-link" href="${root }/admin/manager_dashboard">
+							<div class="sb-nav-link-icon">
+								<i class="bi bi-speedometer2"></i>
+							</div> 대시보드
+						</a>
 						<div class="sb-sidenav-menu-heading">카테고리</div>
 						<a class="nav-link" href="${root }/admin/manager_accountmanager">
 							<div class="sb-nav-link-icon">

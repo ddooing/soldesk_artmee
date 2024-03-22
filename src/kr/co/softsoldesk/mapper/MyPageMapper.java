@@ -231,6 +231,20 @@ public interface MyPageMapper {
       		+ "    notice_id DESC")
       List<NoticeBean>getImportantNoticeList(RowBounds rowBounds);
       
+      @Select("SELECT notice_id, \r\n"
+        		+ "    title, \r\n"
+          		+ "    TO_CHAR(create_date, 'yyyy-mm-dd') AS create_date, \r\n"
+          		+ "    contents, \r\n"
+          		+ "    state, \r\n"
+          		+ "    views\r\n"
+          		+ "FROM notice\r\n"
+          		+ "where state != 0\r\n"
+          		+ "    and upper(title) LIKE '%' || UPPER(#{title}) || '%'\r\n"
+          		+ "ORDER BY \r\n"
+          		+ "    CASE WHEN state = 2 THEN 0 ELSE 1 END,\r\n"
+        		+ "    notice_id DESC FETCH FIRST 4 ROWS ONLY")
+      List<NoticeBean>getNoticeList(String title);
+      
       @Select("select count(*)\r\n"
             + "from notice\r\n"
             + "where state != 0")

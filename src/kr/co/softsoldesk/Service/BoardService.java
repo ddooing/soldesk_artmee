@@ -1,10 +1,8 @@
 package kr.co.softsoldesk.Service;
 
-import kr.co.softsoldesk.Beans.BoardBean;
-import kr.co.softsoldesk.Beans.CommentBean;
-import kr.co.softsoldesk.Beans.PageBean;
-import kr.co.softsoldesk.Beans.UserBean;
-import kr.co.softsoldesk.dao.BoardDao;
+import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +10,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.util.List;
+import kr.co.softsoldesk.Beans.BoardBean;
+import kr.co.softsoldesk.Beans.CommentBean;
+import kr.co.softsoldesk.Beans.PageBean;
+import kr.co.softsoldesk.Beans.UserBean;
+import kr.co.softsoldesk.dao.BoardDao;
 
 @Service
 @PropertySource("/WEB-INF/properties/option.properties")
@@ -166,5 +167,9 @@ public class BoardService {
     public PageBean getSearchBoardPage(String searchType, String searchText, int currentPage) {
         int contentCnt = boardDao.getSearchBoardsCnt(searchType, searchText);
         return new PageBean(contentCnt, currentPage, 10, 10); // 페이지당 게시글 수와 페이지네이션 수를 예시로 10으로 설정
+    }
+    public List<BoardBean> allSearchBoards(String title)
+    {
+    	return boardDao.allSearchBoards(title);
     }
 }

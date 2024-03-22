@@ -69,50 +69,79 @@
 							style="background-color: black; font-size: 15px; padding:10px;">QnA
 							총${qnaCountBean.total_count}건</span>
 					</div>
-					<form action="${root }/admin/manager_QnAlist" method="get">
+					<form action="${root }/admin/manager_QnAlist" method="get" onsubmit="return validateForm()">
+						<select name="usercombo" id="usercombo" style="width: 150px; height: 40px; margin-right: 30px;">
+							<option value="" disabled >검색조건선택</option>
+							<option value="nickname">닉네임</option>
+							<option value="title">제목</option>
+						</select>	
 					
-						<c:choose>
-							<c:when test="${usercombo == null }">
-								<select name="usercombo" id="usercombo" style="width: 150px; height: 40px; margin-right: 30px;">
-									<option value="" disabled selected>검색조건선택</option>
-									<option value="nickname">닉네임</option>
-									<option value="title">제목</option>
-								</select>	
-							</c:when>
-							
-							<c:when test="${usercombo == 'nickname' }">
-								<select name="usercombo" id="usercombo" style="width: 150px; height: 40px; margin-right: 30px;">
-									<option value="" disabled >검색조건선택</option>
-									<option value="nickname" selected>닉네임</option>
-									<option value="title">제목</option>
-								</select>	
-							</c:when>
-							
-							<c:when test="${usercombo == 'title' }">
-								<select name="usercombo" id="usercombo" style="width: 150px; height: 40px; margin-right: 30px;">
-									<option value="" disabled >검색조건선택</option>
-									<option value="nickname" >닉네임</option>
-									<option value="title" selected>제목</option>
-								</select>	
-							</c:when>
+						<input type="text" name="usersearch" 
+							style="width: 500px; height: 40px; margin-right: 30px;"
+							placeholder="검색어를 입력해주세요"  id="searchKeyword" value="${param.usersearch}"/>
+					
 				
-						</c:choose>
-						 
-						<c:choose>
-							<c:when test="${usersearch != null }">
-								<input type="text" name="usersearch" id="usersearch"
-								style="width: 500px; height: 40px; margin-right: 30px;" value="${usersearch }"
-								placeholder="검색어를 입력해주세요" />	
-							</c:when>
-							<c:otherwise>
-								<input type="text" name="usersearch" id="usersearch"
-								style="width: 500px; height: 40px; margin-right: 30px;"
-								placeholder="검색어를 입력해주세요" />
-							</c:otherwise>
-						</c:choose>
-						
 						<button class="btn btn-dark" style="width: 80px; height: 40px;">검색</button>
+					
 					</form>
+					
+					<script>
+		                var selectElement = document.getElementById('usercombo');
+					    var keywordInput = document.getElementById('searchKeyword');
+					
+						var urlParams =new URLSearchParams(window.location.search);
+					    
+					    var typeParam = urlParams.get('usercombo'); 
+
+					    if (typeParam){
+					    	selectElement.value = typeParam; 
+					    }else {
+					    	selectElement.getElementsByTagName('option')[0].selected = 'selected';
+					    }
+					    
+					    
+						function validateForm() {
+		
+						    var selectedType = selectElement.value;
+						    var keyword = keywordInput.value.trim(); 
+						    
+						
+						    if (selectedType === "") {
+						    	Swal.fire({
+								    text: "검색조건을 선택해주세요",
+								    icon: "warning",
+								    showCancelButton: true, 
+								    cancelButtonColor: "gray", 
+								    cancelButtonText: '닫기',
+								    showConfirmButton: false, 
+								});
+						        return false; 
+						    }
+						    if (keyword === "") {
+						    	Swal.fire({
+								    text: "검색어를 입력해주세요",
+								    icon: "warning",
+								    showCancelButton: true, 
+								    cancelButtonColor: "gray", 
+								    cancelButtonText: '닫기', 
+								    showConfirmButton: false,
+								});
+						        return false; 
+						    }
+						    return true; 
+						}
+						</script>
+						<button class="button-39" id="resetButton" role="button" style="width: 80px; height: 44px;  margin-left: 30px;">초기화</button>
+						
+						<script>
+						    document.addEventListener('DOMContentLoaded', function() {
+						        var resetButton = document.getElementById('resetButton');
+
+						        resetButton.addEventListener('click', function() {
+						            window.location.href = '${root}/admin/manager_QnAlist';
+						        });
+						    });
+						</script>
 				</div>
 
 

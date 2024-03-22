@@ -36,6 +36,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <!-- SweetAlert2 JS 파일 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/27.0.0/classic/ckeditor.js"></script>
 <script>
 $(document).ready(function(){
     $("#allcheck").click(function(){
@@ -83,6 +84,11 @@ $(document).ready(function(){
 textarea:focus {
     outline: none;
 }
+.ck-editor__editable_inline {
+    min-height: 400px; /* 또는 원하는 크기로 설정하세요 */
+    max-height: 600px; /* 또는 원하는 크기로 설정하세요 */
+    /* width도 설정 가능합니다. */
+  }
 </style>
 </head>
 
@@ -149,7 +155,7 @@ textarea:focus {
 							<tr style="align-items: center; height: 100px; ">
 								<th style="vertical-align: middle; font-size:20px;">내용</th>
 								<td colspan="3">
-									<form:textarea rows="15" cols="140" path="contents" style="resize:none;" />
+									<form:textarea id="editor" rows="15" cols="140" path="contents" style="resize:none;" />
 								</td>
 							</tr>
 						</table>
@@ -200,6 +206,19 @@ textarea:focus {
 
 		</div>
 	</div>
+	<script>
+	ClassicEditor
+    .create(document.querySelector('#editor'), {
+        // 초기화할 때 데이터 설정
+        initialData: '${rn.contents}'
+    })
+    .then(editor => {
+        // 에디터 사용 준비 완료
+    })
+    .catch(error => {
+        console.error(error);
+    });
+</script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		crossorigin="anonymous"></script>

@@ -49,7 +49,7 @@
 <script
    src="https://www.gmarwaha.com/jquery/jcarousellite/script/jquery.jcarousellite.js"></script>
 
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>	
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
    href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap"
@@ -434,9 +434,6 @@ a:hover {
    color: #000000;
 }
 
-
-
-
 </style>
 
 </head>
@@ -455,44 +452,69 @@ a:hover {
       </div>
             <div>
                <div style="width:900px; display: flex; justify-content: center;">
-               <fieldset class="search_wrap" id="search_wrap1" style="width: 930px;">
-                  <form action="${root }/notice/main" method="get">
-                     <c:choose>
-                        <c:when test="${type == 'title' }">
-                           <select name="type" style=" margin-right: 10px;">
-                              <option value="" disabled>검색조건선택</option>
-                              <option value="title" selected>제목</option>
-                              <option value="titlecontents">제목+내용</option>
-                           </select>
-                           <input type="text" name="keyword" value="${keyword }" style="width: 575px; height: 40px; margin-right: 10px;" placeholder="검색어를 입력해주세요" />
-                           <button class="btn btn-dark" style="width: 80px; height: 40px;">검색</button>
-                        </c:when>
-                        
-                        <c:when test="${type == 'titlecontents' }">
-                           <select name="type" style="margin-right: 10px;">
-                              <option value="" disabled>검색조건선택</option>
-                              <option value="title">제목</option>
-                              <option value="titlecontents" selected>제목+내용</option>
-                           </select>
-                           <input type="text" name="keyword" value="${keyword }" style="width: 575px; height: 40px; margin-right: 10px;" placeholder="검색어를 입력해주세요" />
-                           <button class="btn btn-dark" style="width: 80px; height: 40px;">검색</button>
-                        </c:when>
-                        
-                        <c:otherwise>
-                           <select name="type" style="margin-right: 10px;">
-                              <option value="" disabled selected>검색조건선택</option>
-                              <option value="title">제목</option>
-                              <option value="titlecontents">제목+내용</option>
-                           </select>
-                           <input type="text" name="keyword" style="width: 575px; height: 40px; margin-right: 10px;" placeholder="검색어를 입력해주세요" />
-                           <button class="btn btn-dark" style="width: 80px; height: 40px;">검색</button>
-                        </c:otherwise>
-                        
-                     </c:choose>
-                     </form>
-                     </fieldset>
-
+	               <fieldset class="search_wrap" id="search_wrap1" style="width: 930px;">
+	                  <form action="${root }/notice/main" method="get" onsubmit="return validateForm()">
+	                    
+	                    <select name="type" style=" margin-right: 10px;" id="optionSelect">
+	                       <option value="" disabled>검색조건선택</option>
+	                       <option value="title">제목</option>
+	                       <option value="titlecontents">제목+내용</option>
+	                    </select>
+	                    <input type="text" id="searchInput" name="keyword" value="${keyword }" style="width: 575px; height: 40px; margin-right: 10px;" placeholder="검색어를 입력해주세요" />
+	                    <button class="btn btn-dark" style="width: 80px; height: 40px;">검색</button>  
+	                   </form>
+	                </fieldset>
                </div>
+               
+               <script>
+               var selectElement = document.getElementById('optionSelect');
+			    var keywordInput = document.getElementById('searchInput');
+			
+				var urlParams =new URLSearchParams(window.location.search);
+			    
+			    var typeParam = urlParams.get('type'); 
+			    var searchParam = urlParams.get('keyword'); 
+
+			    if (typeParam){
+			    	selectElement.value = typeParam; 
+			    }else {
+			    	   selectElement.getElementsByTagName('option')[0].selected = 'selected';
+			    	}
+			    if (searchParam){
+			    	keywordInput.value = serchParam; 
+			    }
+			    
+				function validateForm() {
+
+				    var selectedType = selectElement.value;
+				    var keyword = keywordInput.value.trim(); 
+				    
+				
+				    if (selectedType === "") {
+				    	Swal.fire({
+						    text: "검색조건을 선택해주세요",
+						    icon: "warning",
+						    showCancelButton: true, // '취소' 버튼만 표시합니다.
+						    cancelButtonColor: "gray", // 취소 버튼의 색상을 gray로 설정합니다.
+						    cancelButtonText: '닫기', // 취소 버튼의 텍스트를 '닫기'로 설정합니다.
+						    showConfirmButton: false, // '확인' 버튼은 표시하지 않습니다.
+						});
+				        return false; // 폼 제출 방지
+				    }
+				    if (keyword === "") {
+				    	Swal.fire({
+						    text: "검색어를 입력해주세요",
+						    icon: "warning",
+						    showCancelButton: true, // '취소' 버튼만 표시합니다.
+						    cancelButtonColor: "gray", // 취소 버튼의 색상을 gray로 설정합니다.
+						    cancelButtonText: '닫기', // 취소 버튼의 텍스트를 '닫기'로 설정합니다.
+						    showConfirmButton: false, // '확인' 버튼은 표시하지 않습니다.
+						});
+				        return false; // 폼 제출 방지
+				    }
+				    return true; // 폼 제출 계속 진행
+				}
+				</script>
                
                <div style="display: flex; justify-content: center; align-content: center; align-items: center;">
                   <table class="tbl_list text_c" style="margin-left: auto; margin-right: auto;">

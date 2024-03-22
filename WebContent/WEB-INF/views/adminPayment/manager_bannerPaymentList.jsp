@@ -16,7 +16,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
 	rel="stylesheet" />
-<link href="css/styles_manager.css" rel="stylesheet" />
+<link href="../css/styles_manager.css" rel="stylesheet" />
 <!--부트스트랩 아이콘 사용-->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
@@ -198,40 +198,7 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 .pikaday-white table td.is-selected button:hover {
     color: var(--selectedDateTextColor);
 }
-.button-39 {
-  background-color: #FFFFFF;
-  border: 1px solid rgb(209,213,219);
-  border-radius: .5rem;
-  box-sizing: border-box;
-  color: #111827;
-  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-  font-size: .875rem;
-  font-weight: 600;
-  line-height: 1.25rem;
-  padding: .75rem 1rem;
-  text-align: center;
-  text-decoration: none #D1D5DB solid;
-  text-decoration-thickness: auto;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
 
-.button-39:hover {
-  background-color: rgb(249,250,251);
-}
-
-.button-39:focus {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-.button-39:focus-visible {
-  box-shadow: none;
-}
-/*----------------*/
 
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -346,67 +313,7 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 								    
 								    
 								    
-									function redirectToAdminList() {
-										 var datepickerValue = document.getElementById('datepicker').value;
-										 var datepicker2Value = document.getElementById('datepicker2').value;
-										 
-										 
-										console.log("datepicker value:", datepickerValue);
-									    console.log("datepicker2Value  value:", datepicker2Value);
-									    
-									    var startDate = datepickerValue;
-									    var endDate = datepicker2Value;
-									    /*
-									 // 첫 번째 날짜가 두 번째 날짜보다 이후인지 확인
-									    if (startDate < endDate) { // 시작 날짜 가 종료날짜보다 이전일때,
-									    	 if (startDate > endDate) 
-									    	 { // 시작 날짜를 종료날짜보다 이후로 선택했을때, 
-										    	Swal.fire({
-										            title: "날짜 선택 오류",
-										            text: "시작 날짜는 종료 날짜보다 이후일 수 없습니다",
-										            icon: "error",
-										            showCancelButton: true, 
-												    cancelButtonColor: "gray",
-												    cancelButtonText: '닫기', 
-												    showConfirmButton: false, 
-										            
-										        });
-										    	
-										        return;
-									    	 }
-									    
-									    	  if(startDate > endDate) // 종료날짜가 시작날짜보다 이전으로 선택
-										    	{
-											    	Swal.fire({
-											            title: "날짜 선택 오류",
-											            text: "종료 날짜는 시작 날짜보다 이전일 수 없습니다",
-											            icon: "error",
-											            showCancelButton: true, 
-													    cancelButtonColor: "gray",
-													    cancelButtonText: '닫기', 
-													    showConfirmButton: false, 
-											            
-											        });
-											    	
-											        return; 
-										    	}
-									    
-									    }
-									 
-									 */
-
-							            var urlParams = new URLSearchParams(window.location.search);
-										
-							         	//'page' 매개변수가 있으면 제거합니다.
-							            if (urlParams.has('page')) {
-							                urlParams.delete('page');
-							            }
-							           
-							            urlParams.set('startDate', startDate);
-							            urlParams.set('endDate', endDate);
-							            // 페이지를 업데이트된 URL로 리디렉션합니다.
-							            window.location.href = window.location.pathname + '?' + urlParams.toString();
-								    }
+								
 									
 									
 									function fomatting(dateText){
@@ -420,6 +327,74 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 								    var startDateFromUrl = urlParams.get('startDate') ? new Date(urlParams.get('startDate')) : new Date(formattedFirstRequestedAt);
 								    var endDateFromUrl = urlParams.get('endDate') ? new Date(urlParams.get('endDate')) :new Date(formattedToday);
 									
+								    
+								    function redirectToAdminList() 
+									{
+										 var datepickerValue = document.getElementById('datepicker').value;
+										 var datepicker2Value = document.getElementById('datepicker2').value;
+										 
+										 
+										console.log("datepicker value:", datepickerValue);
+									    console.log("datepicker2Value  value:", datepicker2Value);
+									    
+									    var startDate = datepickerValue;
+									    var endDate = datepicker2Value;
+									  
+									 
+								    	 if (startDate > endDate) 
+								    	 { // 시작 날짜를 종료날짜보다 이후로 선택했을때, 
+								    		 Swal.fire({
+							    		        title: "날짜 선택 오류",
+							    		        text: "시작 날짜는 종료 날짜보다 이후일 수 없습니다",
+							    		        icon: "error",
+							    		        confirmButtonText: '확인', // 사용자가 클릭할 버튼
+							    		    }).then((result) => {
+							    		        if (result.value) {
+							    		            // 확인 버튼을 클릭했을 때 페이지 새로고침
+							    		            window.location.reload();
+							    		        }
+							    		    });
+									    	
+									        return;
+								    	 }
+								    
+								    	 else if(startDate < endDate) // 종료날짜가 시작날짜보다 이전으로 선택
+									    	{
+										    	Swal.fire({
+										            title: "날짜 선택 오류",
+										            text: "종료 날짜는 시작 날짜보다 이전일 수 없습니다",
+										            icon: "error",
+										            showCancelButton: true, 
+												    cancelButtonColor: "gray",
+												    cancelButtonText: '닫기', 
+												    showConfirmButton: false, 
+										            
+										        }).then((result) => {
+								    		        if (result.value) {
+								    		            
+								    		            window.location.reload();
+								    		        }
+								    		    });
+										    	
+										        return; 
+									    	}
+									    
+									    
+									 
+									 
+
+							            var urlParams = new URLSearchParams(window.location.search);
+										
+							         	//'page' 매개변수가 있으면 제거합니다.
+							            if (urlParams.has('page')) {
+							                urlParams.delete('page');
+							            }
+							           
+							            urlParams.set('startDate', startDate);
+							            urlParams.set('endDate', endDate);
+							            // 페이지를 업데이트된 URL로 리디렉션합니다.
+							            window.location.href = window.location.pathname + '?' + urlParams.toString();
+								    }
 									new Pikaday({
 							        field: document.getElementById('datepicker'),
 							        theme: "pikaday-white",
@@ -494,8 +469,6 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 								    } else {
 								      $('#datepicker2').val(formattedToday);
 								    }
-									 
-							      
 							    })
 
 							  </script>

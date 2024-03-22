@@ -102,9 +102,9 @@
                         <tr class="tb_content" style="height: 350px; vertical-align:text-top;">
                            <td colspan="3">
                               <div id="divNoticeContents">
-                                 <!-- 내용 -->
+                                 <!-- 내용 -->${readContentBean.contents }
                                  <textarea id="contents" name="contents" rows="15" cols="150"
-                                    style="resize: none; border: hidden; background-color: white;" disabled="disabled">${readContentBean.contents }</textarea>
+                                    style="resize: none; border: hidden; background-color: white;" disabled="disabled"></textarea>
                               </div>
                            </td>
                         </tr>

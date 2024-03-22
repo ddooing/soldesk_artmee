@@ -16,17 +16,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import kr.co.softsoldesk.Beans.ExhibitionBean;
-import kr.co.softsoldesk.Beans.MainBannerBean;
-import kr.co.softsoldesk.Beans.PointDetailBean;
-import kr.co.softsoldesk.Beans.ReserveBean;
 import kr.co.softsoldesk.Beans.SubBannerBean;
 import kr.co.softsoldesk.Beans.UserBean;
 import kr.co.softsoldesk.Service.AdminService;
-import kr.co.softsoldesk.Service.ExhibitionService;
-import kr.co.softsoldesk.Service.PointDetailService;
-import kr.co.softsoldesk.Service.ReserveService;
 import kr.co.softsoldesk.Service.UserService;
 import kr.co.softsoldesk.validator.UserValidator;
 
@@ -37,11 +31,8 @@ import kr.co.softsoldesk.validator.UserValidator;
 public class UserController {
 	
 	@Autowired
-	private UserService UserService;
-	
-	@Autowired
-	private ExhibitionService ExhibitionService;
-	
+	private UserService userService;
+
 	@Autowired
 	private AdminService adminService;
 	
@@ -68,28 +59,18 @@ public class UserController {
 	}
 	
 	@PostMapping("/login_pro")
-    public String login_pro(@ModelAttribute("tempLoginUserBean") UserBean tempLoginUserBean, BindingResult result, Model model) {
-		
-		if(result.hasErrors()) {
-			
-			// 서브 캐러셀
-			List<SubBannerBean> AllSubBannerInfo = adminService.IndexSubBannerBeanList();
-			model.addAttribute("AllSubBannerInfo", AllSubBannerInfo);
-			
-			model.addAttribute("tempLoginUserBean", tempLoginUserBean);
-			
-			return "user/login";
-			
-		}
-		
-        UserService.getLoginUserInfo(tempLoginUserBean);
+    public String login_pro(@ModelAttribute("tempLoginUserBean") UserBean tempLoginUserBean, 
+    		BindingResult result, Model model,RedirectAttributes redirectAttributes ) {
+
+		userService.getLoginUserInfo(tempLoginUserBean);
         
         if(loginUserBean.isUserLogin() == true) {
         	
         	
         	return "redirect:/view/index";
         } else {
-        	return "user/login_fail";
+        	redirectAttributes.addFlashAttribute("loginFail", true);
+        	return "redirect:/user/login";
         }
         
     }
@@ -128,21 +109,19 @@ public class UserController {
 	
 	//-----------------------------------------------------------
 	
-	@GetMapping("/Signup")
-	public String Signup(@ModelAttribute("joinUserBean") UserBean joinUserBean) {
+	@GetMapping("/signup")
+	public String signup(@ModelAttribute("joinUserBean") UserBean joinUserBean) {
 		
 		
-	    return "user/Signup";
+	    return "user/signup";
 	}
 	
 	
-	@PostMapping("/Signup_pro")
-	public String Signup_pro(@Valid @ModelAttribute("joinUserBean")UserBean joinUserBean, BindingResult result,Model model) {
+	@PostMapping("/signup_pro")
+	public String signup_pro(@Valid @ModelAttribute("joinUserBean")UserBean joinUserBean, BindingResult result,Model model) {
+
 		
-		if(result.hasErrors()) {
-			return "user/Signup";
-		}
-		UserService.addUserInfo(joinUserBean);
+		userService.addUserInfo(joinUserBean);
 		
     	
     	return "user/join_success";
@@ -154,7 +133,7 @@ public class UserController {
 	                     @RequestParam("user_id")int user_id, Model model) {
 	      
 	      
-	      UserBean IC = UserService.getLoginUserAllInfo(user_id);
+	      UserBean IC = userService.getLoginUserAllInfo(user_id);
 	      
 	      model.addAttribute("IC", IC);
 
@@ -172,7 +151,7 @@ public class UserController {
 	         return "user/InfoChange";
 	      }
 	      
-	      UserService.ModifyUserInfo(modifyUserBean);
+	      userService.ModifyUserInfo(modifyUserBean);
 	      model.addAttribute("user_id", modifyUserBean.getUser_id());
 	      return "user/InfoChange_success";
 	   }
@@ -182,14 +161,14 @@ public class UserController {
 	public String delete_pro(@Valid @ModelAttribute("deleteUserBean")UserBean deleteUserBean, BindingResult result,
 							@RequestParam("user_id")int user_id, Model model) {
 		
-		UserBean DU = UserService.getLoginUserAllInfo(user_id);
+		UserBean DU = userService.getLoginUserAllInfo(user_id);
 		model.addAttribute("DU", DU);
 		
 		if(deleteUserBean.getPassword().equals(DU.getPassword())) {
 			
 			if(deleteUserBean.getPassword().equals(deleteUserBean.getPassword2())) {
 				
-				UserService.DeleteUserInfo(deleteUserBean);
+				userService.DeleteUserInfo(deleteUserBean);
 				
 				loginUserBean.setUser_id(0);
 				loginUserBean.setId(null);

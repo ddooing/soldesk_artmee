@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,11 +19,13 @@ import kr.co.softsoldesk.Beans.ExhibitionDetailBean;
 import kr.co.softsoldesk.Beans.PageBean;
 import kr.co.softsoldesk.Beans.ReserveBean;
 import kr.co.softsoldesk.Beans.ReviewBean;
+import kr.co.softsoldesk.Beans.StaticsBean;
 import kr.co.softsoldesk.Beans.UserBean;
 import kr.co.softsoldesk.Service.AdminExhibitionService;
 import kr.co.softsoldesk.Service.BookMarkService;
 import kr.co.softsoldesk.Service.ExhibitionService;
 import kr.co.softsoldesk.Service.ReserveService;
+import kr.co.softsoldesk.Service.StaticsService;
 import kr.co.softsoldesk.Service.UserService;
 
 @Controller
@@ -39,6 +40,9 @@ public class ExhibitionController {
 	
 	@Autowired
 	private UserService UserService;
+	
+	@Autowired
+	private StaticsService staticsService;
 	
 	@Autowired
 	private BookMarkService bookMarkService;
@@ -115,8 +119,7 @@ public class ExhibitionController {
 			
 			PageBean pageBean = exhibitionService.AllExhibitionCnt(page);
 			model.addAttribute("pageBean", pageBean);
-			
-			model.addAttribute("keyword", keyword);
+
 		
 		}else {
 			List<ExhibitionBean> getSearchExhibitionInfo = exhibitionService.SearchExhibition(keyword, page);
@@ -124,8 +127,7 @@ public class ExhibitionController {
 			
 			PageBean pageBean2 = exhibitionService.SearchExhibitionCnt(keyword, page);
 			model.addAttribute("pageBean2", pageBean2);
-			 
-			model.addAttribute("keyword", keyword);
+
 		}
 		
 		return "exhibition/exhibition_search";
@@ -150,6 +152,11 @@ public class ExhibitionController {
 		// 전시회 상세정보 가져가기
 		ExhibitionBean exhibitionBean = exhibitionService.getExhibitionDetailInfo(exhibition_id);
 	    model.addAttribute("exhibitionBean", exhibitionBean);
+	    
+	    // 전시회 남여 비율 통계
+	    StaticsBean staticsdetailBean = staticsService.getexhibitiondetailstatics(exhibition_id);
+	    model.addAttribute("staticsdetailBean",staticsdetailBean);
+	    
 	    
 	    // 리뷰 페이징 처리
      	PageBean pageBean = exhibitionService.getExhibitionReviewCnt(exhibition_id, page);
@@ -284,8 +291,14 @@ public class ExhibitionController {
 		
 		// 로그인된 모든 정보 가져옴 (이름, 이메일, 전화번호) readonly용
 		UserBean getLoginUserAllInfo = UserService.getLoginUserAllInfo(loginUserBean.getUser_id());
+		
 		model.addAttribute("getLoginUserAllInfo", getLoginUserAllInfo);
 		
+		//전시 관련자일 경우
+		if(getLoginUserAllInfo.getState()==4)
+		{
+			
+		}
 		return "exhibition/Exhibition_Enroll";
 	}
 	

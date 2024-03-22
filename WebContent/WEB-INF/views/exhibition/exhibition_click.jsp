@@ -47,7 +47,10 @@
 <!-- datepicker -->
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+	
+<!-- chart.js -->	
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 
 <!-- CSS -->
 <link href="../css/styles.css" rel="stylesheet" />
@@ -471,12 +474,14 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 						style="color: black; font-size: 25px; text-decoration: none; border: none; background-color: transparent;">전시회
 						정보</button>
 					<button id="exhibition_detail_button"
-						style="color: lightgray; font-size: 25px; text-decoration: none; border: none; background-color: transparent; margin-left: 150px;">전시회
+						style="color: lightgray; font-size: 25px; text-decoration: none; border: none; background-color: transparent; margin-left: 120px;">전시회
 						상세</button>
 					<button id="exhibition_map_button"
-						style="color: lightgray; font-size: 25px; text-decoration: none; border: none; background-color: transparent; margin-left: 150px;">지도</button>
+						style="color: lightgray; font-size: 25px; text-decoration: none; border: none; background-color: transparent; margin-left: 120px;">지도</button>
+					<button id="exhibition_statics_button" 
+					style="color: lightgray; font-size: 25px; text-decoration: none; border: none; background-color: transparent; margin-left: 120px;">통계</button> 	
 					<button id="exhibition_review_button"
-						style="color: lightgray; font-size: 25px; text-decoration: none; border: none; background-color: transparent; margin-left: 150px;">후기</button>
+						style="color: lightgray; font-size: 25px; text-decoration: none; border: none; background-color: transparent; margin-left: 120px;">후기</button>
 				</div>
 			</section>
 
@@ -499,35 +504,39 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 	</script>
 
 	<script>
-		$(window).scroll(function() {
-			var scroll = $(window).scrollTop();
+	$(window).scroll(function() {
+	    var scroll = $(window).scrollTop();
 
-			var infoPosition = $('#exhibition_info').offset().top;
-			var detailPosition = $('#exhibition_detail').offset().top;
-			var mapPosition = $('#exhibition_map').offset().top;
-			var reviewPosition = $('#exhibition_review').offset().top;
+	    var infoPosition = $('#exhibition_info').offset().top;
+	    var detailPosition = $('#exhibition_detail').offset().top;
+	    var mapPosition = $('#exhibition_map').offset().top;
+	    var staticsPosition = $('#exhibition_statics').offset().top;
+	    var reviewPosition = $('#exhibition_review').offset().top;
 
-			// 버튼 색상 초기화 함수
-			function resetButtonColors() {
-				$('#exhibition_info_button').css('color', 'lightgray');
-				$('#exhibition_detail_button').css('color', 'lightgray');
-				$('#exhibition_map_button').css('color', 'lightgray');
-				$('#exhibition_review_button').css('color', 'lightgray');
-			}
+	    // 버튼 색상 초기화 함수
+	    function resetButtonColors() {
+	        $('#exhibition_info_button').css('color', 'lightgray');
+	        $('#exhibition_detail_button').css('color', 'lightgray');
+	        $('#exhibition_map_button').css('color', 'lightgray');
+	        $('#exhibition_statics_button').css('color', 'lightgray');
+	        $('#exhibition_review_button').css('color', 'lightgray');
+	    }
 
-			resetButtonColors(); // 기본적으로 모든 버튼 색상을 초기화
+	    resetButtonColors(); // 기본적으로 모든 버튼 색상을 초기화
 
-			// 스크롤 위치에 따라 각 버튼의 색상 변경
-			if (scroll >= infoPosition && scroll < detailPosition) {
-				$('#exhibition_info_button').css('color', 'black');
-			} else if (scroll >= detailPosition && scroll < mapPosition) {
-				$('#exhibition_detail_button').css('color', 'black');
-			} else if (scroll >= mapPosition && scroll < reviewPosition) {
-				$('#exhibition_map_button').css('color', 'black');
-			} else if (scroll >= reviewPosition) {
-				$('#exhibition_review_button').css('color', 'black');
-			}
-		});
+	    // 스크롤 위치에 따라 각 버튼의 색상 변경
+	    if (scroll >= infoPosition && scroll < detailPosition) {
+	        $('#exhibition_info_button').css('color', 'black');
+	    } else if (scroll >= detailPosition && scroll < mapPosition) {
+	        $('#exhibition_detail_button').css('color', 'black');
+	    } else if (scroll >= mapPosition && scroll < staticsPosition) {
+	        $('#exhibition_map_button').css('color', 'black');
+	    } else if (scroll >= staticsPosition && scroll < reviewPosition) {
+	        $('#exhibition_statics_button').css('color', 'black');
+	    } else if (scroll >= reviewPosition) {
+	        $('#exhibition_review_button').css('color', 'black');
+	    }
+	});
 	</script>
 
 
@@ -559,6 +568,12 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 								behavior : 'smooth'
 							});
 				});
+		
+		document.getElementById('exhibition_statics_button').addEventListener('click', function() {
+		    document.getElementById('exhibition_statics').scrollIntoView({
+		        behavior: 'smooth'
+		    });
+		});
 
 		document.getElementById('exhibition_map_button').addEventListener(
 				'click', function() {
@@ -595,6 +610,164 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 				</div>
 			</section>
 		
+		<c:choose>
+			<c:when test="${staticsdetailBean.male_Percentage!=null}">
+				<!-- 통계부분  -->
+				<section id="exhibition_statics" style="margin-top: 20px;">
+					<hr style="margin: auto; margin-top: 100px; width: 1000px;" />
+					<div class="container mb-1">
+						<h3 style="margin-left: 180px; margin-top: 50px;">통계</h3>
+						<div id="statics" style="display: flex; justify-content: space-around; align-items: center; width: 800px; height: 400px; margin: auto; margin-top: 30px;">
+							<div style="margin-right:50px;">
+							    <canvas id="genderRatioPieChart" width="300" height="300"></canvas>
+							</div>
+							
+							<div>
+							    <canvas id="ageGroupBarChart" width="300" height="300"></canvas>
+							</div>
+						</div>		
+					</div>
+				</section>
+			</c:when>
+			<c:when test="${empty staticsdetailBean}">
+				<section id="exhibition_statics" style="margin-top: 20px;">
+					<hr style="margin: auto; margin-top: 100px; width: 1000px;" />
+					<div class="container mb-1">
+						<h3 style="margin-left: 180px; margin-top: 50px;">통계</h3>
+						<div id="statics" style="display: flex; justify-content: space-around; align-items: center; width: 800px; height: 400px; margin: auto; margin-top: 30px;">
+							<div class="test-center"
+								style="margin: auto; display: flex; flex-direction: column; align-items: center;">
+								<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-x-circle" style="margin-top: 80px;" viewBox="0 0 16 16">
+									<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+									<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+								</svg>
+								<h3 style="margin-top: 50px;">예매 정보가 없습니다</h3>
+							</div>
+						</div>		
+					</div>
+				</section>
+			</c:when>
+		</c:choose>
+		
+			
+	<script>
+		const genderData = {
+		    labels: [
+		        '남성',
+		        '여성'
+		    ],
+		    datasets: [{
+		        label: '남녀비율',
+		        data: [${staticsdetailBean.male_Percentage },${staticsdetailBean.female_Percentage }], // Replace with your data
+		        backgroundColor: [
+		            'rgb(54, 162, 235)',
+		            'rgb(255, 99, 132)'
+		        ],
+		        hoverOffset: 4
+		    }]
+		};
+		
+		// Data for the bar chart
+		const ageGroupData = {
+		    labels: ['10대', '20대', '30대', '40대', '50대', '60대+'],
+		    datasets: [{
+		        label: '남성',
+		        data: [${staticsdetailBean.male_10 },${staticsdetailBean.male_20 },${staticsdetailBean.male_30 },${staticsdetailBean.male_40 },${staticsdetailBean.male_50 },${staticsdetailBean.male_60 }], // Replace with your data
+		        backgroundColor: 'rgb(54, 162, 235)'
+		    },
+		    {
+		        label: '여성',
+		        data: [${staticsdetailBean.female_10 },${staticsdetailBean.female_20 },${staticsdetailBean.female_30 },${staticsdetailBean.female_40 },${staticsdetailBean.female_50 },${staticsdetailBean.female_60 }], // Replace with your data
+		        backgroundColor: 'rgb(255, 99, 132)'
+		    }]
+		};
+		
+		const configPieChart = {
+			    type: 'pie',
+			    data: genderData,
+			    options: {
+			        plugins: {
+			            datalabels: {
+			                color: '#fff',
+			                formatter: (value, ctx) => {
+			                    let sum = 0;
+			                    let dataArr = ctx.chart.data.datasets[0].data;
+			                    dataArr.map(data => {
+			                        sum += data;
+			                    });
+			                    let percentage = (value*100 / sum).toFixed(0)+"%";
+			                    return percentage;
+			                }
+			            },
+			            tooltip: {
+			                callbacks: {
+			                    label: function(context) {
+			                        let label = context.label || '';
+			                        if (label) {
+			                            label += ': ';
+			                        }
+			                        if (context.parsed !== null) {
+			                            label += context.parsed + '%'; // % 기호를 추가합니다.
+			                        }
+			                        return label;
+			                    }
+			                }
+			            },
+			            title: {
+			                display: true,
+			                text: '남녀 비율'
+			            }
+			        }
+			    },
+			    plugins: [ChartDataLabels] // Register the plugin
+			};
+
+			
+
+		
+		// Config for the bar chart
+		const configBarChart = {
+		    type: 'bar',
+		    data: ageGroupData,
+		    options: {
+		        scales: {
+		            y: {
+		                beginAtZero: true,
+		                max: 100 // Y축의 최대값을 100으로 설정
+		            }
+		        },
+		        plugins: {
+		            tooltip: {
+		                callbacks: {
+		                    label: function(context) {
+		                        let label = context.dataset.label || '';
+		                        if (label) {
+		                            label += ': ';
+		                        }
+		                        if (context.parsed.y !== null) {
+		                            label += context.parsed.y + '%'; // % 기호를 추가합니다.
+		                        }
+		                        return label;
+		                    }
+		                }
+		            }
+		        }
+		    },
+		};
+		
+		// Render the pie chart
+		const genderRatioPieChart = new Chart(
+		    document.getElementById('genderRatioPieChart'),
+		    configPieChart
+		);
+		
+		// Render the bar chart
+		const ageGroupBarChart = new Chart(
+		    document.getElementById('ageGroupBarChart'),
+		    configBarChart
+		);
+	</script>
+			
 
 	<!--후기-->
 	<section id="exhibition_review"

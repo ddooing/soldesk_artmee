@@ -102,6 +102,9 @@ public class MyPageDao {
    public int getImportantNoticeSearchListCnt(String title) {
       return myPageMapper.getImportantNoticeSearchListCnt(title);
    }
+   public List<NoticeBean> getNoticeList(String title) {
+	      return myPageMapper.getNoticeList(title);
+	   }
    
    public List<NoticeBean>getImportantNoticSearchAllList(String title, RowBounds rowBounds){
       return myPageMapper.getImportantNoticeSearchAllList(title, rowBounds);

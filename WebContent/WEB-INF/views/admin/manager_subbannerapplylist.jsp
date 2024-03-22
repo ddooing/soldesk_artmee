@@ -42,7 +42,8 @@
 <!-- jQuery UI 라이브러리 추가 -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+<!-- 부트스트랩 아이콘 CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body class="sb-nav-fixed">
@@ -63,27 +64,47 @@
 						</div>
 
 					<form action="${root }/admin/manager_subbannerapplylist" method="get">
-								<select name="bannercombo" id="bannercombo" style="width: 150px; height: 40px; margin-right: 30px;">
-									<option value="title" selected>제목</option>
-								</select>
-								<c:choose>
-									<c:when test="${bannersearch != null }">
-										<input type="text" name="bannersearch" id="bannersearch" style="width: 250px; height: 40px; margin-right: 30px;" value="${bannersearch }" />
-									</c:when>
-									<c:otherwise>
-										<input type="text" name="bannersearch" id="bannersearch" style="width: 250px; height: 40px; margin-right: 30px;" placeholder="검색어를 입력해주세요" />
-									</c:otherwise>
-								</c:choose>
-								
-								<button class="btn btn-dark" style="width: 80px; height: 40px;">검색</button>
-					</form>
+						<select name="type" id="selectCombo" style="width: 150px; height: 40px; margin-right: 30px;">
+							<option value="title" selected>제목</option>
+						</select>
+						
+						<input type="text" name="keyword" id="searchKeyword" style="width: 250px; height: 40px; margin-right: 30px;" value="${param.keyword}" placeholder="검색어를 입력해주세요" />
+							
+						
+						<button class="btn btn-dark" style="width: 80px; height: 40px;">검색</button>
+						<script src="../js/searchAdmin.js"></script>
+						</form>
+					
+					
+						<button class="button-39" id="resetButton" role="button" style="width: 80px; height: 44px;  margin-left: 30px;">초기화</button>
+						
+						<script>
+						    document.addEventListener('DOMContentLoaded', function() {
+						        var resetButton = document.getElementById('resetButton');
+
+						        resetButton.addEventListener('click', function() {
+						            window.location.href = '${root}/admin/manager_subbannerapplylist';
+						        });
+						    });
+						</script>
 					
 				</div>
 				
 				<div style="display: flex; margin-top:30px;">
 					<h3 onclick="window.location='${root}/admin/manager_mainbannerapplylist'" style="cursor: pointer; color:#e2e2e2;">메인 배너</h3>
 					<h3 onclick="window.location='${root}/admin/manager_subbannerapplylist'" style=" margin-left:30px; cursor: pointer;">서브 배너</h3>
+					<button class="button-81" role="button" id="calendatButton" style="margin-left: auto; margin-right: 30px;">캘린더 확인</button>
 				</div>
+					
+					
+				<script>
+					var calendatButton =document.getElementById('calendatButton');
+					calendatButton.onclick= function(){
+						let popOtion = "width=850px, height=850px, top=1000px,left=100px";
+						let openUrl='${root}/admin/bannerCalendar?type=sub';
+						window.open(openUrl,'pop',popOtion);
+					}
+				</script>
 					<div style="background-color: white; margin-top:20px;" >
 						
 						<table class="table table-striped" style="text-align: center; ">

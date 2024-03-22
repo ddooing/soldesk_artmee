@@ -40,6 +40,7 @@ import kr.co.softsoldesk.mapper.MyPageMapper;
 import kr.co.softsoldesk.mapper.PointDetailMapper;
 import kr.co.softsoldesk.mapper.ReserveMapper;
 import kr.co.softsoldesk.mapper.ReviewMapper;
+import kr.co.softsoldesk.mapper.StaticsMapper;
 import kr.co.softsoldesk.mapper.UserMapper;
 
 @Configuration
@@ -238,6 +239,17 @@ public class ServletAppContext implements WebMvcConfigurer {
 		return factoryBean;
 
 	}
+	
+	@Bean // 통계 매퍼
+	   public MapperFactoryBean<StaticsMapper> getStaticsMapper(SqlSessionFactory factory) throws Exception {
+
+	      MapperFactoryBean<StaticsMapper> factoryBean = new MapperFactoryBean<StaticsMapper>(StaticsMapper.class);
+
+	      factoryBean.setSqlSessionFactory(factory);
+	      return factoryBean;
+
+
+	   }
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
 

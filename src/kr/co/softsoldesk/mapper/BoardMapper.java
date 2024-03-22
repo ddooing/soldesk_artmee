@@ -1,17 +1,15 @@
 package kr.co.softsoldesk.mapper;
 
 import java.util.List;
-import java.util.Map;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.annotations.Delete;
+
 import kr.co.softsoldesk.Beans.BoardBean;
 import kr.co.softsoldesk.Beans.CommentBean;
 
@@ -146,7 +144,13 @@ public interface BoardMapper {
 	        + "ORDER BY b.board_id DESC")
 	List<BoardBean> getSearchBoards(@Param("searchType") String searchType, @Param("searchText") String searchText, RowBounds rowBounds);
 
-	
+	@Select("SELECT b.board_id, u.nickname, b.title, TO_CHAR(b.update_date, 'YYYY-MM-DD')as update_date, b.views, rownum "
+	        + "FROM board b "
+	        + "INNER JOIN user_table u ON b.user_id = u.user_id "
+	        + "WHERE b.state != 0 AND  b.title LIKE '%' || #{title} || '%' "
+	        + "ORDER BY b.board_id DESC, "
+	        + "board_id DESC FETCH FIRST 4 ROWS ONLY")
+	List<BoardBean> allSearchBoards(String title);
 	// 검색 수
 	@Select("SELECT COUNT(*) AS count "
 	        + "FROM board b "

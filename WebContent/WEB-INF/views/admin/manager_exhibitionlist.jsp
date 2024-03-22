@@ -26,7 +26,7 @@
 
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
 	crossorigin="anonymous"></script>
-<!-- JQuery -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -59,49 +59,35 @@
 						<span class="badge text-bg-success rounded-pill" style="font-size: 15px; margin-right: 10px; padding:10px;">전시예정 ${ExhibitionCountBean.upcoming_exhibitions_count }건</span> 
 						<span class="badge bg-success-subtle text-success-emphasis rounded-pill" style="background-color: black; font-size: 15px; padding:10px;">전시회 수 ${ExhibitionCountBean.total_exhibitions_count}건</span>
 					</div>
-					<form action="${root }/admin/manager_exhibitionlist" method="get">
-						<c:choose>
+					<form action="${root }/admin/manager_exhibitionlist" method="get" onsubmit="return validateForm()">
+						
+						<select name="type" id="selectCombo" style="width: 150px; height: 40px; margin-right: 30px;">
+							<option value="" disabled >검색조건선택</option>
+							<option value="author">작가</option>
+							<option value="title">제목</option>
+						</select>
+					
+						<input type="text" name="keyword" id="searchKeyword" value="${param.keyword}"
+						style="width: 500px; height: 40px; margin-right: 30px;" placeholder="검색어를 입력해주세요" />	
+					
 
-							<c:when test="${exhibitioncombo == null }">
-								<select name="exhibitioncombo" id="exhibitioncombo" style="width: 150px; height: 40px; margin-right: 30px;">
-									<option value="" disabled selected>검색조건선택</option>
-									<option value="author">작가</option>
-									<option value="title">제목</option>
-								</select>
-							</c:when>
-							
-							<c:when test="${exhibitioncombo == 'author' }">
-								<select name="exhibitioncombo" id="exhibitioncombo" style="width: 150px; height: 40px; margin-right: 30px;">
-									<option value="" disabled>검색조건선택</option>
-									<option value="author" selected>작가</option>
-									<option value="title">제목</option>
-								</select>
-							</c:when>
-							
-							<c:when test="${exhibitioncombo == 'title' }">
-								<select name="exhibitioncombo" id="exhibitioncombo" style="width: 150px; height: 40px; margin-right: 30px;">
-									<option value="" disabled>검색조건선택</option>
-									<option value="author">작가</option>
-									<option value="title" selected>제목</option>
-								</select>
-							</c:when>
-							
-						</c:choose>
-						 
-						<c:choose>
-							<c:when test="${exhibitionsearch != null }">
-								<input type="text" name="exhibitionsearch" id="exhibitionsearch"
-								style="width: 500px; height: 40px; margin-right: 30px;" value="${exhibitionsearch}"/>	
-							</c:when>
-							<c:otherwise>
-								<input type="text" name="exhibitionsearch" id="exhibitionsearch"
-								style="width: 500px; height: 40px; margin-right: 30px;" placeholder="검색어를 입력해주세요" />	
-							</c:otherwise>
-						</c:choose>
-						
-						
 						<button class="btn btn-dark" style="width: 80px; height: 40px;">검색</button>
+						
+						<script src="../js/searchAdmin.js"></script>
 					</form>
+					
+					
+						<button class="button-39" id="resetButton" role="button" style="width: 80px; height: 44px;  margin-left: 30px;">초기화</button>
+						
+						<script>
+						    document.addEventListener('DOMContentLoaded', function() {
+						        var resetButton = document.getElementById('resetButton');
+
+						        resetButton.addEventListener('click', function() {
+						            window.location.href = '${root}/admin/manager_exhibitionlist';
+						        });
+						    });
+						</script>
 				</div>
 
 

@@ -105,7 +105,15 @@ public class UserService {
 	}
 
 	public void addUserInfo(UserBean joinUserBean) {
-
+		String getExhibition = joinUserBean.getExhibition();
+		
+		//전시회 관련자 체크
+		 if (getExhibition == null || getExhibition.isEmpty()) {// 안적었을 경우
+			 joinUserBean.setState(1); //일반 사용자
+		  }
+		 else {
+			 joinUserBean.setState(4); //관련자
+		 }
 		userDao.addUserInfo(joinUserBean);
 	}
 

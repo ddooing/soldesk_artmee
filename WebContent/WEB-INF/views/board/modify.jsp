@@ -57,6 +57,14 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap"
 	rel="stylesheet">
+<script src="https://cdn.ckeditor.com/ckeditor5/27.0.0/classic/ckeditor.js"></script>	
+<style>
+.ck-editor__editable_inline {
+    min-height: 400px; /* 또는 원하는 크기로 설정하세요 */
+    max-height: 600px; /* 또는 원하는 크기로 설정하세요 */
+    /* width도 설정 가능합니다. */
+  }
+</style>	
 </head>
 <body>
 <body id="page-top">
@@ -89,7 +97,7 @@
 					<div class="form-group" style="margin-top: 20px;">
 						<form:label path="contents" class="font-weight-bold"
 							style="font-size:20px;">내용</form:label>
-						<form:textarea path="contents" class="form-control form-control-sm"
+						<form:textarea path="contents" id="editor" class="form-control form-control-sm"
 							style="height:300px; width: 100%; padding:10px;" />
 
 					</div>
@@ -126,31 +134,16 @@
 	    });
 	}
 	</script>
-
-	<!-- Smart Editor -->
-	<!-- 
-<script type="text/javascript">
-   var oEditors = [];
-   nhn.husky.EZCreator.createInIFrame({
-       oAppRef: oEditors,
-       elPlaceHolder: "smarteditor",
-       sSkinURI: "../se2/SmartEditor2Skin.html",
-       fCreator: "createSEditor2"
-   });
-    
-    function submitContents(elClickedObj) {
-        oEditors.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
-        try {
-            elClickedObj.form.submit();
-        } catch(e) {}
-    }
-    
-    function pasteHTML(filepath){
-        var sHTML = '<img src="${pageContext.request.contextPath}/uploadFolder/' + filepath + '">';
-        oEditors.getById["smarteditor"].exec("PASTE_HTML", [sHTML]);
-    }
+<script>
+  ClassicEditor
+    .create(document.querySelector('#editor'))
+    .then(editor => {
+      // The editor instance
+    })
+    .catch(error => {
+      console.error(error);
+    });
 </script>
- -->
 	<!-- 푸터-->
 	<c:import url="/WEB-INF/views/include/footer.jsp" />
 </body>

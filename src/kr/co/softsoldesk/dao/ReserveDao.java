@@ -45,12 +45,7 @@ public class ReserveDao {
 		reserveMapper.paymentZeroReserveInfo(reserveInfo);
 	}
 	
-	/*
-	public List<ReserveBean> getReserveList()
-	{
-		return reserveMapper.getReserveList();
-	}
-	*/
+
 	
 	//첫 결제 내역 날짜 받기
 	public String getFirstPayDate()
@@ -64,6 +59,8 @@ public class ReserveDao {
 	}
 	public List<ReserveBean> getReserveList(String startDate,String endDate,String payment_method,String exhibition_title,String user_name, RowBounds rowBounds)
 	{
+		System.out.println("Dao - startDate value:"+ startDate);
+		System.out.println("Dao -  endDate value: "+ endDate);
 		return reserveMapper.getReserveList(startDate,endDate,payment_method,exhibition_title,user_name,rowBounds);
 	}
 	//0216 

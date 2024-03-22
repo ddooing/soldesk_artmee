@@ -17,7 +17,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
 	rel="stylesheet" />
-<link href="css/styles_manager.css" rel="stylesheet" />
+<link href="../css/styles_manager.css" rel="stylesheet" />
 <!--부트스트랩 아이콘 사용-->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
@@ -26,8 +26,10 @@
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
 	crossorigin="anonymous"></script>
 <!-- JQuery -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>	
+
 <script>
 	$(document).ready(
 			function() {
@@ -63,65 +65,77 @@
 				<div style="margin-top: 30px;">
 					<h3>사용자 관리</h3>
 				</div>
-				<div
-					style="display: flex; justify-content: center; height: 80px; align-items: center; border: 0.2px solid black; background-color: white; margin-top: 20px;">
-					<form action="${root }/admin/manager_accountmanager" method="get"
-						name="searchUserBean">
+				<div style="display: flex; justify-content: center; height: 80px; align-items: center; border: 0.2px solid black; background-color: white; margin-top: 20px;">
+					<form action="${root }/admin/manager_accountmanager" method="get" name="searchUserBean" onsubmit="return validateForm()">
 
-						<c:choose>
-							<c:when test="${type == 'nickname' }">
-								<select name="type" id="usercombo"
-									style="width: 150px; height: 40px; margin-right: 30px;">
-									<option value="" disabled>검색조건선택</option>
-									<option value="nickname" selected>닉네임</option>
-									<option value="id">사용자ID</option>
-									<option value="email">이메일</option>
-								</select>
-							</c:when>
+						<select name="type" id="usercombo" style="width: 150px; height: 40px; margin-right: 30px;">
+							<option value="" disabled >검색조건선택</option>
+							<option value="nickname">닉네임</option>
+							<option value="id">사용자ID</option>
+							<option value="email">이메일</option>
+						</select>
+						<input type="text" name="keyword" style="width: 500px; height: 40px; margin-right: 30px;" placeholder="검색어를 입력해주세요" id="searchKeyword" value="${param.keyword}"/>
 
-							<c:when test="${type == 'id' }">
-								<select name="type" id="usercombo"
-									style="width: 150px; height: 40px; margin-right: 30px;">
-									<option value="" disabled>검색조건선택</option>
-									<option value="nickname">닉네임</option>
-									<option value="id" selected>사용자ID</option>
-									<option value="email">이메일</option>
-								</select>
-							</c:when>
-
-							<c:when test="${type == 'email' }">
-								<select name="type" id="usercombo"
-									style="width: 150px; height: 40px; margin-right: 30px;">
-									<option value="" disabled>검색조건선택</option>
-									<option value="nickname">닉네임</option>
-									<option value="id">사용자ID</option>
-									<option value="email" selected>이메일</option>
-								</select>
-							</c:when>
-							<c:otherwise>
-								<select name="type" id="usercombo"
-									style="width: 150px; height: 40px; margin-right: 30px;">
-									<option value="" disabled selected>검색조건선택</option>
-									<option value="nickname">닉네임</option>
-									<option value="id">사용자ID</option>
-									<option value="email">이메일</option>
-								</select>
-							</c:otherwise>
-						</c:choose>
-						
-						<c:choose>
-							<c:when test="${!empty keyword}">
-								<input type="text" name="keyword" style="width: 500px; height: 40px; margin-right: 30px;" value="${keyword}" />	
-							</c:when>
-							
-							<c:otherwise>
-								<input type="text" name="keyword" style="width: 500px; height: 40px; margin-right: 30px;" placeholder="검색어를 입력해주세요" />
-							</c:otherwise>
-						</c:choose>
-						
-						<button type="submit" class="btn btn-dark"
-							style="width: 80px; height: 40px;">검색</button>
+						<button type="submit" class="btn btn-dark" style="width: 80px; height: 40px;" >검색</button>
 					</form>
+					
+					<script>
+		                var selectElement = document.getElementById('usercombo');
+					    var keywordInput = document.getElementById('searchKeyword');
+					
+						var urlParams =new URLSearchParams(window.location.search);
+					    
+					    var typeParam = urlParams.get('type'); 
+
+					    if (typeParam){
+					    	selectElement.value = typeParam; 
+					    }else {
+					    	selectElement.getElementsByTagName('option')[0].selected = 'selected';
+					    }
+					    
+					    
+						function validateForm() {
+		
+						    var selectedType = selectElement.value;
+						    var keyword = keywordInput.value.trim(); 
+						    
+						
+						    if (selectedType === "") {
+						    	Swal.fire({
+								    text: "검색조건을 선택해주세요",
+								    icon: "warning",
+								    showCancelButton: true, 
+								    cancelButtonColor: "gray", 
+								    cancelButtonText: '닫기',
+								    showConfirmButton: false, 
+								});
+						        return false; 
+						    }
+						    if (keyword === "") {
+						    	Swal.fire({
+								    text: "검색어를 입력해주세요",
+								    icon: "warning",
+								    showCancelButton: true, 
+								    cancelButtonColor: "gray", 
+								    cancelButtonText: '닫기', 
+								    showConfirmButton: false,
+								});
+						        return false; 
+						    }
+						    return true; 
+						}
+						</script>
+						<button class="button-39" id="resetButton" role="button" style="width: 80px; height: 44px;  margin-left: 30px;">초기화</button>
+						
+						<script>
+						    document.addEventListener('DOMContentLoaded', function() {
+						        var resetButton = document.getElementById('resetButton');
+
+						        resetButton.addEventListener('click', function() {
+						            window.location.href = '${root}/admin/manager_accountmanager';
+						        });
+						    });
+						</script>
 				</div>
 
 				<div style="background-color: white; margin-top: 30px;">

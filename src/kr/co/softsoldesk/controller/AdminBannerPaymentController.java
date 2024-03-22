@@ -44,10 +44,7 @@ public class AdminBannerPaymentController {
 		model.addAttribute("firstPayDate", firstPayDate);
 		
 		
-		if(endDate !=null)
-		{
-			endDate = endDate +" 23:59:59";
-		}
+		
 		if(banner_type == null)
 		{
 			//System.out.println("타입 null");

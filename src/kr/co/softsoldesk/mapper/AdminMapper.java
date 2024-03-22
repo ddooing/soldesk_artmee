@@ -11,10 +11,7 @@ import org.apache.ibatis.session.RowBounds;
 
 import kr.co.softsoldesk.Beans.BannerApplyFormBean;
 import kr.co.softsoldesk.Beans.ExhibitionBean;
-import kr.co.softsoldesk.Beans.ExhibitionDetailBean;
-import kr.co.softsoldesk.Beans.FAQBean;
 import kr.co.softsoldesk.Beans.MainBannerBean;
-import kr.co.softsoldesk.Beans.QnABean;
 import kr.co.softsoldesk.Beans.SubBannerBean;
 
 public interface AdminMapper {

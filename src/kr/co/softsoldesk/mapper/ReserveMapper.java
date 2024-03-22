@@ -73,7 +73,7 @@ public interface ReserveMapper {
 	        "INNER JOIN exhibition e ON r.exhibition_id = e.exhibition_id " +
 	        "WHERE r.state IS NOT NULL " +
 	        "<if test='startDate != null and startDate != \"\" and endDate != null and endDate != \"\"'> "+
-	        "AND requested_at BETWEEN #{startDate} AND #{endDate} </if>" +
+	        "AND requested_at BETWEEN TO_TIMESTAMP(#{startDate},'YYYY-MM-DD') AND TO_TIMESTAMP(#{endDate} || ' 23:59:59','YYYY-MM-DD HH24:MI:SS') </if>" +
 	        "<if test='payment_method != null and payment_method != \"\"'> AND r.payment_method = #{payment_method} </if>" +
 	        "<if test='exhibition_title != null and exhibition_title != \"\"'> AND e.title LIKE '%' || #{exhibition_title} || '%' </if>" +
 	        "<if test='user_name != null and user_name != \"\"'> AND u.name LIKE '%' || #{user_name} || '%' </if>" +
@@ -87,7 +87,7 @@ public interface ReserveMapper {
 	
 	
 	@Select("<script>" +
-	        "SELECT r.reserve_id, e.exhibition_id, TO_CHAR(r.reserve_date, 'yyyy-mm-dd') AS reserve_date, " +
+	        "SELECT r.reserve_id, e.exhibition_id, " +
 	        "r.total_price, r.point_deduction, r.payment, r.ticket_count, " +
 	        "TO_CHAR(requested_at, 'YYYY-MM-DD HH24:MI:SS') as requested_at, " +
 	        "TO_CHAR(approved_at, 'YYYY-MM-DD HH24:MI:SS') as approved_at, " +
@@ -97,7 +97,7 @@ public interface ReserveMapper {
 	        "INNER JOIN exhibition e ON r.exhibition_id = e.exhibition_id " +
 	        "WHERE r.state IS NOT NULL " +
 	        "<if test='startDate != null and startDate != \"\" and endDate != null and endDate != \"\"'> "+
-	        "AND requested_at BETWEEN #{startDate} AND #{endDate} </if>" +
+	        "AND requested_at BETWEEN TO_TIMESTAMP(#{startDate},'YYYY-MM-DD') AND TO_TIMESTAMP(#{endDate} || ' 23:59:59','YYYY-MM-DD HH24:MI:SS') </if>" +
 	        "<if test='payment_method != null and payment_method != \"\" and payment_method != \"전체\"'> AND r.payment_method = #{payment_method} </if>" +
 	        "<if test='exhibition_title != null and exhibition_title != \"\"'> AND  UPPER(e.title) LIKE '%' || UPPER(#{exhibition_title}) || '%' </if>" +
 	        "<if test='user_name != null and user_name != \"\"'> AND u.name LIKE '%' || #{user_name} || '%' </if>" +

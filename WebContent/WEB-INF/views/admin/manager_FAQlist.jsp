@@ -32,6 +32,7 @@
 <!-- JQuery -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script>
 	$(document).ready(function() {
 		$("#allcheck").click(function() {
@@ -59,26 +60,29 @@
 				<div
 					style="position: relative; display: flex; justify-content: center; height: 80px; align-items: center; border: 0.2px solid black; background-color: white; margin-top: 20px;">
 
-					<form action="${root }/admin/manager_FAQlist" method="get" name="faqSerch">
-					<c:choose>
-						<c:when test="${type == 'title' }">
-							<select name="type" id="usercombo" style="width: 150px; height: 40px; margin-right: 30px;">
+					<form action="${root }/admin/manager_FAQlist" method="get" name="faqSerch" onsubmit="return validateForm()">
+					
+						<select name="type" id="selectCombo" style="width: 150px; height: 40px; margin-right: 30px;">
 							<option value="" disabled>검색조건선택</option>
 							<option value="title" selected>제목</option>
 						</select>
-						<input type="text" name="keyword" value="${keyword }" id="usersearch" style="width: 500px; height: 40px; margin-right: 30px;" placeholder="검색어를 입력해주세요" />
-						</c:when>
 						
-						<c:otherwise>
-						<select name="type" id="usercombo"
-							style="width: 150px; height: 40px; margin-right: 30px;">
-							<option value="" disabled selected>검색조건선택</option>
-							<option value="title">제목</option>
-						</select>
-							<input type="text" name="keyword" value="${keyword }" id="usersearch" style="width: 500px; height: 40px; margin-right: 30px;" placeholder="검색어를 입력해주세요" />
-						</c:otherwise>
-						</c:choose>
+						<input type="text" name="keyword" id="searchKeyword" value="${param.keyword}" style="width: 500px; height: 40px; margin-right: 30px;" placeholder="검색어를 입력해주세요" />
+						
 						<button class="btn btn-dark" style="width: 80px; height: 40px;">검색</button>
+						
+						<script src="../js/searchAdmin.js"></script>
+						<button class="button-39" id="resetButton" role="button" style="width: 80px; height: 44px;  margin-left: 30px;">초기화</button>
+						
+						<script>
+						    document.addEventListener('DOMContentLoaded', function() {
+						        var resetButton = document.getElementById('resetButton');
+
+						        resetButton.addEventListener('click', function() {
+						            window.location.href = '${root}/admin/manager_FAQlist';
+						        });
+						    });
+						</script>
 					</form>
 				</div>
 

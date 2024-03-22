@@ -182,7 +182,24 @@
 					</section>
 	<!-- 푸터-->
 	<c:import url="/WEB-INF/views/include/footer.jsp"/>
-
+	
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+	        <% if (request.getAttribute("loginFail") != null) { %>
+	        Swal.fire({
+	            title: '에러!',
+	            text: '로그인 실패하였습니다!',
+	            icon: 'error',
+	            confirmButtonText: '확인'
+	        }).then((result) => {
+	            if (result.isConfirmed) {
+	                location.href = '${root}/user/login';
+	            }
+	        });
+	        <% } %>
+	    });
+		
+	</script>
 
 </body>
 

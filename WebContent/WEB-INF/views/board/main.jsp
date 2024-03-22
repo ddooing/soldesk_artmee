@@ -67,17 +67,66 @@
          
             <ul class="tap_wrap inner">
                 <fieldset class="search_wrap" id="search_wrap1" style="width: 930px; margin-left: 168px">
-                    <form action="${root}/board/main" method="get" name="searchForm">
+                    <form action="${root}/board/main" method="get" name="searchForm" onsubmit="return validateForm()">
                         <select class="ty3" title="검색조건 제목 선택" id="selectCondition1" name="searchType">
-                            <option value="" disabled selected >검색조건선택</option>
-                            <option value="total" <c:if test="${param.searchType == 'total'}">selected</c:if>>전체</option> <!-- value 값을 컨트롤러와 일치시킵니다. -->
-                            <option value="title" <c:if test="${param.searchType == 'title'}">selected</c:if>>제목</option> <!-- value 값을 컨트롤러와 일치시킵니다. -->
-                            <option value="contents" <c:if test="${param.searchType == 'contents'}">selected</c:if>>내용</option> <!-- value 값을 컨트롤러와 일치시킵니다. -->
+                            <option value="" disabled>검색조건선택</option>
+                            <option value="total" >전체</option> <!-- value 값을 컨트롤러와 일치시킵니다. -->
+                            <option value="title">제목</option> <!-- value 값을 컨트롤러와 일치시킵니다. -->
+                            <option value="contents">내용</option> <!-- value 값을 컨트롤러와 일치시킵니다. -->
                         </select> 
                         <input type="text" name="searchText" placeholder="검색어를 입력해주세요." title="검색어를 입력해주세요" value="${param.searchText}"
                             id="searchKeyword1" style="width: 600px;">
                         <button type="submit" class="btn_col2" id="btnSearch1">검색</button>
                     </form>
+                    <script>
+		               var selectElement = document.getElementById('selectCondition1');
+					    var keywordInput = document.getElementById('searchKeyword1');
+					
+						var urlParams =new URLSearchParams(window.location.search);
+					    
+					    var typeParam = urlParams.get('searchType'); 
+					    var searchParam = urlParams.get('searchText'); 
+		
+					    if (typeParam){
+					    	selectElement.value = typeParam; 
+					    }else {
+					    	selectElement.getElementsByTagName('option')[0].selected = 'selected';
+					    }
+					    if (searchParam){
+					    	keywordInput.value = serchParam; 
+					    }
+					    
+						function validateForm() {
+		
+						    var selectedType = selectElement.value;
+						    var keyword = keywordInput.value.trim(); 
+						    
+						
+						    if (selectedType === "") {
+						    	Swal.fire({
+								    text: "검색조건을 선택해주세요",
+								    icon: "warning",
+								    showCancelButton: true, 
+								    cancelButtonColor: "gray", 
+								    cancelButtonText: '닫기',
+								    showConfirmButton: false, 
+								});
+						        return false; 
+						    }
+						    if (keyword === "") {
+						    	Swal.fire({
+								    text: "검색어를 입력해주세요",
+								    icon: "warning",
+								    showCancelButton: true, 
+								    cancelButtonColor: "gray", 
+								    cancelButtonText: '닫기', 
+								    showConfirmButton: false,
+								});
+						        return false; 
+						    }
+						    return true; 
+						}
+						</script>
                 </fieldset>
             </ul>
       
@@ -100,11 +149,11 @@
                   <tbody>
                      <c:forEach items="${boardList}" var="board">
                         <tr>
-                           <td>${board.rownum}</td>
+                           <td>${board.board_id}</td>
                            <td class="text_l" style="text-align:left">
                               <a href="${root}/board/read?board_id=${board.board_id}" style="text-align:left; color: black; text-decoration: none">${board.title}</a>
                            </td>
-                           <td style="font-size: 15px;">${board.nickname}</td>
+                           <td >${board.nickname}</td>
                            <td>${board.update_date}</td>
                         </tr>
                      </c:forEach>

@@ -159,6 +159,10 @@ public class MyPageService {
       return pageBean;
    }
    
+   public List<NoticeBean> allSearchNotice(String title) {
+      return myPageDao.getNoticeList(title);
+   }
+   
    public List<NoticeBean>getImportantNoticeSearchList(String title, int page){
       int start = (page - 1) * admin_listcnt;
       RowBounds rowBounds = new RowBounds(start, admin_listcnt);

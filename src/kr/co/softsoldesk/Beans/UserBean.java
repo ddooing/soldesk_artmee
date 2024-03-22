@@ -262,4 +262,29 @@ public void setNext_grade(String next_grade) {
 }
    
 
+
+// 전시회 관련 직원 신청 
+	private String exhibition;
+	private String exhibition_address;
+	private String exhibition_employee;
+	public String getExhibition() {
+		return exhibition;
+	}
+	public void setExhibition(String exhibition) {
+		this.exhibition = exhibition;
+	}
+	public String getExhibition_address() {
+		return exhibition_address;
+	}
+	public void setExhibition_address(String exhibition_address) {
+		this.exhibition_address = exhibition_address;
+	}
+	public String getExhibition_employee() {
+		return exhibition_employee;
+	}
+	public void setExhibition_employee(String exhibition_employee) {
+		this.exhibition_employee = exhibition_employee;
+	}
+	
+
 }

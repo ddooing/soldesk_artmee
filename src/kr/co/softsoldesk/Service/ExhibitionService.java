@@ -185,6 +185,12 @@ public class ExhibitionService {
 		return pageBean;
 	}
 	
+	// 통함검색 -> 전시회 검색 리스트 0310
+	public List<ExhibitionBean>allSearchExhibition(String title){
+		return exhibitionDao.allSearchExhibition(title);
+	}
+	
+	
 	// 전시회 검색없음 리스트
 	public List<ExhibitionBean>AllExhibition(int page){
 		int start = (page - 1) * exhibition_listcnt;

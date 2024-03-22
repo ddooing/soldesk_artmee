@@ -11,7 +11,7 @@ public interface UserMapper {
 	
 	// ======================================= 승찬부분
 	// loginUserBean 객체 저장될 값들
-	@Select("select user_id, id, password, state from user_table where id = #{id} and password = #{password} and (state=1 or state=3)")
+	@Select("select user_id, id, password, state from user_table where id = #{id} and password = #{password} and (state=1 or state=3 or state=4)")
 	UserBean getLoginUserInfo(UserBean tempLoginUserBean);
 
 	// loginUserBean 객체의 user_id 값을 가지고 로그인한 객체의 모든 정보를 가져옴
@@ -48,8 +48,8 @@ public interface UserMapper {
 		String checkNickExist(String nickname);
 		
 		//회원가입
-		@Insert("insert into user_table(user_id, id, name, password, nickname, birth, gender, email, telephone, create_date, modify_date, state)"
-				+ "values (user_id_seq.nextval, #{id}, #{name}, #{password}, #{nickname}, #{birth}, #{gender}, #{email}, #{telephone}, sysdate, null, 1)")
+		@Insert("insert into user_table(user_id, id, name, password, nickname, birth, gender, email, telephone, create_date, modify_date,exhibition, state)"
+				+ "values (user_id_seq.nextval, #{id}, #{name}, #{password}, #{nickname}, #{birth}, #{gender}, #{email}, #{telephone}, sysdate, null,#{exhibition}, #{state})")
 		void addUserInfo(UserBean joinUserBean);
 		
 		

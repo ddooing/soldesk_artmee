@@ -34,6 +34,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
+
 <body class="sb-nav-fixed">
 	<c:import url="/WEB-INF/views/include/admin_header.jsp" />
 
@@ -51,26 +52,47 @@
 							<span class="badge bg-success-subtle text-success-emphasis rounded-pill" style="background-color: black; font-size: 15px; padding:10px;">배너신청 총 ${BadgeCnt.total_count}건</span>
 						</div>
 
-						<form action="${root }/admin/manager_mainbannerapplylist" method="get">
-							<select name="bannercombo" id="bannercombo" style="width: 150px; height: 40px; margin-right: 30px;">
+						<form action="${root }/admin/manager_mainbannerapplylist" method="get" onsubmit="return validateForm()">
+							<select name="type" id="selectCombo" style="width: 150px; height: 40px; margin-right: 30px;">
 								<option value="title" selected>제목</option>
 							</select>
-							<c:choose>
-								<c:when test="${bannersearch != null }">
-									<input type="text" name="bannersearch" id="bannersearch" style="width: 250px; height: 40px; margin-right: 30px;" value="${bannersearch }" />
-								</c:when>
-								<c:otherwise>
-									<input type="text" name="bannersearch" id="bannersearch" style="width: 250px; height: 40px; margin-right: 30px;" placeholder="검색어를 입력해주세요" />
-								</c:otherwise>
-							</c:choose>
+							
+							<input type="text" name="keyword" id="searchKeyword" style="width: 250px; height: 40px; margin-right: 30px;" value="${param.keyword}" placeholder="검색어를 입력해주세요" />
+								
 							<button class="btn btn-dark" style="width: 80px; height: 40px;">검색</button>
+
+							<script src="../js/searchAdmin.js"></script>
 						</form>
+					
+					
+						<button class="button-39" id="resetButton" role="button" style="width: 80px; height: 44px;  margin-left: 30px;">초기화</button>
+						
+						<script>
+						    document.addEventListener('DOMContentLoaded', function() {
+						        var resetButton = document.getElementById('resetButton');
+
+						        resetButton.addEventListener('click', function() {
+						            window.location.href = '${root}/admin/manager_mainbannerapplylist';
+						        });
+						    });
+						</script>
 					</div>
 				
 					<div style="display: flex; margin-top:30px;">
 						<h3 onclick="window.location='${root}/admin/manager_mainbannerapplylist'" style="cursor: pointer;">메인 배너</h3>
 						<h3 onclick="window.location='${root}/admin/manager_subbannerapplylist'" style=" margin-left:30px; color:#e2e2e2; cursor: pointer;">서브 배너</h3>
+						<button class="button-81" role="button" id="calendatButton" style="margin-left: auto; margin-right: 30px;">캘린더 확인</button>
 					</div>
+					
+					
+					<script>
+						var calendatButton =document.getElementById('calendatButton');
+						calendatButton.onclick= function(){
+							let popOtion = "width=900px, height=900px, top=1000px,left=100px";
+							let openUrl='${root}/admin/bannerCalendar?type=main'
+							window.open(openUrl,'pop',popOtion);
+						}
+					</script>
 					
 					<div style="background-color: white; margin-top:20px;" >					
 						<table class="table table-striped" style="text-align: center; ">

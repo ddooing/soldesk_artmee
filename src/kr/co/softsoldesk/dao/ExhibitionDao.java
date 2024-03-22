@@ -118,6 +118,10 @@ public class ExhibitionDao {
 	public List<ExhibitionBean>AllExhibition(RowBounds rowBounds){
 		return exhibitionMapper.AllExhibition(rowBounds);
 	}
+	// 통함검색 -> 전시회 검색 리스트 0310
+	public List<ExhibitionBean>allSearchExhibition(String title){
+		return exhibitionMapper.allSearchExhibition(title);
+	}
 	
 	public int AllExhibitionCnt() {
 		return exhibitionMapper.AllExhibitionCnt();

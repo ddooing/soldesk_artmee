@@ -117,21 +117,30 @@ $(document).ready(function() {
 						<span class="badge bg-success-subtle text-success-emphasis rounded-pill" style="background-color: black; font-size: 15px; padding:10px;">배너 총 ${BadgeCnt.banner_all_Cnt}건</span>
 					</div>
 
-					<form action="${root }/admin/manager_mainbannershowlist" method="get">
-								<select name="bannercombo" id="bannercombo" style="width: 150px; height: 40px; margin-right: 30px;">
-									<option value="title" selected>제목</option>
-								</select>
-								<c:choose>
-									<c:when test="${bannersearch != null }">
-										<input type="text" name="bannersearch" id="bannersearch" style="width: 500px; height: 40px; margin-right: 30px;" value="${bannersearch }" />
-									</c:when>
-									<c:otherwise>
-										<input type="text" name="bannersearch" id="bannersearch" style="width: 500px; height: 40px; margin-right: 30px;" placeholder="검색어를 입력해주세요" />
-									</c:otherwise>
-								</c:choose>
-								
-								<button class="btn btn-dark" style="width: 80px; height: 40px;">검색</button>
+					<form action="${root }/admin/manager_mainbannershowlist" method="get" onsubmit="return validateForm()">
+						<select name="type" id="selectCombo" style="width: 150px; height: 40px; margin-right: 30px;">
+							<option value="title" selected>제목</option>
+						</select>
+						
+						<input type="text" name="keyword" id="searchKeyword" style="width: 500px; height: 40px; margin-right: 30px;" placeholder="검색어를 입력해주세요" />
+							
+						
+						<button class="btn btn-dark" style="width: 80px; height: 40px;">검색</button>
+						<script src="../js/searchAdmin.js"></script>
 					</form>
+					
+					
+					<button class="button-39" id="resetButton" role="button" style="width: 80px; height: 44px;  margin-left: 30px;">초기화</button>
+					
+					<script>
+					    document.addEventListener('DOMContentLoaded', function() {
+					        var resetButton = document.getElementById('resetButton');
+
+					        resetButton.addEventListener('click', function() {
+					            window.location.href = '${root}/admin/manager_mainbannershowlist';
+					        });
+					    });
+					</script>
 					
 				</div>
 				

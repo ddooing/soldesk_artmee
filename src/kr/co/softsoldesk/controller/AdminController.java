@@ -57,7 +57,7 @@ public class AdminController {
 	// ============================== 관리자 페이지 배너관리 ================================
 	// 메인 배너 관리 관리자 페이지
 	@GetMapping("/manager_mainbannershowlist")
-	public String manager_mainbannershowlist(@RequestParam(value="bannercombo", required=false) String bannercombo, @RequestParam(value="bannersearch", required=false) String bannersearch,Model model) {
+	public String manager_mainbannershowlist(@RequestParam(value="type", required=false) String bannercombo, @RequestParam(value="keyword", required=false) String bannersearch,Model model) {
 		
 		if (bannercombo == null || bannercombo.isEmpty() || bannersearch == null || bannersearch.isEmpty()) {
 			
@@ -144,7 +144,7 @@ public class AdminController {
 	
 	// 숨김 만 보이는 메인 배너 관리 페이지
 	@GetMapping("/manager_mainbannerhidelist")
-	public String manager_mainbannerhidelist(@RequestParam(value="bannercombo", required=false) String bannercombo, @RequestParam(value="bannersearch", required=false) String bannersearch,Model model) {
+	public String manager_mainbannerhidelist(@RequestParam(value="type", required=false) String bannercombo, @RequestParam(value="keyword", required=false) String bannersearch,Model model) {
 		
 		if (bannercombo == null || bannercombo.isEmpty() || bannersearch == null || bannersearch.isEmpty()) {
 			
@@ -301,7 +301,7 @@ public class AdminController {
 	
 	// 서브배너 showlist 매핑
 	@GetMapping("/manager_subbannershowlist")
-	public String manager_subbannershowlist(@RequestParam(value="bannercombo", required=false) String bannercombo, @RequestParam(value="bannersearch", required=false) String bannersearch,Model model) {
+	public String manager_subbannershowlist(@RequestParam(value="type", required=false) String bannercombo, @RequestParam(value="keyword", required=false) String bannersearch,Model model) {
 		
 		if (bannercombo == null || bannercombo.isEmpty() || bannersearch == null || bannersearch.isEmpty()) {
 			
@@ -343,7 +343,7 @@ public class AdminController {
 	
 	// 서브배너 hidelist 매핑
 	@GetMapping("/manager_subbannerhidelist")
-	public String manager_subbannerhidelist(@RequestParam(value="bannercombo", required=false) String bannercombo, @RequestParam(value="bannersearch", required=false) String bannersearch,Model model) {
+	public String manager_subbannerhidelist(@RequestParam(value="type", required=false) String bannercombo, @RequestParam(value="keyword", required=false) String bannersearch,Model model) {
 		
 		if (bannercombo == null || bannercombo.isEmpty() || bannersearch == null || bannersearch.isEmpty()) {
 			
@@ -461,7 +461,7 @@ public class AdminController {
 	
 	// 관리자 페이지 메인 배너 신청 리스트 매핑
 	@GetMapping("/manager_mainbannerapplylist")
-	public String manager_bannerapplylist(@RequestParam(value="bannercombo", required=false) String bannercombo, @RequestParam(value="bannersearch", required=false) String bannersearch,@RequestParam(value = "page", defaultValue = "1") int page,Model model) {
+	public String manager_bannerapplylist(@RequestParam(value="type", required=false) String bannercombo, @RequestParam(value="keyword", required=false) String bannersearch,@RequestParam(value = "page", defaultValue = "1") int page,Model model) {
 			
 		if (bannercombo == null || bannercombo.isEmpty() || bannersearch == null || bannersearch.isEmpty()) {
 			
@@ -504,7 +504,7 @@ public class AdminController {
 		
 	// 관리자 페이지 서브 배너 신청 리스트 매핑
 	@GetMapping("/manager_subbannerapplylist")
-	public String manager_subbannerapplylist(@RequestParam(value="bannercombo", required=false) String bannercombo, @RequestParam(value="bannersearch", required=false) String bannersearch,@RequestParam(value = "page", defaultValue = "1") int page,Model model) {
+	public String manager_subbannerapplylist(@RequestParam(value="type", required=false) String bannercombo, @RequestParam(value="keyword", required=false) String bannersearch,@RequestParam(value = "page", defaultValue = "1") int page,Model model) {
 		
 		if (bannercombo == null || bannercombo.isEmpty() || bannersearch == null || bannersearch.isEmpty()) {
 			
@@ -661,5 +661,7 @@ public class AdminController {
 		return "redirect:/admin/manager_subbannershowlist";
 
 	}
+	
+	
 		
 }

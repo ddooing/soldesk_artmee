@@ -32,6 +32,7 @@
 <!-- JQuery -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	 <script src="https://cdn.ckeditor.com/ckeditor5/27.0.0/classic/ckeditor.js"></script>
 <script>
 $(document).ready(function(){
     $("#allcheck").click(function(){
@@ -79,6 +80,11 @@ textarea:focus {
 	overflow: hidden;
 	border: 0;
 }
+.ck-editor__editable_inline {
+    min-height: 400px; /* 또는 원하는 크기로 설정하세요 */
+    max-height: 600px; /* 또는 원하는 크기로 설정하세요 */
+    /* width도 설정 가능합니다. */
+  }
 </style>
 </head>
 
@@ -115,13 +121,23 @@ textarea:focus {
 									<label for="noopen" style="font-size: 20px; margin-left:20px;">비공개</label>
 								</td>
 							</tr>
-							<tr style="align-items: center; height: 100px; ">
+							<tr style="align-items: center;">
 								<th style="vertical-align: middle; font-size:20px;">내용</th>
 								<td colspan="3">
-									<textarea rows="15" cols="140" style="resize:none;" name="contents"></textarea>
+									 <textarea id="editor" rows="15" cols="140" style="resize:none;" name="contents"></textarea>
 								</td>
 							</tr>
 						</table>	
+<script>
+  ClassicEditor
+    .create(document.querySelector('#editor'))
+    .then(editor => {
+      // The editor instance
+    })
+    .catch(error => {
+      console.error(error);
+    });
+</script>
 
 							
 							<div style="float:right; margin-bottom:50px;">

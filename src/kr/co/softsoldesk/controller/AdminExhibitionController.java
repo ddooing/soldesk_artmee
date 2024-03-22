@@ -27,7 +27,7 @@ public class AdminExhibitionController {
 	
 		// 전시회 관리 매핑
 		@GetMapping("/manager_exhibitionlist")
-		public String manager_exhibitionlist(@RequestParam(value="exhibitioncombo", required=false) String exhibitioncombo, @RequestParam(value="exhibitionsearch", required=false) String exhibitionsearch, @RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+		public String manager_exhibitionlist(@RequestParam(value="type", required=false) String exhibitioncombo, @RequestParam(value="keyword", required=false) String exhibitionsearch, @RequestParam(value = "page", defaultValue = "1") int page, Model model) {
 			
 			if (exhibitioncombo == null || exhibitioncombo.isEmpty() || exhibitionsearch == null || exhibitionsearch.isEmpty()) {
 				// 전시회 목록 가져가기
