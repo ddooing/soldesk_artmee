@@ -95,5 +95,29 @@ public class UserDao {
 	{
 		userMapper.getPointMinus(pointMinus,user_id);
 	}
+	// 전시회 가입 시, user_id 
+	public int getUserId(String id) {
+		return userMapper.getUserId(id);
+	}
+	// 아이디, 비번 찾기 0326 추가
+   public int findUserByNameAndEmail(String name1, String email1) {
+      return userMapper.findUserByNameAndEmail(name1, email1);
+   }
+   
+   public String findUserId(String name1, String email1) {
+      return userMapper.findUserId(name1, email1);
+   }
+   
+   public int findUserByNameAndEmailAndId(String name1, String email1, String id1) {
+      return userMapper.findUserByNameAndEmailAndId(name1, email1, id1);
+   }
+   
+   public int finduser_id(String name1, String email1, String id1) {
+      return userMapper.finduser_id(name1, email1, id1);
+   }
+   
+   public void changepw(String new_pw1, int user_id) {
+      userMapper.changepw(new_pw1, user_id);
+   }
 
 }

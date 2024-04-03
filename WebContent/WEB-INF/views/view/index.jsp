@@ -104,6 +104,7 @@
 			right: 10px;
 			width: 150px;
 			transition: top 0.3s;
+			z-index:9999;
 
 		}
 
@@ -154,82 +155,29 @@
 			</div>
 		</div>
 	</header>
-
-	<div id="right-side-menu">
-		<div style="display: inline-block; box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.22); border-top: 10px solid black; border-top-left-radius: 5%; border-top-right-radius: 5%; border-bottom: 10px solid black; border-bottom-left-radius: 5%; border-bottom-right-radius: 5%; background-color: white;">
-			
-				<c:choose>
-					<c:when test="${loginUserBean.userLogin == false}">
-					<div id="sidebar_menu" onclick="nologin();"
-						style="border: 1px solid #e7e7e7; border-top-right-radius: 5%; border-top-left-radius: 5%; border-bottom: none; width: 100px; height: 80px; text-align: center; align-items: center; justify-content: center; display: flex;">
-						<div style=" justify-content: center;" >
-							<a href="#" style="color: black; text-decoration: none;">
-								<p1>전시회 등록</p1>
-							</a>
-						</div>
-						</div>
-					</c:when>
-					<c:otherwise>
-					<div id="sidebar_menu" onclick="window.location.href='${root}/exhibition/Exhibition_Enroll'" style="border: 1px solid #e7e7e7; border-top-right-radius: 5%; border-top-left-radius: 5%; border-bottom: none; width: 100px; height: 80px; text-align: center; align-items: center; justify-content: center; display: flex;">
-						<div style=" justify-content: center;">
-							<a href="#" style="color: black; text-decoration: none;">
-								<p1>전시회 등록</p1>
-							</a>
-						</div>
+	<c:if test="${loginUserBean.userLogin == true && loginUserBean.state == 4}">
+		<div id="right-side-menu">
+			<div style="display: inline-block; box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.22); border-top: 10px solid black; border-top-left-radius: 5%; border-top-right-radius: 5%; border-bottom: 10px solid black; border-bottom-left-radius: 5%; border-bottom-right-radius: 5%; background-color: white;">
+				<div id="sidebar_menu" onclick="window.location.href='${root}/exhibition/Exhibition_Enroll'" style="border: 1px solid #e7e7e7; border-top-right-radius: 5%; border-top-left-radius: 5%; border-bottom: none; width: 100px; height: 80px; text-align: center; align-items: center; justify-content: center; display: flex;">
+					<div style=" justify-content: center;">
+						<a href="#" style="color: black; text-decoration: none;">
+							<p1>전시회 등록</p1>
+						</a>
 					</div>
-					</c:otherwise>
-				</c:choose>
-				
-				
-			
-			<hr style="margin:auto; width: 80px; color: black;" />
-			
-				<c:choose>
-					<c:when test="${loginUserBean.userLogin == false}">
-					<div id="sidebar_menu" onclick="nologin();"
-						style="border: 1px solid #e7e7e7; border-top-right-radius: 5%; border-top-left-radius: 5%; border-bottom: none; width: 100px; height: 80px; text-align: center; align-items: center; justify-content: center; display: flex;">
-						<div style=" justify-content: center;" >
-							<a href="#" style="color: black; text-decoration: none;">
-								<p1>배너 신청</p1>
-							</a>
-						</div>
-						</div>
-					</c:when>
-					<c:otherwise>
-					<div id="sidebar_menu" onclick="window.location.href='${root}/banner/bannerapply'" style="border: 1px solid #e7e7e7; border-top-right-radius: 5%; border-top-left-radius: 5%; border-bottom: none; width: 100px; height: 80px; text-align: center; align-items: center; justify-content: center; display: flex;">
-						<div style=" justify-content: center;">
-							<a href="#" style="color: black; text-decoration: none;">
-								<p1>배너 신청</p1>
-							</a>
-						</div>
-					</div>
-					</c:otherwise>
-				</c:choose>
-			
-			
-			<hr style="margin:auto; width: 80px; color: black;" />
-
-			<c:choose>
-			    <c:when test="${loginUserBean.userLogin == false}">
-				    <div id="sidebar_menu" onclick="nologin();" style="cursor: pointer; border: 1px solid #e7e7e7; border-radius: 5%; width: 100px; height: 80px; text-align: center; align-items: center; justify-content: center; display: flex;">
-								<div style="justify-content: center;">
-									<p1>Q&A</p1>
-								</div>
-					</div>
-				</c:when>
-			
-			<c:otherwise>
-				<div id="sidebar_menu" onclick="window.location.href='${root}/mypage/QnA?user_id=${loginUserBean.user_id}'"
-						style="cursor: pointer; border: 1px solid #e7e7e7; border-radius: 5%; width: 100px; height: 80px; text-align: center; align-items: center; justify-content: center; display: flex;">
-							<div style="justify-content: center;">
-								<p1>Q&A</p1>
-							</div>
 				</div>
-			</c:otherwise>
-			</c:choose>
-		</div>
-	</div>
 	
+				<hr style="margin:auto; width: 80px; color: black;" />
+	
+				<div id="sidebar_menu" onclick="window.location.href='${root}/banner/bannerapply'" style="border: 1px solid #e7e7e7; border-top-right-radius: 5%; border-top-left-radius: 5%; border-bottom: none; width: 100px; height: 80px; text-align: center; align-items: center; justify-content: center; display: flex;">
+					<div style=" justify-content: center;">
+						<a href="#" style="color: black; text-decoration: none;">
+							<p1>배너 신청</p1>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if>
 	<script>
 		function nologin() {
 			Swal.fire({
@@ -243,7 +191,7 @@
 		}
 	</script>
 
-	</div>
+	
 
 	<script>
 		window.addEventListener('scroll', function () {

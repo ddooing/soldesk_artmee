@@ -48,8 +48,10 @@ public interface UserMapper {
 		String checkNickExist(String nickname);
 		
 		//회원가입
-		@Insert("insert into user_table(user_id, id, name, password, nickname, birth, gender, email, telephone, create_date, modify_date,exhibition, state)"
-				+ "values (user_id_seq.nextval, #{id}, #{name}, #{password}, #{nickname}, #{birth}, #{gender}, #{email}, #{telephone}, sysdate, null,#{exhibition}, #{state})")
+		@Insert("insert into user_table(user_id, id, name, password, nickname, birth, gender, email, telephone, create_date, modify_date,state,point)"
+				+ "values (user_id_seq.nextval, #{id}, #{name}, #{password}, "
+				+ "#{nickname, jdbcType=VARCHAR}, #{birth, jdbcType=DATE}, #{gender, jdbcType=VARCHAR}, #{email}, "
+				+ "#{telephone}, sysdate, null, #{state},#{point,jdbcType=NUMERIC})")
 		void addUserInfo(UserBean joinUserBean);
 		
 		
@@ -74,5 +76,29 @@ public interface UserMapper {
 		@Update("update user_table set point = point - #{pointMinus} where user_id= #{user_id}")
 		public void getPointMinus(@Param("pointMinus")int pointMinus,@Param("user_id") int user_id);
 	
+		
+		// 전시회 가입 시, user_id 
+		@Select("select user_id from user_table where id= #{id}")
+		public int getUserId(String id);
+	
+		
+		// 아이디, 비번 찾기 0327 추가
+	      // 아이디찾기
+	      @Select("SELECT COUNT(*) FROM user_table WHERE name = #{name1, jdbcType=VARCHAR} AND email = #{email1, jdbcType=VARCHAR}")
+	      int findUserByNameAndEmail(@Param("name1") String name1, @Param("email1") String email1);
+	      
+	      @Select("SELECT id FROM user_table WHERE name = #{name1, jdbcType=VARCHAR} AND email = #{email1, jdbcType=VARCHAR}")
+	      String findUserId(@Param("name1") String name1, @Param("email1") String email1);
+	      
+	      
+	      // 비번찾기
+	      @Select("SELECT COUNT(*) FROM user_table WHERE name = #{name1, jdbcType=VARCHAR} AND email= #{email1, jdbcType=VARCHAR} AND id = #{id1, jdbcType=VARCHAR}")
+	      int findUserByNameAndEmailAndId(@Param("name1") String name1, @Param("email1") String email1, @Param("id1") String id1);
+	      
+	      @Select("SELECT user_id FROM user_table WHERE name = #{name1, jdbcType=VARCHAR} AND email= #{email1, jdbcType=VARCHAR} AND id = #{id1, jdbcType=VARCHAR}")
+	      int finduser_id(@Param("name1") String name1, @Param("email1") String email1, @Param("id1") String id1);
+	   
+	      @Update("UPDATE user_table SET password = #{new_pw1} WHERE user_id = #{user_id}")
+	      void changepw(@Param("new_pw1") String new_pw1, @Param("user_id") int user_id);
 	
 }

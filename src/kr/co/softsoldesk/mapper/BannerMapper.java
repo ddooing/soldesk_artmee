@@ -33,12 +33,10 @@ public interface BannerMapper {
 	@Select("SELECT\r\n"
 			+ "    e.exhibition_id,\r\n"
 			+ "    e.title\r\n"
-			+ "FROM\r\n"
-			+ "    exhibition e\r\n"
-			+ "INNER JOIN\r\n"
-			+ "    user_table u ON e.apply_person = u.user_id\r\n"
-			+ "WHERE\r\n"
-			+ "    u.user_id = #{user_id} AND e.exhibition_end >= CURRENT_DATE")
+			+ "FROM exhibition e"
+			+" INNER JOIN gallery g ON e.gallery_id = g.gallery_id "
+			+ "INNER JOIN user_table u ON g.gallery_user_id = u.user_id"
+			+ " WHERE u.user_id = #{user_id} AND e.exhibition_end >= CURRENT_DATE")
 	List<ExhibitionBean> getApply_personExhibitionlist(@Param("user_id") int user_id);
 	
 	

@@ -104,16 +104,18 @@ public class UserService {
 
 	}
 
-	public void addUserInfo(UserBean joinUserBean) {
-		String getExhibition = joinUserBean.getExhibition();
+	public void addUserInfo(UserBean joinUserBean,int state) {
 		
-		//전시회 관련자 체크
-		 if (getExhibition == null || getExhibition.isEmpty()) {// 안적었을 경우
+
+		//일반 사용자 <-> 전시회 관계자 
+		 if (state ==1) {// 안적었을 경우
 			 joinUserBean.setState(1); //일반 사용자
+			 joinUserBean.setPoint(1000);
 		  }
-		 else {
+		 else if(state ==4) {
 			 joinUserBean.setState(4); //관련자
 		 }
+		 System.out.println("이름 : "+joinUserBean.getState());
 		userDao.addUserInfo(joinUserBean);
 	}
 
@@ -144,4 +146,30 @@ public class UserService {
 	{
 		userDao.getPointMinus(pointMinus,user_id);
 	}
+	
+	// 전시회 가입 시, user_id 
+	public int getUserId(String id) {
+		return userDao.getUserId(id);
+	}
+	
+	// 아이디 비번 찾기 0326 추가
+	   public int findUserByNameAndEmail(String name1, String email1) {
+	      return userDao.findUserByNameAndEmail(name1, email1);
+	   }
+	   
+	   public String findUserId(String name1, String email1) {
+	      return userDao.findUserId(name1, email1);
+	   }
+	   
+	   public int findUserByNameAndEmailAndId(String name1, String email1, String id1) {
+	      return userDao.findUserByNameAndEmailAndId(name1, email1, id1);
+	   }
+	   
+	   public int finduser_id(String name1, String email1, String id1) {
+	      return userDao.finduser_id(name1, email1, id1);
+	   }
+	   
+	   public void changepw(String new_pw1, int user_id) {
+	      userDao.changepw(new_pw1, user_id);
+	   }
 }

@@ -1,14 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html>
-<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var='root' value="${pageContext.request.contextPath }" />
 <head>
 <meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
 	<title>ARTMEE</title>
-
 	<link rel="icon" type="image/x-icon" href="../img/ARTMEE_PAGELOGO.png" />
 
 	<!-- Font Awesome icons (free version)-->
@@ -22,46 +20,38 @@
 
 	<!-- Bootstrap core JS-->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Core theme JS-->
+	<script src="js/scripts.js"></script>
 
-	<!-- JQuery ÀÚ¹Ù½ºÅ©¸³Æ®-->
+	<!-- JQuery ìžë°”ìŠ¤í¬ë¦½íŠ¸-->
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 
 	<!-- CSS -->
 	<link href="../css/styles.css" rel="stylesheet" />
 
-	<!-- Carousel ÀÚ¹Ù½ºÅ©¸³Æ®-->
+	<!-- Carousel ìžë°”ìŠ¤í¬ë¦½íŠ¸-->
 	<script src='https://www.gmarwaha.com/script/lib/jquery-1.11.1.js'></script>
 	<script src="https://www.gmarwaha.com/script/lib/jquery.easing-1.3.js"></script>
 	<script src="https://www.gmarwaha.com/script/lib/jquery.easing.compatibility.js"></script>
 	<script src="https://www.gmarwaha.com/script/lib/jquery.mousewheel-3.1.12.js"></script>
 	<script src="https://www.gmarwaha.com/jquery/jcarousellite/script/jquery.jcarousellite.js"></script>
-
-
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
-
+    <!-- SweetAlert ë¼ì´ë¸ŒëŸ¬ë¦¬ ì¶”ê°€ -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
-<body>
-	<footer class="py-4 navbar-custom" style="margin-top: 200px; background-color: navbar-color;">
-    <div class="container px-5">
-        <div class="row">
-            <div class="col-lg-3">
-                <img src="../img/ARTMEE.png" alt="Artmee Logo"
-                    style="max-width: 80%; height: auto; margin-bottom: 5px;">
-            </div>
-            <div class="col-lg-6">
-                <p class="text-white small" style="margin-top: 5px;">
-                    ¾ÆÆ®¹Ì <br>
-                    ÀüÈ­¹øÈ£: 123-456-7890<br>
-                    ÁÖ¼Ò: ¼­¿ï½Ã Á¾·Î±¸ Á¾·Î12±æ 15, 8Ãþ 801È£<br>
-                    ÀÌ¸ÞÀÏ: info@artmee.com<br>
-                    Copyright &copy; 2023 °³¹ßÇØµå¸² ALL RIGHTS RESERVED
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-</body>
-</html>
+<script>
+    window.onload = function() {
+        Swal.fire({
+            title: 'ë¹„ë°€ë²ˆí˜¸ ë³€ê²½ ì™„ë£Œ!',
+            text: 'ë¹„ë°€ë²ˆí˜¸ ë³€ê²½ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤',
+            icon: 'success',
+            timer: 2000,
+            timerProgressBar: false,
+            showConfirmButton: false
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                location.href = '${root}/user/login';
+            }
+        });
+    };
+</script>

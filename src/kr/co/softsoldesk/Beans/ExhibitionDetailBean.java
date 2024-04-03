@@ -35,6 +35,7 @@ public class ExhibitionDetailBean {
 	private int main_poster_file_id;		// 전시회 테이블에 있는 main_poster_file_id
 	private int detail_poster_file_id;		// 전시회 테이블에 있는 detail_poster_file_id
 	
+	private int gallery_id;
 	// 파일 처리용
 	private MultipartFile main_poster_file;			// 파일 업로드 처리 받을 메인포스터
 	private MultipartFile detail_poster_file;		// 파일 업로드 처리 받을 상세포스터
@@ -268,6 +269,12 @@ public class ExhibitionDetailBean {
 	}
 	public void setComplete_exhibition_eroll_count(int complete_exhibition_eroll_count) {
 		this.complete_exhibition_eroll_count = complete_exhibition_eroll_count;
+	}
+	public int getGallery_id() {
+		return gallery_id;
+	}
+	public void setGallery_id(int gallery_id) {
+		this.gallery_id = gallery_id;
 	}
 	
 	

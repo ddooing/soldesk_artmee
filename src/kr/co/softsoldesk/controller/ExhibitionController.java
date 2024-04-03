@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.softsoldesk.Beans.BookMarkBean;
 import kr.co.softsoldesk.Beans.ExhibitionBean;
 import kr.co.softsoldesk.Beans.ExhibitionDetailBean;
+import kr.co.softsoldesk.Beans.GalleryBean;
 import kr.co.softsoldesk.Beans.PageBean;
 import kr.co.softsoldesk.Beans.ReserveBean;
 import kr.co.softsoldesk.Beans.ReviewBean;
@@ -24,6 +25,7 @@ import kr.co.softsoldesk.Beans.UserBean;
 import kr.co.softsoldesk.Service.AdminExhibitionService;
 import kr.co.softsoldesk.Service.BookMarkService;
 import kr.co.softsoldesk.Service.ExhibitionService;
+import kr.co.softsoldesk.Service.GalleryService;
 import kr.co.softsoldesk.Service.ReserveService;
 import kr.co.softsoldesk.Service.StaticsService;
 import kr.co.softsoldesk.Service.UserService;
@@ -50,6 +52,8 @@ public class ExhibitionController {
 	@Autowired
 	private AdminExhibitionService adminExhibitionService;
 	
+	@Autowired
+	private GalleryService galleryService;
 	@Resource(name = "loginUserBean")
 	private UserBean loginUserBean;
 	
@@ -294,11 +298,22 @@ public class ExhibitionController {
 		
 		model.addAttribute("getLoginUserAllInfo", getLoginUserAllInfo);
 		
-		//전시 관련자일 경우
-		if(getLoginUserAllInfo.getState()==4)
-		{
-			
-		}
+		
+		//전시관 정보 가져오기 ( user_id = gallery tabel gallery_user_id
+		GalleryBean galleryInfo = galleryService.getGalleryInfo(loginUserBean.getUser_id());
+	
+		System.out.println("galleryOpen : "+ galleryInfo.getOpen());
+		String galleryOpen = galleryInfo.getOpen(); // 가정: gallery 객체에서 open 시간 문자열을 가져온다.
+		String[] times = galleryOpen.split(" - "); // " - "를 기준으로 문자열을 분리합니다.
+		String openTime = times[0]; // "10:00"
+		String closeTime = times[1]; // "20:00"
+
+		galleryInfo.setOpen_time(openTime);
+		galleryInfo.setClose_time(closeTime);
+
+	
+		model.addAttribute("galleryInfo", galleryInfo);
+		
 		return "exhibition/Exhibition_Enroll";
 	}
 	
@@ -306,6 +321,7 @@ public class ExhibitionController {
 	@PostMapping("/Exhibition_Enroll_pro")
 	public String Exhibition_Enroll_pro(@ModelAttribute("addExhibitionDetailBean") ExhibitionDetailBean exhibitionDetailBean, Model model) {
 		
+
 		// 파일 테이블에 추가 및 파일 저장 (관리자 전시회 직접추가때 사용한 메소드 재사용)
 		adminExhibitionService.addfiletableExhibition(exhibitionDetailBean);
 		
@@ -315,7 +331,11 @@ public class ExhibitionController {
 		return "/exhibition/exhibition_enroll_complete";
 	}
 	
-
+	@GetMapping("/exhibition_enroll_complete")
+	public String exhibition_enroll_complete() {
+		return "/exhibition/exhibition_enroll_complete";
+	}
+		
 	
 
 }

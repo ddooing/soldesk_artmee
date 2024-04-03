@@ -245,42 +245,7 @@ function checkIdExist() {
 		$("#IdExist").val('false');
 	}
 
-	function checkNickExist() {
-		var nickname = $("#nickname").val();
-		document.getElementById("nickError").innerHTML = "";
-		if (nickname.length == 0) {
-			Swal.fire({
-				  icon: "error",
-				  title: "닉네임을 입력해 주세요!",
-				});
-			return;
-		}
 
-		$.ajax({
-			url : '${root}/user/checkNickExist/' + nickname,
-			type : 'get',
-			dataType : 'text',
-			success : function(result) {
-				if (result.trim() == 'true') {
-					Swal.fire({
-						  icon: "success",
-						  title: "사용할 수 있는 닉네임 입니다",
-						});
-					$("#NickExist").val('true');
-				} else if (result.trim() == 'false') {
-					Swal.fire({
-						  icon: "error",
-						  title: "사용할 수 없는 닉네임 입니다",
-						});
-					$("#NickExist").val('false');
-				}
-			}
-		});
-	}
-
-	function resetNickExist() {
-		$("#NickExist").val('false');
-	}
 </script>
 
 <body id="page-top">
@@ -291,22 +256,20 @@ function checkIdExist() {
 	<!--로그인 부분-->
 	<section id="readg" class="text-center" style="margin-top: 100px;">
 
-		<h2>회원가입</h2>
+		<h2>전시관 회원가입</h2>
 		<hr style="margin: auto; margin-top: 50px; width: 1000px;" />
 
-		<form:form action="${root}/user/signup_pro" method="post" id="signupForm"
-			modelAttribute="joinUserBean">
+		<form:form action="${root}/user/signupGallery_pro" method="post" id="signupForm"
+			modelAttribute="joinUserGalleyBean">
 			<form:hidden path="IdExist" />
-			<form:hidden path="NickExist" />
-
-			<div
-				style="display: flex; justify-content: center; align-content: center; text-align: left;">
+			
+			<div style="display: flex; justify-content: center; align-content: center; text-align: left;">
 				<table class="asdf" style="margin-top: 50px;">
 					<tr>
 						<th style="width:200px;">
-						<form:label path="name" style="font-size: 20px;">성함</form:label>
+						<form:label path="name" style="font-size: 20px;">전시관 이름 </form:label>
 						</th>
-						<td><form:input type="text" path="name" id="name" class="form-control" value="${tempLoginUserBean.name }" onkeyup="validateName()" style="margin-bottom: 10px;" />
+						<td><form:input type="text" path="name" id="name" class="form-control"  onkeyup="validateName()" style="margin-bottom: 10px;" />
 						<span id="nameError" style="color:red;"></span></td>
 					</tr>
 
@@ -314,7 +277,7 @@ function checkIdExist() {
 						<th style="width:200px;">
 						<form:label path="id" style="font-size: 20px;">아이디</form:label></th>
 						<td>
-							<form:input path="id" id="id" onkeypress="resetIdExist()" class="form-control" value="${tempLoginUserBean.id }" onkeyup="validateId()" style="margin-bottom: 10px;"/>
+							<form:input path="id" id="id" onkeypress="resetIdExist()" class="form-control"  onkeyup="validateId()" style="margin-bottom: 10px;"/>
 							<span id="idError" style="color:red;"></span>
 						</td>
 						<td>
@@ -323,33 +286,13 @@ function checkIdExist() {
 					</tr>
 					
 					<tr>
-						<th style="width:200px;"><form:label path="email" style="font-size: 20px;">이메일</form:label></th>
+						<th style="width:200px;"><form:label path="email" style="font-size: 20px;">전시관 이메일</form:label></th>
 						<td>
-							<form:input path="email" class="form-control" required="required" value="${tempLoginUserBean.email }"/>
+							<form:input path="email" class="form-control" required="required" />
 							<span id="emailError" style="color:red;"></span>
 						</td>
 					</tr>
-					
-					<tr>
-						<th style="width:200px;">
-							<form:label path="birth" style="font-size: 20px;">생년월일</form:label>
-						</th>
-						<td>
-							<form:hidden path="birth" id="formatted-birth-date"/>
-							<div class="info" id="info__birth">
-							  <select class="box" id="birth-year" style="width: 125px;">
-							    <option disabled selected>출생 연도</option>
-							  </select>
-							  <select class="box" id="birth-month">
-							    <option disabled selected>월</option>
-							  </select>
-							  <select class="box" id="birth-day">
-							    <option disabled selected>일</option>
-							  </select>
-							</div>
-							<span id="birthError" style="color:red;"></span>
-						</td>
-					</tr>
+
 					<script>
 					
 						//비밀번호 체크
@@ -396,65 +339,66 @@ function checkIdExist() {
 
 					</tr>
 		
+					
+					
 					<tr>
 						<th style="width:200px;">
-							<form:label path="nickname" style="font-size: 20px;">닉네임</form:label>
+							<form:label path="telephone" style="font-size: 20px;">전시관 전화번호</form:label>
 						</th>
 						<td>
-							<form:input path="nickname" class="form-control" id="nickname" value="${tempLoginUserBean.nickname }" onkeypress="resetNickExist()" onkeyup="validateNickname()" style="margin-bottom: 10px;" />
-							<span id="nickError" style="color:red;"></span>
-						</td>
-						<td>
-							<button type="button" class="btn btn-dark" style="margin-left:15px;" onclick="checkNickExist()">중복확인</button>
-						</td>
-					</tr>
-					<tr>
-						<th style="width:200px;">
-						<form:label path="gender" style="font-size: 20px;">성별</form:label>	</th>
-						<td>
-							<div style="display: flex; justify-content: center;">
-								<div style="margin-right: 80px;">
-									<form:radiobutton path="gender" value="male" id="male" />
-									<form:label path="gender" for="male" style="margin-left:10px;">남</form:label>
-								</div>
-								<div>
-									<form:radiobutton path="gender" value="female" id="female" />
-									<form:label path="gender" for="female" style="margin-left:10px;">여</form:label>
-								</div>
-							</div>
-							<span id="genderError" style="color:red" ></span>
-						</td>
-					</tr>
-					<tr>
-						<th style="width:200px;">
-						<form:label path="telephone" style="font-size: 20px;">전화번호</form:label></th>
-						<td>
-							<form:input path="telephone"  class="form-control" placeholder="'-' 없이 입력" value="${tempLoginUserBean.telephone }"/>
+							<form:input path="telephone"  class="form-control" placeholder="'-' 없이 입력" />
 							<span id="telephoneError" style="color:red;"></span>
+						</td>
+					</tr>
+					
+					<tr>
+						<th  style="width: 150px; font-size: 20px;">
+							<form:label path="address" style="font-size: 20px;">주소</form:label>
+						</th>
+						<td>
+							<form:input path="address" id="address" style="width: 400px;" readonly="true" class="form-control"/>
+							<span id="addressError" style="color:red;"></span>
+						</td>
+						<td>
+							<input type="button" style="margin-left:10px; border: 0.5px solid lightgray; margin-bottom:10px;" class="btn btn-light" onclick="sample4_execDaumPostcode()" value="검색">
+						</td>
+					</tr>
+					
+					<tr>
+						<th style="width: 150px;  font-size: 20px;">
+							운영시간
+						</th>
+						<td style="justify-content: space-between;align-items: center;display: flex;flex-direction: row;">
+							<form:input path="open_time" id="open_time" type="time" class="form-control" 
+										style="margin-right: 10px; width=45%;" required="required" />
+							~
+							<form:input path="close_time" id="close_time" type="time" class="form-control" 
+										style="margin-left: 10px; width=45%;" required="required" />
+							<span id="timeError" style="color:red; bottom: -80px;"></span>
+						</td>
+					</tr>
+
+					<tr>
+						<th for="holiday" style="width: 150px; font-size: 20px;">
+							휴무일
+						</th>
+						<td>
+							<form:input path="holiday" id="holiday"  class="form-control"  />
+						</td>
+					</tr>
+					
+					<tr >
+						<th style="width: 150px;font-size: 20px;">사이트</th>
+						<td>
+							<form:input path="site" id="site" class="form-control" style="width: 400px;" />
+							<span id="siteError" style="color:red;"></span>
 						</td>
 					</tr>
 				</table>
 			</div>
 			<!-- 여기서 부터 전시관 관리자 영역 -->
 			
-			<hr style="margin: auto; margin-top: 50px; width: 600px;" />
-			<div style="position: flex; margin:auto; justify-content: center;">
-				
-					<div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
-						<div class="list-group">
-						    <div onclick="gallerySignForm()" style="display: flex; cursor:pointer; font-size: 20px;">
-					            전시관 회원가입
-					            <i class="bi bi-chevron-right"></i>
-						    </div>
-						</div>
-					</div>
-					<script>
-						function gallerySignForm() {
-							window.location.href = '${root}/user/signup_gallery';
-						}
-					</script>
-					
-			</div>
+			
 			
 			
 			
@@ -465,10 +409,72 @@ function checkIdExist() {
 			</div>
 		</form:form>
 	</section>
-	<script src="../js/signup.js"></script>
-	
+	<script src="../js/gallery_signup.js"></script>
+	<!-- 주소 검색 -->
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+		<script>
+			// 시간 validation
+			var start_time = document.getElementById('open_time');
+			var close_time = document.getElementById('close_time');
+			
+			close_time.addEventListener('change', function() {
+				if(close_time.value < start_time.value) {
+					Swal.fire({
+						  icon: "error",
+						  title: "시간 선택 오류",
+						  text: "종료 시간은 시작 시간보다 이전일 수 없습니다!",
+						});
+					close_time.value = start_time.value;
+				}
+			});
+		    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+		    function sample4_execDaumPostcode() {
+		        new daum.Postcode({
+		            oncomplete: function(data) {
+		                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+		
+		                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+		                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+		                var roadAddr = data.roadAddress; // 도로명 주소 변수
+		                var extraRoadAddr = ''; // 참고 항목 변수
+		
+		                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+		                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+		                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+		                    extraRoadAddr += data.bname;
+		                }
+		                // 건물명이 있고, 공동주택일 경우 추가한다.
+		                if(data.buildingName !== '' && data.apartment === 'Y'){
+		                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+		                }
+		                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+		                if(extraRoadAddr !== ''){
+		                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+		                }
+		
+		                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+		                document.getElementById("address").value = roadAddr;
+		
+		            }
+		        }).open();
+		    }
+		</script>
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	
+<!-- 요기까지 전시관 관계자 -->
+	<script>
+		function age_chg(age) {
+			var buttons = document.querySelectorAll('.age_btn');
+			buttons.forEach(function(button) {
+				button.classList.remove('on');
+			});
+
+			var selectedButton = document.getElementById('age_' + age);
+			selectedButton.classList.add('on');
+		}
+	</script>
+
 
 
 	<!-- 푸터-->

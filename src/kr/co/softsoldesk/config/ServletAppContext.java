@@ -1,5 +1,6 @@
 package kr.co.softsoldesk.config;
 
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
@@ -16,6 +17,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.CacheControl;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
@@ -36,6 +39,7 @@ import kr.co.softsoldesk.mapper.BannerMapper;
 import kr.co.softsoldesk.mapper.BoardMapper;
 import kr.co.softsoldesk.mapper.BookMarkMapper;
 import kr.co.softsoldesk.mapper.ExhibitionMapper;
+import kr.co.softsoldesk.mapper.GalleryMapper;
 import kr.co.softsoldesk.mapper.MyPageMapper;
 import kr.co.softsoldesk.mapper.PointDetailMapper;
 import kr.co.softsoldesk.mapper.ReserveMapper;
@@ -250,6 +254,17 @@ public class ServletAppContext implements WebMvcConfigurer {
 
 
 	   }
+	
+	@Bean // 전시관 매퍼
+	   public MapperFactoryBean<GalleryMapper> getGalleryMapper(SqlSessionFactory factory) throws Exception {
+
+	      MapperFactoryBean<GalleryMapper> factoryBean = new MapperFactoryBean<GalleryMapper>(GalleryMapper.class);
+
+	      factoryBean.setSqlSessionFactory(factory);
+	      return factoryBean;
+
+
+	   }
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
 
@@ -290,5 +305,23 @@ public class ServletAppContext implements WebMvcConfigurer {
 
 		return new StandardServletMultipartResolver();
 	}
+	
+	@Bean
+    public JavaMailSender mailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("timtory.synology.me");
+        mailSender.setPort(57978);
+
+        mailSender.setUsername("mail_account");
+        mailSender.setPassword("Soldeskdream801!");
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.ssl.trust", "*"); // SSL 인증 무시
+
+        return mailSender;
+    }
 
 }

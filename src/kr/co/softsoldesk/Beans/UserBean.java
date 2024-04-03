@@ -1,64 +1,35 @@
 package kr.co.softsoldesk.Beans;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class UserBean {
-   
    private boolean IdExist;
-      private boolean NickExist;
+   private boolean NickExist;
       private boolean PassExist;
       private boolean userLogin;
       
       public UserBean() {
-         this.IdExist = false;
          this.userLogin = false;
       }
       
-   private int user_id;
-      
-      @Pattern(regexp = "[가-힣]{2,4}")
+      private int user_id;
       private String name;
-      
-      @Size(min = 4, max = 20)
-      @Pattern(regexp = "[a-zA-Z0-9]*")
       private String id;
-      
-      @Size(min = 6, max = 20)
-      @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=]).*$")
       private String password;
       private String password2;
-
-
-      @Size(min = 6, max = 20)
-      @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=]).*$")
-      private String icpassword;
-      private String icpasscheck;
       
-      @Size(min = 2, max = 8)
+      //info modify에 사용됨
+	      private String icpassword;
+	      private String icpasscheck;
+      
       private String nickname;
-      
-      @NotNull(message = "생년월일을 선택하세요.")
       private String birth;
-      
-      @NotNull(message = "성별을 선택하세요.")
       private String gender;
-      
-      @NotEmpty(message = "이메일은 필수 입력 항목입니다.")
-      @Email
       private String email;
-      
       private int point;
-      
-      @Pattern(regexp = "^\\d{11}$")
       private String telephone;
       private int exp;
       private String create_date;
@@ -66,20 +37,28 @@ public class UserBean {
       private int state;
    
    
-   // 테이블 외 조인 변수들
-   private String grade;
-    private String keyword;
-   // 마이페이지용
-   private int exp_to_next_level;
-   private String next_grade;
-   
-// 유저 수정페이지 개수 반환용
-   private int board_count;
-   private int comment_count;
-   private int qna_count;
-   private int banner_apply_count;
-   private int exhibition_enroll_count;
+	   // 테이블 외 조인 변수들
+	   private String grade;
+	    private String keyword;
+	   // 마이페이지용
+	   private int exp_to_next_level;
+	   private String next_grade;
+	   
+	// 유저 수정페이지 개수 반환용
+	   private int board_count;
+	   private int comment_count;
+	   private int qna_count;
+	   private int banner_apply_count;
+	   private int exhibition_enroll_count;
 
+	   // 아이디 비번찾기 용 인증번호 
+	   private int verification_code;
+	   private String name1;
+	   private String id1;
+	   private String email1;
+
+	   private String new_pw;
+	   private String new_pw1;
 public int getBoard_count() {
 	return board_count;
 }
@@ -260,31 +239,43 @@ public String getNext_grade() {
 public void setNext_grade(String next_grade) {
 	this.next_grade = next_grade;
 }
+public int getVerification_code() {
+	return verification_code;
+}
+public void setVerification_code(int verification_code) {
+	this.verification_code = verification_code;
+}
+public String getName1() {
+	return name1;
+}
+public void setName1(String name1) {
+	this.name1 = name1;
+}
+public String getId1() {
+	return id1;
+}
+public void setId1(String id1) {
+	this.id1 = id1;
+}
+public String getEmail1() {
+	return email1;
+}
+public void setEmail1(String email1) {
+	this.email1 = email1;
+}
+public String getNew_pw() {
+	return new_pw;
+}
+public void setNew_pw(String new_pw) {
+	this.new_pw = new_pw;
+}
+public String getNew_pw1() {
+	return new_pw1;
+}
+public void setNew_pw1(String new_pw1) {
+	this.new_pw1 = new_pw1;
+}
    
 
-
-// 전시회 관련 직원 신청 
-	private String exhibition;
-	private String exhibition_address;
-	private String exhibition_employee;
-	public String getExhibition() {
-		return exhibition;
-	}
-	public void setExhibition(String exhibition) {
-		this.exhibition = exhibition;
-	}
-	public String getExhibition_address() {
-		return exhibition_address;
-	}
-	public void setExhibition_address(String exhibition_address) {
-		this.exhibition_address = exhibition_address;
-	}
-	public String getExhibition_employee() {
-		return exhibition_employee;
-	}
-	public void setExhibition_employee(String exhibition_employee) {
-		this.exhibition_employee = exhibition_employee;
-	}
-	
 
 }

@@ -273,8 +273,8 @@ td, th{
                   <th><form:label path="password" style="font-size: 20px;">현재 비밀번호</form:label>
                   </th>
 
-                  <td><form:password path="password" id="pw" oninput="cpwCheck()" class="form-control" />
-                      <form:errors path="password" style="color:red; position: absolute;"/>
+                  <td><input  type="password" id="pw" oninput="cpwCheck()" class="form-control" />
+                      
                   </td><td><span id="pwConfirm" style="margin-left: 10px;"></span></td>
                </tr>
 

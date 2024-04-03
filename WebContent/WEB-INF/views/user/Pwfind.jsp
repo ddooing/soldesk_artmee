@@ -41,7 +41,7 @@
 	<script src="https://www.gmarwaha.com/script/lib/jquery.easing.compatibility.js"></script>
 	<script src="https://www.gmarwaha.com/script/lib/jquery.mousewheel-3.1.12.js"></script>
 	<script src="https://www.gmarwaha.com/jquery/jcarousellite/script/jquery.jcarousellite.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 	<style>
 		#jcl-demo {
 			text-align: center;
@@ -118,28 +118,61 @@
 	    <div class="container py-5 h-100" style="margin-top:100px;">
 	        <div class="row d-flex align-items-center justify-content-center h-100">
 	            <div class="col-md-12 col-lg-5 col-xl-5">
-					<div class="text-center mb-4">
-						<img src="../img/ARTMEE.png" style="width: 250px; height: 100px;">
-					</div>
-					
-					<form:form action="${root }/user/login_pro" method="post" modelAttribute="tempLoginUserBean">
-						<div class="form-outline mb-4" style="margin-top:50px;">
-							<input name="id" class="form-control form-control-lg" placeholder="아이디" />
+						<div style="position: flex; margin:auto; justify-content: center;">
+				
+					<h2>비밀번호 찾기</h2>
+					<hr style="margin: auto; margin-top: 50px; margin-bottom: 50px; width: 600px;" />
+					<section>
+					<form:form action="${root }/user/Pwfind_go" method="post" modelAttribute="findUserBean">
+					    <div style="display: flex; justify-content: center; align-items: center; margin-top:10px;">
+					        <div style="margin-right:50px;">
+					            <label path="name1" style="font-size: 20px; font-weight:bold; width:90px;">이름</label>
+					        </div>
+					        <div style="display: flex;">
+					            <form:input path="name1" class="form-control"/>
+					        </div>
+					    </div>
+					    
+					    <div style="display: flex; justify-content: center; align-items: center; margin-top:30px;">
+					        <div style="margin-right:50px;">
+					            <label path="id1" style="font-size: 20px; font-weight:bold; width:90px;">아이디</label>
+					        </div>
+					        <div style="display: flex;">
+					            <form:input path="id1" class="form-control"/>
+					        </div>
+					    </div>
+					    
+					    <div style="display: flex; justify-content: center; align-items: center; margin-top:30px;">
+					        <div style="margin-right:50px;">
+					            <label path="email1" style="font-size: 20px; font-weight:bold; width:90px;">이메일</label>
+					        </div>
+					        <div style="display: flex; align-items: center; position: relative;">
+					            <form:input path="email1" id="email1" class="form-control" />
+					            <input type="button" style="position: absolute; right: -150px; border: 0.5px solid lightgray;" class="btn btn-dark" id="verificationCodeBtn" value="인증번호 받기">
+					        </div>
+					    </div>
+					    
+					    <div style="display: flex; justify-content: center; align-items: center; margin-top:30px; margin-left:80px;">
+					        <div style="margin-right:50px;">
+					            <label path="verification_code" style="font-size: 20px; font-weight:bold; width:90px;">인증번호</label>
+					        </div>
+					        <div style="display: flex; align-items: center;">
+					            <input name="verification_num" class="form-control" style="flex-grow: 1; width:240px; margin-right:30px;"/>
+					            <div id="timer" style="position: relative; width:50px;">00:00</div>
+					        </div>
+					    </div>
+					    
+					    <div style="display:flex; margin-top:50px; justify-content: center; align-items: center;">
+							<a href="${root}/user/login" class="btn btn-danger" style=" margin-right:15px;">로그인</a>
+							<button type="submit" class="btn btn-dark">확인</button>
 						</div>
-						
-						<div class="form-outline mb-4">
-							<input type="password" name="password" class="form-control form-control-lg" placeholder="비밀번호" />
-						</div>
-						
-						<form:button type="submit" class="btn btn-primary btn-lg btn-block w-100" style="background-color: #000; color: #fff; border:none;">로그인</form:button>
+						</form:form>
+					</section>
+			</div>
 					
 					
-					</form:form>
 					
-					<div style="display: flex; margin-top:15px; justify-content: space-between;">
-					    <button type="button" onclick="window.location.href='${root}/user/Idfind'" class="btn btn-primary btn-lg" style="background-color: #000; color: #fff; border:none; width: 48%;">아이디 찾기</button>
-					    <button type="button" onclick="window.location.href='${root}/user/Pwfind'" class="btn btn-primary btn-lg" style="background-color: #000; color: #fff; border:none; width: 48%;">비밀번호 찾기</button>
-					</div>
+					
 					
 
 				</div>
@@ -186,19 +219,77 @@
 					</section>
 	<!-- 푸터-->
 	<c:import url="/WEB-INF/views/include/footer.jsp"/>
-	
 
-	<c:if test="${not empty alertMap}">
-        <script>
-        Swal.fire({
-            title: '${alertMap.title}',
-            text: '${alertMap.text}',
-            icon: '${alertMap.icon}',
-            confirmButtonText: '확인'
-        });
-    </script>
-    </c:if>
+<script>
+	$(document).ready(function() {
+	    $("#verificationCodeBtn").click(function() {
+	        var name1 = $("#name1").val();
+	        var id1 = $("#id1").val();
+	        var email1 = $("#email1").val();
 
+	        // AJAX POST 요청 수행
+	        $.ajax({
+	            url: "${root}/user/Pwfind_pro", // 필요에 따라 URL 조정
+	            type: "POST",
+	            contentType: "application/json", // Content-Type 설정 추가
+	            data: JSON.stringify({
+	                name1: name1,
+	                id1: id1,
+	                email1: email1
+	            }),
+	            success: function(response) {
+	                // 서버의 응답 처리
+	                Swal.fire({
+	                    icon: 'success',
+	                    title: '인증번호 발송 완료',
+	                    text: '이메일로 인증번호가 발송되었습니다.',
+	                    confirmButtonText: '확인'
+	                });
+	             // 타이머 추가
+	                var time = 5 * 60; // 5분을 초 단위로 변환
+	                var timerElement = document.getElementById('timer');
+
+	                var interval = setInterval(function() {
+	                    var minutes = parseInt(time / 60, 10);
+	                    var seconds = parseInt(time % 60, 10);
+
+	                    minutes = minutes < 10 ? "0" + minutes : minutes;
+	                    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+	                    timerElement.textContent = minutes + ":" + seconds;
+
+	                    if (--time < 0) {
+	                        timerElement.textContent = "";
+	                        clearInterval(interval);
+	                    }
+	                }, 1000);
+	            },
+	            error: function(xhr, status, error) {
+	                if (xhr.status !== 200) {
+	                    console.log("Error: Status code is not 200");
+	                }
+	                if (xhr.getResponseHeader("Content-Type").indexOf("application/json") === -1) {
+	                    console.log("Error: Response is not JSON");
+	                    // 여기서 추가 처리를 할 수 있습니다.
+	                } else {
+	                    // JSON으로 안전하게 파싱할 수 있음
+	                    var response = JSON.parse(xhr.responseText);
+	                }
+	            
+
+	                // 사용자에게 오류 메시지 표시
+	                Swal.fire({
+	                    icon: 'error',
+	                    title: '오류 발생',
+	                    text: '인증번호 발송 중 오류가 발생했습니다.',
+	                    confirmButtonText: '닫기'
+	                });
+	            }
+	        });
+	    });
+	});
+
+</script>
 </body>
 
 </html>

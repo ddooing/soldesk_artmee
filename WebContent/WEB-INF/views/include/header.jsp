@@ -27,8 +27,7 @@
 
 	<!-- Bootstrap core JS-->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-	<!-- Core theme JS-->
-	<script src="../js/scripts.js"></script>
+
 
 	<!-- JQuery 자바스크립트-->
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -123,7 +122,9 @@
 					    </c:when>
 					    
 					    <c:otherwise>
-					        <li class="nav-item"><a href="${root}/mypage/reservelist?user_id=${loginUserBean.user_id}" class="nav-link">마이페이지</a></li>
+					    	<c:if test="${loginUserBean.state==1}">
+					        	<li class="nav-item"><a href="${root}/mypage/reservelist?user_id=${loginUserBean.user_id}" class="nav-link">마이페이지</a></li>
+					        </c:if>
 					        <li class="nav-item"><a href="${root}/user/logout" class="nav-link">로그아웃</a></li>
 					        <c:choose>
 						        <c:when test="${loginUserBean.state == 3}">

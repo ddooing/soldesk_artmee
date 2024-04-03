@@ -32,8 +32,6 @@
 <!-- Bootstrap core JS-->
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Core theme JS-->
-<script src="js/scripts.js"></script>
 
 <!-- JQuery 자바스크립트-->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -55,70 +53,70 @@
 	src="https://www.gmarwaha.com/jquery/jcarousellite/script/jquery.jcarousellite.js"></script>
 
 <script>
-	$(document)
-			.ready(
-					function() {
-						// enroll_second, enroll_third, enroll_forth, enroll_fifth 숨김
-						$(
-								"#enroll_second, #enroll_third, #enroll_forth, #enroll_fifth")
-								.hide();
-
-						function scrollToTop() {
-							window.scrollTo(0, 0);
-						}
-
-						$("#first_nextButton").click(function() {
-							$("#enroll_first").hide();
-							$("#enroll_second").show();
-							scrollToTop();
+	$(document).ready(function() 
+	{
+		
+		// enroll_second, enroll_third, enroll_forth, enroll_fifth 숨김
+		$(
+				"#enroll_second, #enroll_third, #enroll_forth, #enroll_fifth")
+				.hide();
+	
+		function scrollToTop() {
+			window.scrollTo(0, 0);
+		}
+	
+		$("#first_nextButton").click(function() {
+			$("#enroll_first").hide();
+			$("#enroll_second").show();
+			scrollToTop();
+		});
+	
+		$("#second_nextButton").click(
+				function() {
+					if ($("#title").val() && $("#place").val()
+							&& $("#price").val()
+							&& $("#exhibition_start").val()
+							&& $("#exhibition_end").val()
+							&& $("#open_time").val()
+							&& $("#close_time").val()
+							&& $("#author").val()
+							&& $("#address").val() ) {
+						$("#enroll_second").hide();
+						$("#enroll_third").show();
+						scrollToTop();
+					} else {
+						Swal.fire({
+							icon : "error",
+							title : "오류!",
+							text : "필수부분을 입력해주세요",
 						});
-
-						$("#second_nextButton").click(
-								function() {
-									if ($("#title").val() && $("#place").val()
-											&& $("#price").val()
-											&& $("#exhibition_start").val()
-											&& $("#exhibition_end").val()
-											&& $("#open_time").val()
-											&& $("#close_time").val()
-											&& $("#author").val()
-											&& $("#address").val() ) {
-										$("#enroll_second").hide();
-										$("#enroll_third").show();
-										scrollToTop();
-									} else {
-										Swal.fire({
-											icon : "error",
-											title : "오류!",
-											text : "필수부분을 입력해주세요",
-										});
-									}
-								});
-
-						$("#third_nextButton").click(function() {
-							if($("#file1").val()&&$("#file2").val){
-								$("#enroll_third").hide();
-								$("#enroll_forth").show();
-								scrollToTop();	
-							} else {
-								Swal.fire({
-									icon : "error",
-									title : "오류!",
-									text : "필수파일을 입력해주세요",
-								});
-							}
-						});
-
-						$("#re_check").click(function() {
-							$("#enroll_forth").hide();
-							$("#enroll_first").show();
-							scrollToTop();
-						});
-
-						$("#come_back").click(function() {
-							window.location.href = '${root}/view/index';
-						});
-					});
+					}
+				});
+	
+		$("#third_nextButton").click(function() {
+			if($("#file1").val()&&$("#file2").val){
+				$("#enroll_third").hide();
+				$("#enroll_forth").show();
+				scrollToTop();	
+			} else {
+				Swal.fire({
+					icon : "error",
+					title : "오류!",
+					text : "필수파일을 입력해주세요",
+				});
+			}
+		});
+	
+		$("#re_check").click(function() {
+			$("#enroll_forth").hide();
+			$("#enroll_first").show();
+			scrollToTop();
+		});
+	
+		$("#come_back").click(function() {
+			window.location.href = '${root}/view/index';
+		});
+	});
 </script>
 
 
@@ -283,9 +281,10 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 		});
 	</script>
 
-	<form:form method="post" action="${root }/exhibition/Exhibition_Enroll_pro" id="form"
+	<form:form method="post" action="${root }/exhibition/Exhibition_Enroll_pro" id="form_enroll"
 		modelAttribute="addExhibitionDetailBean" enctype="multipart/form-data">
 		<form:hidden path="apply_person" value="${loginUserBean.user_id }"/>
+		<form:hidden path="gallery_id" value="${ galleryInfo.gallery_id}"/>
 		<section style="margin-top: 150px;" id="enroll_second">
 			<center>
 				<img src="../img/ARTMEE.png" alt="아트미 로고"
@@ -307,7 +306,7 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 					
 					<div class="form-group" style="margin-top: 30px;">
 						<label for="place" style="width: 150px; display: inline-block; font-size: 20px;">전시관*</label>
-						<form:input path="place" id="place" style="width:400px;" required="required" />
+						<form:input path="place" id="place" style="width:400px;" required="required" value="${galleryInfo.gallery_name}"/>
 					</div>
 
 					<div class="form-group" style="margin-top: 30px;">
@@ -315,10 +314,10 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 						<form:input path="author" style="width: 400px;" id="author" />
 					</div>
 					
-					<div class="form-group" style="margin-top: 30px; margin-left:70px;">
+					<div class="form-group" style="margin-top: 30px; ">
 						<label for="address" style="width: 150px; display: inline-block; font-size: 20px;">주소*</label>
-						<form:input path="address" id="address" style="width: 400px;" readonly="true" />
-						<input type="button" style="margin-left:10px; border: 0.5px solid lightgray;" class="btn btn-light" onclick="sample4_execDaumPostcode()" value="검색"><br>
+						<input id="address" style="width: 400px;" readonly="true" value="${galleryInfo.address}"/>
+						
 					</div>
 					
 					<div class="form-group" style="margin-top: 30px;">
@@ -335,19 +334,19 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 
 					<div class="form-group" style="margin-top: 30px;">
 						<label for="exhibition_start_time" style="width: 150px; display: inline-block; font-size: 20px;">운영시간*</label>
-							<form:input path="open_time" id="open_time" type="time" style="width: 180px; margin-right: 10px;" required="required" />
+							<form:input path="open_time" id="open_time" type="time" style="width: 180px; margin-right: 10px;" readonly="true" value="${galleryInfo.open_time}" />
 							~
-							<form:input path="close_time" id="close_time" type="time" style="width: 180px; margin-left: 10px;" required="required" />
+							<form:input path="close_time" id="close_time" type="time" style="width: 180px; margin-left: 10px;" readonly="true" value="${galleryInfo.close_time}"/>
 					</div>
 
 					<div class="form-group" style="margin-top: 30px;">
 						<label for="holiday" style="width: 150px; display: inline-block; font-size: 20px;">휴무일</label>
-						<form:input path="holiday" id="holiday" style="width:400px;" />
+						<form:input path="holiday" id="holiday" style="width:400px;" readonly="true" value="${galleryInfo.holiday}"/>
 					</div>
 					
 					<div class="form-group" style="margin-top: 30px;">
 						<label for="site" style="width: 150px; display: inline-block; font-size: 20px;">사이트</label>
-						<form:input path="site" id="site" style="width: 400px;" />
+						<form:input path="site" id="site" style="width: 400px;" readonly="true" value="${galleryInfo.site}"/>
 					</div>
 
 					<div style="margin-top: 90px;">
@@ -417,41 +416,7 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 		    });
 		</script>
 		
-		<!-- 주소 검색 -->
-		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-		<script>
-		    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
-		    function sample4_execDaumPostcode() {
-		        new daum.Postcode({
-		            oncomplete: function(data) {
-		                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 		
-		                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
-		                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-		                var roadAddr = data.roadAddress; // 도로명 주소 변수
-		                var extraRoadAddr = ''; // 참고 항목 변수
-		
-		                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-		                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-		                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-		                    extraRoadAddr += data.bname;
-		                }
-		                // 건물명이 있고, 공동주택일 경우 추가한다.
-		                if(data.buildingName !== '' && data.apartment === 'Y'){
-		                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-		                }
-		                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-		                if(extraRoadAddr !== ''){
-		                    extraRoadAddr = ' (' + extraRoadAddr + ')';
-		                }
-		
-		                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-		                document.getElementById("address").value = roadAddr;
-		
-		            }
-		        }).open();
-		    }
-		</script>
 		
 
 		<section style="margin-top: 150px;" id="enroll_third">
@@ -586,7 +551,7 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 	
 	<script>
 	function submit_fn() {
-	    var form = document.querySelector("form"); // 폼 요소를 가져옵니다.
+	    var form = document.getElementById('form_enroll'); // 폼 요소를 가져옵니다.
 
 	    Swal.fire({
 	        title: "전시회를 등록하시겠습니까?",
@@ -596,7 +561,7 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 	        cancelButtonText: "취소"
 	    }).then((result) => {
 	        if (result.isConfirmed) {
-	            form.submit();
+	        	form.submit();
 	        }
 	    });
 	}

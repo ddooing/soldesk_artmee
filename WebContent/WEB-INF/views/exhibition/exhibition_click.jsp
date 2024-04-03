@@ -155,6 +155,7 @@
 	right: 10px;
 	width: 400px;
 	transition: top 0.3s;
+	z-index:99px;
 }
 
 #sidebar_menu:hover {
@@ -247,7 +248,7 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 									style="width: 30px; height: 30px;" alt="공유아이콘" />
 							</button>
 
-
+							<c:if test="${loginUserBean.state != 4}">
 							<c:choose>
 								<c:when
 									test="${loginUserBean.user_id != 0 && bookmarksure == 1}">
@@ -289,7 +290,7 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 									</button>
 								</c:otherwise>
 							</c:choose>
-
+							</c:if>
 
 
 						</div>
@@ -310,8 +311,7 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 						<form:hidden path="user_id" value="${loginUserBean.user_id }" />
 						<form:hidden path="exhibition_id" value="${exhibitionBean.exhibition_id}"/>
 						<div id="right-side-menu">
-							<div
-								style="display: inline-block; box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.22); border-top: 10px solid black; border-top-left-radius: 5%; border-top-right-radius: 5%; border-bottom: 10px solid black; border-bottom-left-radius: 5%; border-bottom-right-radius: 5%; background-color: white;">
+							<div style="display: inline-block; box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.22); border-top: 10px solid black; border-top-left-radius: 5%; border-top-right-radius: 5%; border-bottom: 10px solid black; border-bottom-left-radius: 5%; border-bottom-right-radius: 5%; background-color: white;">
 								<div id="sidebar_menu"
 									style="border: 1px solid #e7e7e7; border-top-right-radius: 5%; border-top-left-radius: 5%; border-bottom: none; width: 400px; height: 350px; text-align: center; align-items: center; justify-content: center; display: flex;">
 									<form:hidden path="reserve_date" id="hiddenDateField" value="" />
@@ -319,6 +319,7 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 								</div>
 								<hr style="margin: auto; width: 400px; color: black;" />
 
+								<c:if test="${loginUserBean.state !=4}">
 								<div id="sidebar_menu"
 									style="border: 1px solid #e7e7e7; border-top: none; border-bottom: none; border-radius: 5%; width: 400px; height: 80px; text-align: center; align-items: center; justify-content: center; display: flex;">
 									<div
@@ -343,7 +344,7 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 										</div>
 									</div>
 								</div>
-
+								
 								<script>
 									const decrementButton = document
 											.getElementById("ticket_decrement");
@@ -402,9 +403,7 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 										</c:choose>
 									</div>
 								</div>
-								<hr style="margin: auto; width: 80px; color: black;" />
-
-
+								</c:if>
 							</div>
 						</div>
 

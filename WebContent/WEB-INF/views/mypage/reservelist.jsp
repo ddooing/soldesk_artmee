@@ -28,18 +28,13 @@
    <script src="https://www.gmarwaha.com/script/lib/jquery.easing.compatibility.js"></script>
    <script src="https://www.gmarwaha.com/script/lib/jquery.mousewheel-3.1.12.js"></script>
    <script src="https://www.gmarwaha.com/jquery/jcarousellite/script/jquery.jcarousellite.js"></script>
-   
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
       <!-- Font Awesome icons (free version)-->
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
    
       <link rel="preconnect" href="https://fonts.gstatic.com">
    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
-   
-   
-   <!-- Core theme JS-->
-   <script src="js/scripts.js"></script>
-   
-   <script src="js/mypage.js"></script> 
+
    <!-- JQuery 자바스크립트-->
    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -338,5 +333,15 @@ table, th, td {
         }
     });
 </script>
+
+<c:if test="${infoSuccessMsg}">
+        <script>
+        Swal.fire({
+            text: '회원정보가 수정되었습니다',
+            icon: 'success',
+            confirmButtonText: '확인'
+        });
+    </script>
+</c:if>
 </body>
 </html>
