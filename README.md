@@ -14,11 +14,10 @@
 ## 📅 개발기간 
 2024.02.01 ~ 2024.02.23
 
-
 <img src="https://github.com/ddooing/soldesk_artme/assets/118183105/4fe106c0-1289-4365-a2c8-61f1eb6aa09c" width="850" height="350"/>
 
 <br/><br/>
-
+💥  유지보수 중 24.03 ~ 
 
 
 ## 👨‍💻 팀원 구성
