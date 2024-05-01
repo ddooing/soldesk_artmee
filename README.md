@@ -24,7 +24,7 @@
 ## Team
 |<img src="https://avatars.githubusercontent.com/u/118183105?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/101092238?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/55232668?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/94101325?v=4" width="150" height="150"/>|
 |:-:|:-:|:-:|:-:|
-|ddooing<br/>[@ddooing](https://github.com/ddooing)|[@Timtory](https://github.com/Timtory)|[@starry067](https://github.com/starry067)|[@pore133](https://github.com/pore133)|
+|[@ddooing](https://github.com/ddooing)|[@Timtory](https://github.com/Timtory)|[@starry067](https://github.com/starry067)|[@pore133](https://github.com/pore133)|
 
 임승연 - 결제 기능 ,장바구니 기능 , 결제 내역 관리 기능 <br/>
 김연희 - 게시판 기능 ( 관리자 페이지 포함) <br/>
@@ -36,8 +36,8 @@
 
 <br/><br/>
 ## ⚙ 개발환경
-![Eclipse](https://img.shields.io/badge/Eclipse-2C2255?style=for-the-badge&logo=eclipse&logoColor=white)  <br/><br/>
-![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white) <br/><br/>
+![Eclipse](https://img.shields.io/badge/Eclipse-2C2255?style=for-the-badge&logo=eclipse&logoColor=white)  
+![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white) 
 ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white) ![CSS](https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white)  ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white) ![JQuery](https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white)
 ![Oracle](https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=black)
 
