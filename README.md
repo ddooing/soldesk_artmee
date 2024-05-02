@@ -27,10 +27,10 @@
 |:-:|:-:|:-:|:-:|
 |[@ddooing](https://github.com/ddooing) |[@Timtory](https://github.com/Timtory)|[@starry067](https://github.com/starry067)|[@pore133](https://github.com/pore133)|
 
-임승연 - 결제 기능 ,장바구니 기능 , 결제 내역 관리 기능 <br/>
-김연희 - 게시판 기능 ( 관리자 페이지 포함) <br/>
-노승찬 - 전시회 등록 신청, 배너 신청 ( 관리자 페이지 포함) <br/>
-최재호 - 공지사항 기능, 로그인, 회원가입 ( 관리자 페이지 포함) <br/>
+ddooing - 결제 기능 ,장바구니 기능 , 결제 내역 관리 기능 <br/>
+starry067 - 게시판 기능 ( 관리자 페이지 포함) <br/>
+Timtory - 전시회 등록 신청, 배너 신청 ( 관리자 페이지 포함) <br/>
+pore133 - 공지사항 기능, 로그인, 회원가입 ( 관리자 페이지 포함) <br/>
 모두 - DB 설계, 프론트 디자인 설계 
 
 
