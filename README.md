@@ -1,5 +1,5 @@
 # Spring Project
-🎨 ARTME 전시회 정보 및 예약 관리 시스템
+🎨 ARTMEE 전시회 정보 및 예약 관리 시스템
 
 
 ## 💻 프로젝트 소개 
@@ -17,7 +17,7 @@
 <img src="https://github.com/ddooing/soldesk_artme/assets/118183105/4fe106c0-1289-4365-a2c8-61f1eb6aa09c" width="850" height="350"/>
 
 <br/><br/>
-💥  <b>서버 업로드 후, 유지보수 중 </b> 24.03 ~ 
+💥  <b font-size="20">서버 업로드 후, 유지보수 중 </b> 24.03 ~ 
 <br/><br/>
 
 
