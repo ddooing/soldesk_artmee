@@ -25,8 +25,7 @@
 ## Team
 |<img src="https://avatars.githubusercontent.com/u/118183105?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/101092238?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/55232668?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/94101325?v=4" width="150" height="150"/>|
 |:-:|:-:|:-:|:-:|
-|[@ddooing](https://github.com/ddooing) 결제 기능 ,장바구니 기능 , 결제 내역 관리 기능
-|[@Timtory](https://github.com/Timtory)|[@starry067](https://github.com/starry067)|[@pore133](https://github.com/pore133)|
+|[@ddooing](https://github.com/ddooing) |[@Timtory](https://github.com/Timtory)|[@starry067](https://github.com/starry067)|[@pore133](https://github.com/pore133)|
 
 임승연 - 결제 기능 ,장바구니 기능 , 결제 내역 관리 기능 <br/>
 김연희 - 게시판 기능 ( 관리자 페이지 포함) <br/>
