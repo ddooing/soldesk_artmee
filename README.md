@@ -19,9 +19,9 @@
 <br/><br/>
 💥  <b font-size="20">서버 업로드 후, 유지보수 중 </b> 24.03 ~ 
 <br/>
-<b>http://timtory.synology.me:8082/view/index</b>
+<b> 주소 : http://timtory.synology.me:8082/view/index</b>
 <br/>
-<b>관리자 아이디& 비밀번호 :asdf</b>
+<b> 관리자 아이디& 비밀번호 :asdf</b>
 <br/><br/>
 
 
