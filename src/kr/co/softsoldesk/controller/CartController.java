@@ -48,7 +48,6 @@ public class CartController {
 	    list = new ArrayList < CartBean > ();
 	  }
 	  
-	  
 		/*
 		 * System.out.println("cart insert 컨트롤러 - ");
 		 * System.out.println("cart insert 컨트롤러 실행됨"+tempReserveBean.getReserve_date());

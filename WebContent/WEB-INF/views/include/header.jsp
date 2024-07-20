@@ -122,7 +122,7 @@
 					    </c:when>
 					    
 					    <c:otherwise>
-					    	<c:if test="${loginUserBean.state==1}">
+					    	<c:if test="${loginUserBean.state==1 || loginUserBean.state == 3}">
 					        	<li class="nav-item"><a href="${root}/mypage/reservelist?user_id=${loginUserBean.user_id}" class="nav-link">마이페이지</a></li>
 					        </c:if>
 					        <li class="nav-item"><a href="${root}/user/logout" class="nav-link">로그아웃</a></li>

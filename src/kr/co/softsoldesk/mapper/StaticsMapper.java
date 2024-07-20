@@ -25,6 +25,7 @@ public interface StaticsMapper {
 			+ "    WHERE\r\n"
 			+ "        approved_At >= TRUNC(SYSDATE) - 13\r\n"
 			+ "        AND approved_At < TRUNC(SYSDATE) + 1\r\n"
+			+ "		AND state=1"
 			+ "    GROUP BY\r\n"
 			+ "        TRUNC(approved_At)\r\n"
 			+ ")\r\n"

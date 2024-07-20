@@ -99,13 +99,14 @@ public class AdminExhibitionDao {
 		
 		// ====================== 전시회 등록 신청 ===========================
 		// 전시회 등록 신청 관리자 페이지 리스트
-		public List<ExhibitionDetailBean> getAllExhibitionEnroll(RowBounds rowBounds) {
-			return adminExhibitionMapper.getAllExhibitionEnroll(rowBounds);
+		public List<ExhibitionDetailBean> getEnrollExhibitionSearch(String title,String name,String author,RowBounds rowBounds) {
+			return adminExhibitionMapper.getEnrollExhibitionSearch(title,name,author, rowBounds);
 		}
-		
-		// 전시회 등록 신청 관리자 페이지 페이징처리
-		public int getEnrollExhibitionCnt() {
-			return adminExhibitionMapper.getEnrollExhibitionCnt();
+		public int getEnrollExhibitionSearchCnt(String title,String name,String author) {
+			return adminExhibitionMapper.getEnrollExhibitionSearchCnt(title,name,author);
+		}
+		public ExhibitionDetailBean getEnrollExhibitionSearch_BadgeCnt(String title,String name,String author) {
+			return adminExhibitionMapper.getEnrollExhibitionSearch_BadgeCnt(title,name,author);
 		}
 		
 		// 전시회 등록 신청 한개 모든 정보 가져오기
@@ -121,71 +122,6 @@ public class AdminExhibitionDao {
 		// 전시회 등록 신청 한 후 상태값 변경
 		public void UpdateExhibitionEnrollState(int enroll_state, int exhibition_enroll_id) {
 			adminExhibitionMapper.UpdateExhibitionEnrollState(enroll_state, exhibition_enroll_id);
-		}
-		
-		// 전시회 등록 신청 관리자 페이지 뱃지에 넣을 개수 반환
-		public ExhibitionDetailBean getEnrollExhibitionbadgeCnt() {
-			return adminExhibitionMapper.getEnrollExhibitionbadgeCnt();
-		}
-		
-		// 전시회 등록 신청 제목 검색
-		public List<ExhibitionDetailBean> getEnrollExhibitionSearchTitle(String search, RowBounds rowBounds) {
-			return adminExhibitionMapper.getEnrollExhibitionSearchTitle(search, rowBounds);
-		}
-		
-		// 전시회 등록 신청 제목 검색 중 배지 개수 반환
-		public ExhibitionDetailBean getEnrollExhibitionSearchTitleBadgeCnt(String search) {
-			return adminExhibitionMapper.getEnrollExhibitionSearchTitleBadgeCnt(search);
-		}
-		
-		// 전시회 등록 신청 제목 검색 페이징 처리를 위한 검색시 총개수 반환
-		public int getEnrollExhibitionSearchTitletotalCnt(String search) {
-			return adminExhibitionMapper.getEnrollExhibitionSearchTitletotalCnt(search);
-		}
-		
-		// 전시회 등록 신청 신청인 검색
-		public List<ExhibitionDetailBean> getEnrollExhibitionSearchapply_person(String search, RowBounds rowBounds) {
-			return adminExhibitionMapper.getEnrollExhibitionSearchapply_person(search, rowBounds);
-		}
-		
-		// 전시회 등록 신청 신청인 검색 중 배지 개수 반환
-		public ExhibitionDetailBean getEnrollExhibitionSearchapply_personBadgeCnt(String search) {
-			return adminExhibitionMapper.getEnrollExhibitionSearchapply_personBadgeCnt(search);
-		}
-		
-		// 전시회 등록 신청 신청인 검색 페이징 처리를 위한 검색시 총개수 반환
-		public int getEnrollExhibitionSearchapply_persontotalCnt(String search) {
-			return adminExhibitionMapper.getEnrollExhibitionSearchapply_persontotalCnt(search);
-		}
-		
-		// 전시회 등록 신청 작가 검색
-		public List<ExhibitionDetailBean> getEnrollExhibitionSearchauthor(String search, RowBounds rowBounds) {
-			return adminExhibitionMapper.getEnrollExhibitionSearchauthor(search, rowBounds); 
-		}
-		
-		// 전시회 등록 신청 작가 검색 중 배지 개수 반환
-		public ExhibitionDetailBean getEnrollExhibitionSearchauthorBadgeCnt(String search) {
-			return adminExhibitionMapper.getEnrollExhibitionSearchauthorBadgeCnt(search);
-		}
-		
-		// 전시회 등록 신청 작가 검색 페이징 처리를 위한 검색시 총개수 반환
-		public int getEnrollExhibitionSearchauthortotalCnt(String search) {
-			return adminExhibitionMapper.getEnrollExhibitionSearchauthortotalCnt(search);
-		}
-		
-		// 전시회 등록 신청 상태 검색
-		public List<ExhibitionDetailBean> getEnrollExhibitionSearchstate(int search, RowBounds rowBounds) {
-			return adminExhibitionMapper.getEnrollExhibitionSearchstate(search, rowBounds);
-		}
-		
-		// 전시회 등록 신청 상태 검색 중 배지 개수 반환
-		public ExhibitionDetailBean getEnrollExhibitionSearchstateBadgeCnt(int search) {
-			return adminExhibitionMapper.getEnrollExhibitionSearchstateBadgeCnt(search);
-		}
-		
-		// 전시회 등록 신청 상태 검색 페이징 처리를 위한 검색시 총개수 반환
-		public int getEnrollExhibitionSearchstatetotalCnt(int search) {
-			return adminExhibitionMapper.getEnrollExhibitionSearchstatetotalCnt(search);
 		}
 
 }

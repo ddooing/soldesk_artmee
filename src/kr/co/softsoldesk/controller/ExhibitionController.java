@@ -54,6 +54,7 @@ public class ExhibitionController {
 	
 	@Autowired
 	private GalleryService galleryService;
+	
 	@Resource(name = "loginUserBean")
 	private UserBean loginUserBean;
 	
@@ -143,6 +144,7 @@ public class ExhibitionController {
 	    // 전시회 클릭시 조회수 1증가
 		exhibitionService.increaseViewsExhibition(exhibition_id);
 		
+		
 		// 로그인 되어있을때만 북마크 여부 확인
 		if(user_id != 0) {
 			int bookmarksure = bookMarkService.BookMarkSure(user_id, exhibition_id);
@@ -157,6 +159,7 @@ public class ExhibitionController {
 		ExhibitionBean exhibitionBean = exhibitionService.getExhibitionDetailInfo(exhibition_id);
 	    model.addAttribute("exhibitionBean", exhibitionBean);
 	    
+	    System.out.println("exhibition_click . id="+exhibitionBean.getTitle());
 	    // 전시회 남여 비율 통계
 	    StaticsBean staticsdetailBean = staticsService.getexhibitiondetailstatics(exhibition_id);
 	    model.addAttribute("staticsdetailBean",staticsdetailBean);

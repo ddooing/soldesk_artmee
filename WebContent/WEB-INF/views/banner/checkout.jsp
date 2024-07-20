@@ -27,9 +27,9 @@
 	            amount: ${applybannerBean.payment}, // 서버에서 받은 금액 사용
 	            orderId: '${orderid}', // 주문 ID
 	            orderName: '${title}', // 주문명 
-	            customerName: '${loginUserDetailBean.name}', // 구매자 이름
-	            successUrl: 'http://localhost:8080/Spring_Project_Dream/banner/success',
-	            failUrl: 'http://localhost:8080/Spring_Project_Dream/banner/bannerapply'
+	            customerName: '${galleryInfo.gallery_name}', // 구매자 이름
+	            successUrl: 'http://timtory.synology.me:8088/banner/success',
+	            failUrl: 'http://timtory.synology.me:8088/banner/bannerapply'
 	        }).catch(function (error) {
 	            handlePaymentError(error);    
 	        });

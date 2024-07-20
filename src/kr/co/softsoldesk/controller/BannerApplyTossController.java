@@ -30,8 +30,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import kr.co.softsoldesk.Beans.BannerApplyFormBean;
 import kr.co.softsoldesk.Beans.ExhibitionBean;
 import kr.co.softsoldesk.Beans.ExhibitionDetailBean;
+import kr.co.softsoldesk.Beans.GalleryBean;
 import kr.co.softsoldesk.Beans.UserBean;
 import kr.co.softsoldesk.Service.BannerService;
+import kr.co.softsoldesk.Service.GalleryService;
 import kr.co.softsoldesk.Service.UserService;
 
 @Controller
@@ -51,6 +53,9 @@ public class BannerApplyTossController {
 	
 	String failmsg="";
 	
+	@Autowired
+	private GalleryService galleryService;
+	
 
 	//에러 코드 재현할때 사용함
 	String testCode = "PROVIDER_ERROR"; // 에러 테스트용 코드
@@ -65,10 +70,10 @@ public class BannerApplyTossController {
 	// 배너 견적 신청
 	@GetMapping("/mainbannerapplyform")
 	public String mainbannerapplyform(@ModelAttribute("applybannerBean") BannerApplyFormBean applybannerBean ,Model model) {
-		
-		// user 모든 정보 가져가기
-		UserBean userinfoBean = userService.getLoginUserAllInfo(loginUserBean.getUser_id());
-		model.addAttribute("userinfoBean",userinfoBean);
+
+		//전시관 정보 가져오기 ( user_id = gallery tabel gallery_user_id
+		GalleryBean galleryInfo = galleryService.getGalleryInfo(loginUserBean.getUser_id());
+		model.addAttribute("galleryInfo", galleryInfo);
 		
 		// 해당 유저가 신청한 전시회 목록 가져가기
 		List<ExhibitionBean> apply_personexhibitionlist = bannerSerivce.getApply_personExhibitionlist(loginUserBean.getUser_id());
@@ -81,9 +86,9 @@ public class BannerApplyTossController {
 	@GetMapping("/subbannerapplyform")
 	public String estimate2(@ModelAttribute("applybannerBean") BannerApplyFormBean applybannerBean ,Model model) {
 		
-		// user 모든 정보 가져가기
-		UserBean userinfoBean = userService.getLoginUserAllInfo(loginUserBean.getUser_id());
-		model.addAttribute("userinfoBean",userinfoBean);
+		//전시관 정보 가져오기 ( user_id = gallery tabel gallery_user_id
+		GalleryBean galleryInfo = galleryService.getGalleryInfo(loginUserBean.getUser_id());
+		model.addAttribute("galleryInfo", galleryInfo);
 		
 		// 해당 유저가 신청한 전시회 목록 가져가기
 		List<ExhibitionBean> apply_personexhibitionlist = bannerSerivce.getApply_personExhibitionlist(loginUserBean.getUser_id());
@@ -97,7 +102,7 @@ public class BannerApplyTossController {
             				HttpServletRequest request, Model model) throws Exception  {
 		
 		//신청하려는 유저 아이디 찾기
-		UserBean loginUserDetailBean = userService.getLoginUserAllInfo(applybannerBean.getApply_person_id());
+		GalleryBean galleryInfo = galleryService.getGalleryInfo(loginUserBean.getUser_id());
 		
 		String title="";
 		// 파일저장 및 banner_file_id set
@@ -133,7 +138,7 @@ public class BannerApplyTossController {
 	    
 		model.addAttribute("orderid", applybannerBean.getOrder_id()); 
 	    model.addAttribute("applybannerBean", applybannerBean);
-	    model.addAttribute("loginUserDetailBean",loginUserDetailBean);
+	    model.addAttribute("galleryInfo",galleryInfo);
 	    model.addAttribute("title",title);
 	    
 	    

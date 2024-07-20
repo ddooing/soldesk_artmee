@@ -59,18 +59,14 @@
 				<div style="margin-top: 30px;">
 					<h3>전시회 신청내역</h3>
 				</div>
-				<div
-					style="position: relative; display: flex; justify-content: start; height: 80px; align-items: center; border: 0.2px solid black; background-color: white; margin-top: 20px;">
-					
+				<div style="position: relative; display: flex; justify-content: start; height: 80px; align-items: center; border: 0.2px solid black; background-color: white; margin-top: 20px;">
 					<div style="display:flex;  margin-right:60px; width: 450px; float: left;">
 						<span class="badge text-bg-danger rounded-pill" style="font-size: 15px; margin-right: 10px; margin-left: 50px; padding:10px;">등록대기 ${countBean.stay_exhibition_eroll_count }건</span> 
 						<span class="badge text-bg-success rounded-pill" style="font-size: 15px; margin-right: 10px; padding:10px;">등록완료 ${countBean.complete_exhibition_eroll_count }건</span> 
 						<span class="badge bg-success-subtle text-success-emphasis rounded-pill" style="background-color: black; font-size: 15px; padding:10px;">등록신청 총 ${countBean.total_exhibition_eroll_count}건</span>
 					</div>
 					
-					<form action="${root }/admin/manager_exhibitionapplylist"
-						method="get">
-
+					<form action="${root }/admin/manager_exhibitionapplylist" style="margin-bottom:20px;" method="get">
 						<c:choose>
 							<c:when test="${exhibitioncombo == null }">
 								<select name="exhibitioncombo" id="exhibitioncombo"
@@ -79,7 +75,7 @@
 									<option value="title">제목</option>
 									<option value="apply_person">신청인</option>
 									<option value="author">작가</option>
-									<option value="enroll_state">상태</option>
+									
 								</select>
 							</c:when>
 							<c:when test="${exhibitioncombo == 'title' }">
@@ -89,7 +85,7 @@
 									<option value="title" selected>제목</option>
 									<option value="apply_person">신청인</option>
 									<option value="author">작가</option>
-									<option value="enroll_state">상태</option>
+									
 								</select>
 							</c:when>
 							<c:when test="${exhibitioncombo == 'apply_person' }">
@@ -112,16 +108,7 @@
 									<option value="enroll_state">상태</option>
 								</select>
 							</c:when>
-							<c:when test="${exhibitioncombo == 'enroll_state' }">
-								<select name="exhibitioncombo" id="exhibitioncombo"
-									style="width: 150px; height: 40px; margin-right: 30px;">
-									<option value="" disabled>검색조건선택</option>
-									<option value="title">제목</option>
-									<option value="apply_person">신청인</option>
-									<option value="author">작가</option>
-									<option value="enroll_state" selected>상태</option>
-								</select>
-							</c:when>
+
 						</c:choose>
 
 						<c:choose>
@@ -138,6 +125,19 @@
 						</c:choose>
 
 						<button class="btn btn-dark" style="width: 80px; height: 40px;">검색</button>
+						<button class="button-39" id="resetButton" role="button" style="width: 80px; height: 44px; margin-top: 22px; margin-left: 20px;">초기화</button>
+                  
+	                  <script>
+	                      document.addEventListener('DOMContentLoaded', function() {
+	                          // 검색 조건 콤보박스와 검색어 입력 필드, 검색 버튼 요소를 가져옵니다.
+	                          var resetButton = document.getElementById('resetButton');
+	
+	                          // 검색 버튼 클릭 이벤트 리스너를 추가합니다.
+	                          resetButton.addEventListener('click', function() {
+	                              window.location.href = '${root}/admin/manager_exhibitionapplylist';
+	                          });
+	                      });
+	                  </script>
 					</form>
 				</div>
 
@@ -248,303 +248,93 @@
 					</table>
 
 
-					<c:choose>
-						<c:when test="${!empty pageBean }">
-							<div class="d-none d-md-block" style="margin-top: 50px;">
-								<ul class="pagination justify-content-center">
-									<c:choose>
-										<c:when test="${pageBean.prevPage <= 0 }">
-											<li class="page-item disabled"><a href="#"
-												class="page-link">이전</a></li>
-										</c:when>
-										<c:otherwise>
-											<li class="page-item"><a
-												href="${root}/admin/manager_exhibitionapplylist?page=${pageBean.prevPage}"
-												class="page-link">이전</a></li>
-										</c:otherwise>
-									</c:choose>
+					<div class="d-none d-md-block" style="margin-top: 50px;">
+						<ul class="pagination justify-content-center">
+							<c:choose>
+								<c:when test="${pageBean.prevPage <= 0 }">
+									<li class="page-item disabled">
+										<a href="#" class="page-link">이전</a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="pre-page">
+                                    	<a href="#" class="page-link">이전</a>
+                                    </li>
+								</c:otherwise>
+							</c:choose>
+							<script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                     var pageLinks = document.querySelectorAll('.pre-page');
+                             
+                                     pageLinks.forEach(function(link) {
+                                         link.addEventListener('click', function(event) {
+                                             event.preventDefault();
+                                             var pageNum = ${pageBean.prevPage};
+                                             var urlParams = new URLSearchParams(window.location.search);
+                                             urlParams.set('page', pageNum);
+                                             window.location.href = window.location.pathname + '?' + urlParams.toString();
+                                         });
+                                     });
+                                 });
+                             </script>
 
-									<c:forEach var="idx" begin="${pageBean.min}"
-										end="${pageBean.max}">
-										<c:choose>
-											<c:when test="${idx == pageBean.currentPage}">
-												<li class="page-item active"><a
-													href="${root}/admin/manager_exhibitionapplylist?page=${idx}"
-													class="page-link">${idx}</a></li>
-											</c:when>
-											<c:otherwise>
-												<li class="page-item"><a
-													href="${root}/admin/manager_exhibitionapplylist?page=${idx}"
-													class="page-link">${idx}</a></li>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach>
-
-									<c:choose>
-										<c:when test="${pageBean.max >= pageBean.pageCnt}">
-											<li class="page-item disabled"><a href="#"
-												class="page-link">다음</a></li>
-										</c:when>
-										<c:otherwise>
-											<li class="page-item"><a
-												href="${root}/admin/manager_exhibitionapplylist?page=${pageBean.nextPage}"
-												class="page-link">다음</a></li>
-										</c:otherwise>
-									</c:choose>
-								</ul>
-							</div>
-
-							<div class="d-block d-md-none">
-								<ul class="pagination justify-content-center">
-									<li class="page-item"><a href="#" class="page-link">이전</a></li>
-									<li class="page-item"><a href="#" class="page-link">다음</a></li>
-								</ul>
-							</div>
-						</c:when>
-						
-						<c:when test="${!empty pageBean1 }">
-							<div class="d-none d-md-block" style="margin-top: 50px;">
-								<ul class="pagination justify-content-center">
-									<c:choose>
-										<c:when test="${pageBean1.prevPage <= 0 }">
-											<li class="page-item disabled">
-												<!-- 1페이지에 있으면 이전 버튼 비활성화 --> <a href="#" class="page-link">이전</a>
-											</li>
-										</c:when>
-										<c:otherwise>
-											<li class="page-item"><a
-												href="${root }/admin/manager_exhibitionapplylist?exhibitioncombo=${exhibitioncombo}&exhibitionsearch=${exhibitionsearch}&page=${pageBean1.prevPage}"
-												class="page-link">이전</a></li>
-										</c:otherwise>
-									</c:choose>
-
-									<c:forEach var="idx" begin="${pageBean1.min}"
-										end="${pageBean1.max}">
-										<!-- model로 가져온 pageBean의 최소페이지부터 최대페이지까지 반복 : idx 는 현재페이지-->
-										<c:choose>
-											<c:when test="${idx == pageBean1.currentPage }">
-												<li class="page-item active"><a
-													href="${root }/admin/manager_exhibitionapplylist?exhibitioncombo=${exhibitioncombo}&exhibitionsearch=${exhibitionsearch}&page=${idx}"
-													class="page-link"> ${idx } </a></li>
-											</c:when>
-											<c:otherwise>
-												<li class="page-item"><a
-													href="${root }/admin/manager_exhibitionapplylist?exhibitioncombo=${exhibitioncombo}&exhibitionsearch=${exhibitionsearch}&page=${idx}"
-													class="page-link"> ${idx } </a></li>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach>
-
-
-									<c:choose>
-										<c:when test="${pageBean1.max >= pageBean1.pageCnt  }">
-											<!-- max페이지 > 전체페이지개수 일때  -->
-											<li class="page-item disabled">
-												<!-- 1페이지에 있으면 이전 버튼 비활성화 --> <a href="#" class="page-link">다음</a>
-											</li>
-										</c:when>
-										<c:otherwise>
-											<li class="page-item"><a
-												href="${root }/admin/manager_exhibitionapplylist?exhibitioncombo=${exhibitioncombo}&exhibitionsearch=${exhibitionsearch}&page=${pageBean1.nextPage}"
-												class="page-link">다음</a></li>
-										</c:otherwise>
-									</c:choose>
-								</ul>
-							</div>
-
-							<div class="d-block d-md-none">
-								<ul class="pagination justify-content-center">
-									<li class="page-item"><a href="#" class="page-link">이전</a>
-									</li>
-									<li class="page-item"><a href="#" class="page-link">다음</a>
-									</li>
-								</ul>
-							</div>
-						</c:when>
-						
-						<c:when test="${!empty pageBean2 }">
-							<div class="d-none d-md-block" style="margin-top: 50px;">
-								<ul class="pagination justify-content-center">
-									<c:choose>
-										<c:when test="${pageBean2.prevPage <= 0 }">
-											<li class="page-item disabled">
-												<!-- 1페이지에 있으면 이전 버튼 비활성화 --> <a href="#" class="page-link">이전</a>
-											</li>
-										</c:when>
-										<c:otherwise>
-											<li class="page-item"><a
-												href="${root }/admin/manager_exhibitionapplylist?exhibitioncombo=${exhibitioncombo}&exhibitionsearch=${exhibitionsearch}&page=${pageBean2.prevPage}"
-												class="page-link">이전</a></li>
-										</c:otherwise>
-									</c:choose>
-
-									<c:forEach var="idx" begin="${pageBean2.min}"
-										end="${pageBean2.max}">
-										<!-- model로 가져온 pageBean의 최소페이지부터 최대페이지까지 반복 : idx 는 현재페이지-->
-										<c:choose>
-											<c:when test="${idx == pageBean2.currentPage }">
-												<li class="page-item active"><a
-													href="${root }/admin/manager_exhibitionapplylist?exhibitioncombo=${exhibitioncombo}&exhibitionsearch=${exhibitionsearch}&page=${idx}"
-													class="page-link"> ${idx } </a></li>
-											</c:when>
-											<c:otherwise>
-												<li class="page-item"><a
-													href="${root }/admin/manager_exhibitionapplylist?exhibitioncombo=${exhibitioncombo}&exhibitionsearch=${exhibitionsearch}&page=${idx}"
-													class="page-link"> ${idx } </a></li>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach>
-
-
-									<c:choose>
-										<c:when test="${pageBean2.max >= pageBean2.pageCnt  }">
-											<!-- max페이지 > 전체페이지개수 일때  -->
-											<li class="page-item disabled">
-												<!-- 1페이지에 있으면 이전 버튼 비활성화 --> <a href="#" class="page-link">다음</a>
-											</li>
-										</c:when>
-										<c:otherwise>
-											<li class="page-item"><a
-												href="${root }/admin/manager_exhibitionapplylist?exhibitioncombo=${exhibitioncombo}&exhibitionsearch=${exhibitionsearch}&page=${pageBean2.nextPage}"
-												class="page-link">다음</a></li>
-										</c:otherwise>
-									</c:choose>
-								</ul>
-							</div>
-
-							<div class="d-block d-md-none">
-								<ul class="pagination justify-content-center">
-									<li class="page-item"><a href="#" class="page-link">이전</a>
-									</li>
-									<li class="page-item"><a href="#" class="page-link">다음</a>
-									</li>
-								</ul>
-							</div>
-						</c:when>
-						
-						<c:when test="${!empty pageBean3 }">
-							<div class="d-none d-md-block" style="margin-top: 50px;">
-								<ul class="pagination justify-content-center">
-									<c:choose>
-										<c:when test="${pageBean3.prevPage <= 0 }">
-											<li class="page-item disabled">
-												<!-- 1페이지에 있으면 이전 버튼 비활성화 --> <a href="#" class="page-link">이전</a>
-											</li>
-										</c:when>
-										<c:otherwise>
-											<li class="page-item"><a
-												href="${root }/admin/manager_exhibitionapplylist?exhibitioncombo=${exhibitioncombo}&exhibitionsearch=${exhibitionsearch}&page=${pageBean3.prevPage}"
-												class="page-link">이전</a></li>
-										</c:otherwise>
-									</c:choose>
-
-									<c:forEach var="idx" begin="${pageBean3.min}"
-										end="${pageBean3.max}">
-										<!-- model로 가져온 pageBean의 최소페이지부터 최대페이지까지 반복 : idx 는 현재페이지-->
-										<c:choose>
-											<c:when test="${idx == pageBean3.currentPage }">
-												<li class="page-item active"><a
-													href="${root }/admin/manager_exhibitionapplylist?exhibitioncombo=${exhibitioncombo}&exhibitionsearch=${exhibitionsearch}&page=${idx}"
-													class="page-link"> ${idx } </a></li>
-											</c:when>
-											<c:otherwise>
-												<li class="page-item"><a
-													href="${root }/admin/manager_exhibitionapplylist?exhibitioncombo=${exhibitioncombo}&exhibitionsearch=${exhibitionsearch}&page=${idx}"
-													class="page-link"> ${idx } </a></li>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach>
-
-
-									<c:choose>
-										<c:when test="${pageBean3.max >= pageBean3.pageCnt  }">
-											<!-- max페이지 > 전체페이지개수 일때  -->
-											<li class="page-item disabled">
-												<!-- 1페이지에 있으면 이전 버튼 비활성화 --> <a href="#" class="page-link">다음</a>
-											</li>
-										</c:when>
-										<c:otherwise>
-											<li class="page-item"><a
-												href="${root }/admin/manager_exhibitionapplylist?exhibitioncombo=${exhibitioncombo}&exhibitionsearch=${exhibitionsearch}&page=${pageBean3.nextPage}"
-												class="page-link">다음</a></li>
-										</c:otherwise>
-									</c:choose>
-								</ul>
-							</div>
-
-							<div class="d-block d-md-none">
-								<ul class="pagination justify-content-center">
-									<li class="page-item"><a href="#" class="page-link">이전</a>
-									</li>
-									<li class="page-item"><a href="#" class="page-link">다음</a>
-									</li>
-								</ul>
-							</div>
-						</c:when>
-						
-						<c:when test="${!empty pageBean4 }">
-							<div class="d-none d-md-block" style="margin-top: 50px;">
-								<ul class="pagination justify-content-center">
-									<c:choose>
-										<c:when test="${pageBean4.prevPage <= 0 }">
-											<li class="page-item disabled">
-												<!-- 1페이지에 있으면 이전 버튼 비활성화 --> <a href="#" class="page-link">이전</a>
-											</li>
-										</c:when>
-										<c:otherwise>
-											<li class="page-item"><a
-												href="${root }/admin/manager_exhibitionapplylist?exhibitioncombo=${exhibitioncombo}&exhibitionsearch=${exhibitionsearch}&page=${pageBean4.prevPage}"
-												class="page-link">이전</a></li>
-										</c:otherwise>
-									</c:choose>
-
-									<c:forEach var="idx" begin="${pageBean4.min}"
-										end="${pageBean4.max}">
-										<!-- model로 가져온 pageBean의 최소페이지부터 최대페이지까지 반복 : idx 는 현재페이지-->
-										<c:choose>
-											<c:when test="${idx == pageBean4.currentPage }">
-												<li class="page-item active"><a
-													href="${root }/admin/manager_exhibitionapplylist?exhibitioncombo=${exhibitioncombo}&exhibitionsearch=${exhibitionsearch}&page=${idx}"
-													class="page-link"> ${idx } </a></li>
-											</c:when>
-											<c:otherwise>
-												<li class="page-item"><a
-													href="${root }/admin/manager_exhibitionapplylist?exhibitioncombo=${exhibitioncombo}&exhibitionsearch=${exhibitionsearch}&page=${idx}"
-													class="page-link"> ${idx } </a></li>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach>
-
-
-									<c:choose>
-										<c:when test="${pageBean4.max >= pageBean4.pageCnt  }">
-											<!-- max페이지 > 전체페이지개수 일때  -->
-											<li class="page-item disabled">
-												<!-- 1페이지에 있으면 이전 버튼 비활성화 --> <a href="#" class="page-link">다음</a>
-											</li>
-										</c:when>
-										<c:otherwise>
-											<li class="page-item"><a
-												href="${root }/admin/manager_exhibitionapplylist?exhibitioncombo=${exhibitioncombo}&exhibitionsearch=${exhibitionsearch}&page=${pageBean4.nextPage}"
-												class="page-link">다음</a></li>
-										</c:otherwise>
-									</c:choose>
-								</ul>
-							</div>
-
-							<div class="d-block d-md-none">
-								<ul class="pagination justify-content-center">
-									<li class="page-item"><a href="#" class="page-link">이전</a>
-									</li>
-									<li class="page-item"><a href="#" class="page-link">다음</a>
-									</li>
-								</ul>
-							</div>
-						</c:when>
-					</c:choose>
-
-
-
+							<c:forEach var="idx" begin="${pageBean.min}"
+								end="${pageBean.max}">
+								<c:choose>
+									<c:when test="${idx == pageBean.currentPage}">
+										<li class="page-item active"><a
+											href="${root}/admin/manager_exhibitionapplylist?page=${idx}"
+											class="page-link">${idx}</a></li>
+									</c:when>
+									<c:otherwise>
+										<li class="page-item">
+                                            		<a href="#" class="page-link page-link-number" data-page="${idx}">${idx}</a>
+                                        		</li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+							<script>
+                                 document.addEventListener('DOMContentLoaded', function () {
+                                     var pageLinks = document.querySelectorAll('.page-link-number');
+                             
+                                     pageLinks.forEach(function(link) {
+                                         link.addEventListener('click', function(event) {
+                                             event.preventDefault();
+                                             var pageNum = this.getAttribute('data-page');
+                                             var urlParams = new URLSearchParams(window.location.search);
+                                             urlParams.set('page', pageNum);
+                                             window.location.href = window.location.pathname + '?' + urlParams.toString();
+                                         });
+                                     });
+                                 });
+                             </script>
+							<c:choose>
+								<c:when test="${pageBean.max >= pageBean.pageCnt}">
+									<li class="page-item disabled"><a href="#"
+										class="page-link">다음</a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="next-page">
+                                       <a href="#"class="page-link">다음</a>
+                                    </li>
+								</c:otherwise>
+							</c:choose>
+							<script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                     var pageLinks = document.querySelectorAll('.next-page');
+                             
+                                     pageLinks.forEach(function(link) {
+                                         link.addEventListener('click', function(event) {
+                                             event.preventDefault();
+                                             var pageNum = ${pageBean.nextPage};
+                                             var urlParams = new URLSearchParams(window.location.search);
+                                             urlParams.set('page', pageNum);
+                                             window.location.href = window.location.pathname + '?' + urlParams.toString();
+                                         });
+                                     });
+                                 });
+                             </script>
+						</ul>
+					</div>
 
 				</div>
 			</div>

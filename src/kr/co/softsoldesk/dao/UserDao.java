@@ -119,5 +119,9 @@ public class UserDao {
    public void changepw(String new_pw1, int user_id) {
       userMapper.changepw(new_pw1, user_id);
    }
+   
+   public int existemail(String email) {
+      return userMapper.existemail(email);
+   }
 
 }

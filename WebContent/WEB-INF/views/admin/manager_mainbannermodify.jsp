@@ -112,46 +112,9 @@
 		<main style="background-color: ivory;">
 			<div class="container-fluid px-4">
 				<div style="margin-top: 30px;">
-					<h3>배너 수정</h3>
+					<h3>배너 정보 수정</h3>
 				</div>
-				<div
-					style="position: relative; display: flex; justify-content: start; height: 80px; align-items: center; border: 0.2px solid black; background-color: white; margin-top: 20px;">
-					<div
-						style="position: flex; margin-right: 60px; width: 450px; float: left;">
-						<span class="badge text-bg-success rounded-pill"
-							style="font-size: 15px; margin-right: 10px; margin-left: 50px;">노출배너
-							${BadgeCnt.banner_show_Cnt }건</span> <span
-							class="badge text-bg-danger rounded-pill"
-							style="font-size: 15px; margin-right: 10px;">숨김배너
-							${BadgeCnt.banner_hide_Cnt }건</span> <span
-							class="badge bg-success-subtle text-success-emphasis rounded-pill"
-							style="background-color: black; font-size: 15px;">배너
-							총${BadgeCnt.banner_all_Cnt}건</span>
-					</div>
-
-					<form action="${root }/admin/manager_mainbannershowlist"
-						method="get">
-						<select name="bannercombo" id="bannercombo"
-							style="width: 150px; height: 40px; margin-right: 30px;">
-							<option value="title" selected>제목</option>
-						</select>
-						<c:choose>
-							<c:when test="${bannersearch != null }">
-								<input type="text" name="bannersearch" id="bannersearch"
-									style="width: 500px; height: 40px; margin-right: 30px;"
-									value="${bannersearch }" />
-							</c:when>
-							<c:otherwise>
-								<input type="text" name="bannersearch" id="bannersearch"
-									style="width: 500px; height: 40px; margin-right: 30px;"
-									placeholder="검색어를 입력해주세요" />
-							</c:otherwise>
-						</c:choose>
-
-						<button class="btn btn-dark" style="width: 80px; height: 40px;">검색</button>
-					</form>
-
-				</div>
+				
 
 				<form:form action="${root }/admin/manager_mainbannermodify_pro" method="post" modelAttribute="getOneMainBannerInfoBean"
 					enctype="multipart/form-data" id="myForm">

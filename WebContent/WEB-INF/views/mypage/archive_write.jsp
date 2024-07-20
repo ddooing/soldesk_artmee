@@ -207,7 +207,7 @@
 			<div>
 				<h3 style="margin-left: 180px; margin-top: 50px;">별점</h3>
 			</div>
-			<form:form action="${root }/mypage/archive_pro?user_id=${loginUserBean.user_id}" method="post" modelAttribute="reviewBean">		<!-- form -->
+			<form:form action="${root }/mypage/archive_pro?user_id=${loginUserBean.user_id}" method="post" modelAttribute="reviewBean" id="archiveForm">		<!-- form -->
 			<form:hidden path="reserve_id" value="${ArchiveOneInfoBean.reserve_id }"/>
 				<div style="margin:auto;">
 					<div style="text-align: center; font-size: 35px;" class="star-rating">
@@ -353,7 +353,7 @@ function updateCheckboxValue(checkbox) {
 	                title: '저장되었습니다!',
 	                icon: 'success' 
 	            }).then(() => {
-	                document.forms[0].submit();
+	            	 document.getElementById('archiveForm').submit();
 	            });
 	        }
 	    });

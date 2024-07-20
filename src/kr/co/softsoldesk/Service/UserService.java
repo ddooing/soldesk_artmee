@@ -172,4 +172,7 @@ public class UserService {
 	   public void changepw(String new_pw1, int user_id) {
 	      userDao.changepw(new_pw1, user_id);
 	   }
+	   public int existemail(String email) {
+	         return userDao.existemail(email);
+	      }
 }

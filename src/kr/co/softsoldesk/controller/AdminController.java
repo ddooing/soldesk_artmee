@@ -384,7 +384,7 @@ public class AdminController {
 		// 서브 배너 한개 모든 정보 가져오기
 		SubBannerBean getOneSubBannerInfo = adminService.getOneSubBannerInfo(sub_banner_id);
 		model.addAttribute("getOneSubBannerInfoBean",getOneSubBannerInfo);
-		
+		System.out.println("sub_banner_id"+sub_banner_id);
 		// 서브 배너 뱃지 관련
 		SubBannerBean BadgeCnt = adminService.getSubBannerBadgeCnt();
 		model.addAttribute("BadgeCnt", BadgeCnt);

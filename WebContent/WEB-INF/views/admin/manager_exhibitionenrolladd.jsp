@@ -128,25 +128,6 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 				<div style="margin-top: 30px;">
 					<h3>전시회 등록 확인</h3>
 				</div>
-				<div
-					style="position: relative; display: flex; justify-content: center; margin: 10px; height: 80px; align-items: center; border: 0.2px solid black; background-color: white; margin-top: 20px;">
-
-					<form action="${root }/admin/manager_exhibitionapplylist" method="get">
-								<select name="exhibitioncombo" id="exhibitioncombo"
-									style="width: 150px; height: 40px; margin-right: 30px;">
-									<option value="" disabled selected>검색조건선택</option>
-									<option value="title">제목</option>
-									<option value="apply_person">신청인</option>
-									<option value="author">작가</option>
-									<option value="enroll_state">상태</option>
-								</select>
-								<input type="text" name="exhibitionsearch" id="exhibitionsearch"
-									style="width: 500px; height: 40px; margin-right: 30px;"
-									placeholder="검색어를 입력해주세요" />
-							
-						<button class="btn btn-dark" style="width: 80px; height: 40px;">검색</button>
-					</form>
-				</div>
 
 				<form:form action="${root }/admin/manager_exhibitionenrolladd_pro"
 					id="myForm" method="post"
@@ -183,7 +164,7 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 										제목 *</th>
 									<td><form:input path="title"
 											style="border:none; border-bottom: 1px solid black; width:100%; text-align: right; font-size: 20px;"
-											required="required" /></td>
+											required="required"  /></td>
 								</tr>
 								<tr style="height: 80px;">
 									<th style="width: 200px; text-align: center; font-size: 20px;">작가
@@ -287,13 +268,13 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 
 								<tr style="height: 80px;">
 									<th style="width: 200px; text-align: center; font-size: 20px;">휴무일</th>
-									<td style="width: 400px;"><form:input path="holiday"
+									<td style="width: 400px;"><form:input path="holiday" readonly="true"
 											style="border:none; border-bottom: 1px solid black; width:100%; text-align: right; font-size: 20px;" />
 									</td>
 								</tr>
 								<tr style="height: 80px;">
 									<th style="width: 200px; text-align: center; font-size: 20px;">사이트</th>
-									<td style="width: 400px;"><form:input path="site"
+									<td style="width: 400px;"><form:input path="site" readonly="true"
 											style="border:none; border-bottom: 1px solid black; width:100%; text-align: right; font-size: 20px;" />
 									</td>
 								</tr>
@@ -301,8 +282,7 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 								<tr style="height: 80px;">
 									<th style="width: 200px; text-align: center; font-size: 20px;">신청인
 										이름</th>
-									<td style="width: 400px;"><form:input path="apply_name"
-											readonly="true"
+									<td style="width: 400px;"><form:input path="apply_name" readonly="true"
 											style="border:none; border-bottom: 1px solid black; width:100%; text-align: right; font-size: 20px;" />
 									</td>
 								</tr>

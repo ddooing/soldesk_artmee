@@ -299,7 +299,7 @@
   									<tr style="height: 80px;">
   										<th style="width:200px; text-align: center; font-size: 20px;">휴무일</th>
   										<td style="width:400px;">
-  											<form:input path="holiday" style="border:none; border-bottom: 1px solid black; width:100%; text-align: right; font-size: 20px;"/>
+  											<form:input path="holiday" style="border:none; border-bottom: 1px solid black; width:100%; text-align: right; font-size: 20px;" readonly="true"/>
   										</td>
   									</tr>
   									

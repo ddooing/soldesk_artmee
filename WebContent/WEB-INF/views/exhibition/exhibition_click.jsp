@@ -242,7 +242,7 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 
 					<div style="display: flex; margin-top: 50px;">
 						<div style="margin-left: 400px;">
-							<button onclick="copyLink()"
+							<button id="shareButton" 
 								style="background: none; border: none; margin-right: 20px;">
 								<img src="../img/shareicon.svg"
 									style="width: 30px; height: 30px;" alt="공유아이콘" />
@@ -298,6 +298,75 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 
 				</div>
 			</div>
+			<!-- 모달 창 -->
+			<div id="shareModal" class="modal">
+				<div class="modal-content" style="width: 20%;">
+					<div class="close">&times;</div>
+					<!-- 이미지를 표시하는 부분입니다 -->
+					<div
+						style="display: flex; text-align: center; justify-content: center; margin: 20px;">
+						<div
+							style="display: inline-block; margin-right: 50px; cursor: pointer;"
+							onclick="copyLink()">
+							<!--인스타그램 클릭 -->
+							<div>
+								<img src="../img/rinkshareIcon.png"
+									style="width: 45px; height: 45px;" />
+							</div>
+							<div style="margin-top: 10px;">
+								<p3>링크 복사</p3>
+							</div>
+						</div>
+
+						<div style="display: inline-block; cursor: pointer;"
+							onclick="shareMessage()">
+							<!--카카오톡 클릭 -->
+							<div>
+								<img src="../img/kakaoshareIcon.png" alt="카카오톡"
+									style="width: 45px; height: 45px;" />
+							</div>
+							<div style="margin-top: 10px;">
+								<p3>카카오톡</p3>
+							</div>
+						</div>
+						<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.1/kakao.min.js"
+						  integrity="sha384-kDljxUXHaJ9xAb2AzRd59KxjrFjzHa5TAoFQ6GbYTCAG0bjM55XohjjDT7tDDC01" crossorigin="anonymous"></script>
+						<script>
+						  Kakao.init('8df826ca6d8498b6265f60034e5b7d70'); // 사용하려는 앱의 JavaScript 키 입력
+						</script>
+						
+						<script>
+						  function shareMessage() {
+						    Kakao.Share.sendDefault({
+						      objectType: 'feed',
+						      content: {
+						        title: '${exhibitionBean.title}',
+						        description: '#케익 #딸기 #삼평동 #카페 #분위기 #소개팅',
+						        imageUrl:
+						          '${exhibitionBean.main_poster_path}${exhibitionBean.main_poster_name}',
+						        link: {
+						          webUrl: 'http://timtory.synology.me:8088/Spring_Project_Dream/exhibition/exhibition_click?exhibition_id=${exhibitionBean.exhibition_id}',
+						        },
+						      },
+
+						      buttons: [
+						        {
+						          title: '전시회 상세 보기',
+						          link: {
+						            mobileWebUrl: 'http://timtory.synology.me:8088/Spring_Project_Dream/exhibition/exhibition_click?exhibition_id=${exhibitionBean.exhibition_id}',
+						            webUrl: 'http://timtory.synology.me:8088/Spring_Project_Dream/exhibition/exhibition_click?exhibition_id=${exhibitionBean.exhibition_id}',
+						          },
+						        },
+						        
+						      ],
+						    });
+						  }
+						</script>
+					</div>
+
+				</div>
+			</div>
+			<!-- 공유 모달창 끝 -->
 			<!-- 우측 예매 -->
 			<c:choose>
 				<c:when
@@ -436,7 +505,22 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 
 
 			<script>
-
+				// 공유 버튼 클릭 이벤트
+				document.getElementById('shareButton').onclick = function() {
+					document.getElementById('shareModal').style.display = "block";
+				}
+	
+				// 모달창 닫기 버튼 클릭 이벤트
+				document.getElementsByClassName('close')[0].onclick = function() {
+					document.getElementById('shareModal').style.display = "none";
+				}
+	
+				// 모달창 외부 클릭 시 모달창 닫기
+				window.onclick = function(event) {
+					if (event.target == document.getElementById('shareModal')) {
+						document.getElementById('shareModal').style.display = "none";
+					}
+				}
 				// 링크 복사 버튼 클릭 이벤트
 				function copyLink() {
 					
@@ -718,7 +802,7 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 			            }
 			        }
 			    },
-			    plugins: [ChartDataLabels] // Register the plugin
+			    plugins: [ChartDataLabels] 
 			};
 
 			

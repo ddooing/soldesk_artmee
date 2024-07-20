@@ -29,11 +29,12 @@ public interface AdminUserMapper {
 					+ "        ELSE g.grade \r\n"
 					+ "    END AS grade\r\n"
 					+ "FROM \r\n"
-					+ "    user_table ut\r\n"
+					+ "    user_table ut\r\n "
 					+ "LEFT JOIN \r\n"
 					+ "    grade g\r\n"
 					+ "ON \r\n"
 					+ "    ut.exp BETWEEN g.start_exp AND g.end_exp\r\n"
+					+ "WHERE ut.state != 4 "
 					+ "ORDER BY \r\n"
 					+ "    ut.user_id DESC")
 			List<UserBean> getUserList(RowBounds rowBounds);
@@ -61,7 +62,7 @@ public interface AdminUserMapper {
 		            + "    grade g\r\n"
 		            + "ON \r\n"
 		            + "    ut.exp BETWEEN g.start_exp AND g.end_exp\r\n"
-		            + "WHERE \r\n"
+		            + "WHERE ut.state != 4 and "
 		            + "    UPPER(nickname) LIKE '%' || UPPER(#{keyword}) || '%'\r\n"
 		            + "ORDER BY \r\n"
 		            + "    ut.user_id DESC")
@@ -73,7 +74,7 @@ public interface AdminUserMapper {
 		            + "    user_table ut\r\n"
 		            + "LEFT JOIN \r\n"
 		            + "    grade g ON ut.exp BETWEEN g.start_exp AND g.end_exp\r\n"
-		            + "WHERE \r\n"
+		            + "WHERE ut.state != 4 and "
 		            + "    UPPER(ut.nickname) LIKE '%' || UPPER(#{keyword}) || '%'")
 		      int getNickSearchCnt(String keyword);
 		         
@@ -95,7 +96,7 @@ public interface AdminUserMapper {
 		             + "    grade g\r\n"
 		             + "ON \r\n"
 		             + "    ut.exp BETWEEN g.start_exp AND g.end_exp\r\n"
-		             + "WHERE \r\n"
+		             + "WHERE ut.state != 4 and "
 		             + "    UPPER(id) LIKE '%' || UPPER(#{keyword}) || '%'\r\n"
 		             + "ORDER BY \r\n"
 		             + "    ut.user_id DESC")
@@ -107,7 +108,7 @@ public interface AdminUserMapper {
 		               + "    user_table ut\r\n"
 		               + "LEFT JOIN \r\n"
 		               + "    grade g ON ut.exp BETWEEN g.start_exp AND g.end_exp\r\n"
-		               + "WHERE \r\n"
+		               + "WHERE ut.state != 4 and "
 		               + "    UPPER(ut.id) LIKE '%' || UPPER(#{keyword}) || '%'")
 		         int getIdSearchCnt(String keyword);
 		         
@@ -129,7 +130,7 @@ public interface AdminUserMapper {
 		                + "    grade g\r\n"
 		                + "ON \r\n"
 		                + "    ut.exp BETWEEN g.start_exp AND g.end_exp\r\n"
-		                + "WHERE \r\n"
+		                + "WHERE ut.state != 4 and "
 		                + "    UPPER(email) LIKE '%' || UPPER(#{keyword}) || '%'\r\n"
 		                + "ORDER BY \r\n"
 		                + "    ut.user_id DESC")
@@ -141,7 +142,7 @@ public interface AdminUserMapper {
 		               + "    user_table ut\r\n"
 		               + "LEFT JOIN \r\n"
 		               + "    grade g ON ut.exp BETWEEN g.start_exp AND g.end_exp\r\n"
-		               + "WHERE \r\n"
+		               + "WHERE ut.state != 4 and "
 		               + "    UPPER(ut.email) LIKE '%' || UPPER(#{keyword}) || '%'")
 		         int getEmailSearchCnt(String keyword);
 			

@@ -37,8 +37,8 @@
 	            orderId: '${orderid}', // 주문 ID
 	            orderName: '${title}', // 주문명 
 	            customerName: '${loginUserDetailBean.name}', // 구매자 이름
-	            successUrl: 'http://localhost:8080/Spring_Project_Dream/toss/success',
-	            failUrl: 'http://localhost:8080/Spring_Project_Dream/exhibition/exhibition_click?exhibition_id=${tempReserveBean.exhibition_id}&user_id=${loginUserDetailBean.user_id}'
+	            successUrl: 'http://timtory.synology.me:8088/toss/success',
+	            failUrl: 'http://timtory.synology.me:8088/exhibition/exhibition_click?exhibition_id=${tempReserveBean.exhibition_id}&user_id=${loginUserDetailBean.user_id}'
 	        }).catch(function (error) {
 	            handlePaymentError(error);    
 	        });
@@ -61,8 +61,6 @@
 	            
 	        } else if (error.code === 'INVALID_CARD_COMPANY') {
 	            msg = "유효하지 않는 카드사입니다.";
-	        } else if (error.code === 4001) {
-	            msg = "토큰이 만료되었습니다.";
 	        }
 	        
             Swal.fire({

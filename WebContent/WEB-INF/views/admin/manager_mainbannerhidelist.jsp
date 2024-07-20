@@ -142,9 +142,9 @@ $(document).ready(function(){
 							</tbody>
 						</table>
 						<div style="display:flex; margin-top: 20px; margin-bottom: 20px; float: right;">
-						
+						<!--  
 							<button class="btn btn-dark" style="margin-right:30px;" onclick="location.href='${root}/admin/manager_mainbanneradd'">추가</button>
-						
+						 -->
 						</div>
 
 					</div>

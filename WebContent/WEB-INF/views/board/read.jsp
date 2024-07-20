@@ -65,7 +65,7 @@
                style="font-size: 35px; margin-left: 20px; color: black; text-decoration: none;">게시판</a>
          </h3>
       </div>
-      <div>
+      
          <div class="active">
             <div class="tab_con">
                   <table class="tbl_dtal" summary="게시판 상세내용에 대한 표입니다">
@@ -101,7 +101,7 @@
                         </tr>
                         <tr class="tb_content" style="height: 350px; vertical-align:text-top;">
                            <td colspan="3">
-                              <div id="divNoticeContents">
+                              <div id="divNoticeContents" style="width:850px; word-wrap: break-word;">
                                  <!-- 내용 -->${readContentBean.contents }
                                  <textarea id="contents" name="contents" rows="15" cols="150"
                                     style="resize: none; border: hidden; background-color: white;" disabled="disabled"></textarea>
@@ -172,7 +172,7 @@
             <div id="pagination" style="justify-content: center"></div>
          </div>
       </div>
-   </div>
+   
 
    <!-- 푸터-->
    <c:import url="/WEB-INF/views/include/footer.jsp" />
@@ -267,6 +267,7 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 $("#replySection").empty(); 
+                
                 $.each(response.comment_s, function(index, comment) {
                     var buttonsHtml = '';
                     if (loggedInUserId === comment.user_id) {

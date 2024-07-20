@@ -1,6 +1,5 @@
 package kr.co.softsoldesk.Service;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -128,7 +127,7 @@ public class AdminExhibitionService {
 		}
 	
 	//=================================== 전시회 관리 ===========================
-	
+		
 		// 전시회 관리 첫페이지 찍혀오는 값 가져오기
 		public List<ExhibitionBean> getAdminexhibitionmange(int page) {
 			
@@ -137,6 +136,7 @@ public class AdminExhibitionService {
 			
 			return adminExhibitionDao.getAdminexhibitionmange(rowBounds);
 		}
+	
 		
 		// 전시회 관리 전시총개수, 전시예정, 진행중, 종료 전시 개수 반환
 		public ExhibitionBean getExhibitionCount() {
@@ -150,7 +150,7 @@ public class AdminExhibitionService {
 
 			return pageBean;
 		}
-		
+	
 		// 전시회 관리 작가 검색
 		public List<ExhibitionBean> getauthorSearchExhibitionInfo(String search) {
 			return adminExhibitionDao.getauthorSearchExhibitionInfo(search);
@@ -349,22 +349,25 @@ public class AdminExhibitionService {
 		}
 		
 		// =========================== 전시회 등록 신청 ========================
+
 		// 전시회 등록신청 관리자 페이지 리스트
-		public List<ExhibitionDetailBean> getAllExhibitionEnroll(int page) {
-			//페이징 처리
+		public List<ExhibitionDetailBean> getEnrollExhibitionSearch(String title,String name,String author,int page) {
 			int start = (page - 1) * admin_listcnt;
 			RowBounds rowBounds = new RowBounds(start, admin_listcnt);
-			
-			return adminExhibitionDao.getAllExhibitionEnroll(rowBounds);
+
+			return adminExhibitionDao.getEnrollExhibitionSearch(title,name,author,rowBounds);
 		}
 		
-		// 전시회 등록신청 관리자 페이지 페이징 처리
-		public PageBean getEnrollExhibitionCnt(int currentPage) {
-			
-			int Enroll_Cnt = adminExhibitionDao.getEnrollExhibitionCnt();
-			PageBean pageBean = new PageBean(Enroll_Cnt, currentPage, admin_listcnt, admin_paginationcnt);
+		public PageBean getEnrollExhibitionSearchCnt(String title,String name,String author,int currentPage) 
+		{
+			int searchautor_Cnt=  adminExhibitionDao.getEnrollExhibitionSearchCnt(title,name,author);
+
+			PageBean pageBean = new PageBean(searchautor_Cnt, currentPage, admin_listcnt, admin_paginationcnt);
 			
 			return pageBean;
+		}
+		public ExhibitionDetailBean getEnrollExhibitionSearch_BadgeCnt(String title,String name,String author) {
+			return adminExhibitionDao.getEnrollExhibitionSearch_BadgeCnt(title,name,author);
 		}
 		
 		// 전시회 등록신청 한개 모든 정보 가져오기
@@ -407,102 +410,6 @@ public class AdminExhibitionService {
 			
 			adminExhibitionDao.UpdateExhibitionEnrollState(enroll_state, exhibition_enroll_id);
 		}
-		
-		// 전시회 등록 신청 관리자 페이지 뱃지 개수 반환
-		public ExhibitionDetailBean getEnrollExhibitionbadgeCnt() {
-			return adminExhibitionDao.getEnrollExhibitionbadgeCnt();
-		}
-		
-		// 전시회 등록 신청 제목 검색
-		public List<ExhibitionDetailBean> getEnrollExhibitionSearchTitle(String search, int page) {
-			
-			int start = (page - 1) * admin_listcnt;
-			RowBounds rowBounds = new RowBounds(start, admin_listcnt);
-			
-			return adminExhibitionDao.getEnrollExhibitionSearchTitle(search, rowBounds);
-		}
-		
-		// 전시회 등록 신청 제목 검색 배지 개수 반환
-		public ExhibitionDetailBean getEnrollExhibitionSearchTitleBadgeCnt(String search) {
-			return adminExhibitionDao.getEnrollExhibitionSearchTitleBadgeCnt(search);
-		}
-		
-		// 전시회 등록 신청 제목 검색 페이징 처리를 위한 총개수 반환
-		public PageBean getEnrollExhibitionSearchTitletotalCnt(String search, int currentPage) {
-			
-			int titlesearch_Cnt = adminExhibitionDao.getEnrollExhibitionSearchTitletotalCnt(search);
-			PageBean pageBean = new PageBean(titlesearch_Cnt, currentPage, admin_listcnt, admin_paginationcnt);
-			
-			return pageBean;
-		}
-		
-		// 전시회 등록 신청 신청인 검색
-		public List<ExhibitionDetailBean> getEnrollExhibitionSearchapply_person(String search, int page) {
-			
-			int start = (page - 1) * admin_listcnt;
-			RowBounds rowBounds = new RowBounds(start, admin_listcnt);
-			
-			return adminExhibitionDao.getEnrollExhibitionSearchapply_person(search, rowBounds);
-		}
-		
-		// 전시회 등록 신청 신청인 검색 중 배지 개수 반환
-		public ExhibitionDetailBean getEnrollExhibitionSearchapply_personBadgeCnt(String search) {
-			return adminExhibitionDao.getEnrollExhibitionSearchapply_personBadgeCnt(search);
-		}
-		
-		// 전시회 등록 신청 신청인 검색 페이징 처리를 위한 총개수 반환
-		public PageBean getEnrollExhibitionSearchapply_persontotalCnt(String search, int currentPage) {
 
-			int apply_personsearch_Cnt = adminExhibitionDao.getEnrollExhibitionSearchapply_persontotalCnt(search);
-			PageBean pageBean = new PageBean(apply_personsearch_Cnt, currentPage, admin_listcnt, admin_paginationcnt);
-			
-			return pageBean;
-		}
-		
-		// 전시회 등록 신청 작가 검색
-		public List<ExhibitionDetailBean> getEnrollExhibitionSearchauthor(String search, int page) {
-			
-			int start = (page - 1) * admin_listcnt;
-			RowBounds rowBounds = new RowBounds(start, admin_listcnt);
-			
-			return adminExhibitionDao.getEnrollExhibitionSearchauthor(search, rowBounds);
-		}
-		
-		// 전시회 등록 신청 작가 검색 중 배지 개수 반환
-		public ExhibitionDetailBean getEnrollExhibitionSearchauthorBadgeCnt(String search) {
-			return adminExhibitionDao.getEnrollExhibitionSearchauthorBadgeCnt(search);
-		}
-		
-		// 전시회 등록 신청 작가 검색 페이징 처리를 위한 총개수 반환
-		public PageBean getEnrollExhibitionSearchauthortotalCnt(String search, int currentPage) {
-			
-			int authorsearch_Cnt = adminExhibitionDao.getEnrollExhibitionSearchauthortotalCnt(search);
-			PageBean pageBean = new PageBean(authorsearch_Cnt, currentPage, admin_listcnt, admin_paginationcnt);
-			
-			return pageBean;
-		}
-		
-		// 전시회 등록 신청 상태 검색
-		public List<ExhibitionDetailBean> getEnrollExhibitionSearchstate(int search, int page) {
-			
-			int start = (page - 1) * admin_listcnt;
-			RowBounds rowBounds = new RowBounds(start, admin_listcnt);
-			
-			return adminExhibitionDao.getEnrollExhibitionSearchstate(search, rowBounds);
-		}
-		
-		// 전시회 등록 신청 상태 검색 중 배지 개수 반환
-		public ExhibitionDetailBean getEnrollExhibitionSearchstateBadgeCnt(int search) {
-			return adminExhibitionDao.getEnrollExhibitionSearchstateBadgeCnt(search);
-		}
-		
-		// 전시회 등록 신청 상태 검색 페이징 처리를 위한 총개수 반환
-		public PageBean getEnrollExhibitionSearchstatetotalCnt(int search, int currentPage) {
-			
-			int statesearch_Cnt = adminExhibitionDao.getEnrollExhibitionSearchstatetotalCnt(search);
-			PageBean pageBean = new PageBean(statesearch_Cnt, currentPage, admin_listcnt, admin_paginationcnt);
-			
-			return pageBean;
-		}
 
 }

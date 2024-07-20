@@ -65,10 +65,12 @@ public class TossController {
 	
 
 	private int exhibitionId=0;// fail 시 다시 전시회 정보 페이지 가기 위함
-	//에러 코드 재현할때 사용함
+	
+
 	String testCode = "INVALID_REQUEST"; // 에러 테스트용 코드
 	
-	@PostMapping("/checkout_pro")
+	// toss api 기준 결제금액이 0이면 결제 sdk 에러하기에 
+	@PostMapping("/checkout_pro") 
 	public String checkout_pro(@ModelAttribute("tempReserveBean")ReserveBean tempReserveBean,
 				Model model,RedirectAttributes redirectAttributes) {
 
@@ -84,20 +86,29 @@ public class TossController {
 			// state 값을 1(예매 되었음)로
 		reserveService.paymentZeroReserveInfo(tempReserveBean); 
 		
-		//저장된 예매 정보 부르기 .. reserve_id를 가져오기 위함 
-		//System.out.println("/toss_pro - orderid :"+tempReserveBean.getOrder_id());
+		/*
+			//저장된 예매 정보 부르기 .. reserve_id를 가져오기 위함 
 		ReserveBean reserveInfoBean =reserveService.validcheckOrderId(tempReserveBean.getOrder_id());
 		
-		// 2. 나머지 저장 
-		addService(reserveInfoBean);
-	
+			// 2. 나머지 저장 
+		//addService(reserveInfoBean);
+		addService(tempReserveBean);
+		
 		ExhibitionBean exhibitionBean = exhibitionService.getExhibitionDetailInfo(reserveInfoBean.getExhibition_id());
 
 		redirectAttributes.addFlashAttribute("exhibitionBean", exhibitionBean);
 	    redirectAttributes.addFlashAttribute("tempReserveBean", reserveInfoBean);
+	    */
 	    
+	    addService(tempReserveBean);
+	    ExhibitionBean exhibitionBean = exhibitionService.getExhibitionDetailInfo(tempReserveBean.getExhibition_id());
+
+		redirectAttributes.addFlashAttribute("exhibitionBean", exhibitionBean);
+	    redirectAttributes.addFlashAttribute("tempReserveBean", tempReserveBean);
 	    
 		return "redirect:/exhibition/payment_complete";
+		
+		
 		}
 		// 결제 금액이 0이 아니면 ckeckout page로 이동
 		else {
@@ -127,13 +138,7 @@ public class TossController {
 			//pay_state(결제 상태),pay_approval_state(결제 승인 상태) 기본으로 0(false)로 저장함 
 		reserveService.checkoutReserveInfo(tempReserveBean);
 		
-		/*
-		//확인
-		System.out.println(" /checkout - tempReserveBean oderid : "+tempReserveBean.getOrder_id());
-	    System.out.println(" /checkout ReserveBean.payment: " + tempReserveBean.getPayment());
-	    System.out.println("/checkout Exhibition ID: " + tempReserveBean.getExhibition_id());
-		*/
-	    
+
 		model.addAttribute("orderid", tempReserveBean.getOrder_id()); 
 		model.addAttribute("tempReserveBean", tempReserveBean.getOrder_id()); 
 	    model.addAttribute("tempReserveBean", tempReserveBean);
@@ -152,30 +157,22 @@ public class TossController {
             					@RequestParam int amount,HttpServletRequest request, Model model,
             					RedirectAttributes redirectAttributes) throws Exception  {
 		
-		/*
-		 * System.out.println("orderId :"+orderId);
-		 * System.out.println("paymentKey :"+paymentKey);
-		 * System.out.println("amount :"+amount);
-		 */
-
-		// [1].결제 요청 전에 예매정보 데이터(/checkout 에서 저장한 정보)와 인증 결과(orderId,paymentKey,amount) 검증
-		ReserveBean validReserveBean = reserveService.validcheckOrderId(orderId);
+		// [1].결제 승인 요청 전에 예매정보 데이터(/checkout 에서 저장한 정보)와 요청 결과(orderId,amount)로 검증
+			
+			//요청 결과 파라미터 orderId로 orderId인 예매 내역 찾기 
+		ReserveBean validReserveBean = reserveService.validcheckOrderId(orderId); 
 		String isOrderIdValid=validReserveBean.getOrder_id();
 		
-		//확인
-		// System.out.println("isOrderIdValid :"+isOrderIdValid);
-
-		
-			// (1 결과 : false): 다를 경우, 실패 페이지로 이동 
-		if(isOrderIdValid==null) {// pay_approval_state : 승인 거부 0 인 상태
+	
+			// (1 결과 : false): 예매 내역에서 파라미터 orderId 와 같은 내역을 못찾을 경우, 메인 페이지로 이동 
+		if(isOrderIdValid==null) {
 			failmsg="주문번호 오류가 발생했습니다.";
             redirectAttributes.addFlashAttribute("failmsg", failmsg);    
-            return "redirect:/exhibition/exhibition_click?exhibition_id="+validReserveBean.getExhibition_id(); 
+            return "redirect:/view/index"; 
 		}
 
 			//(1 결과  : true)
-
-		//[2].결제 요청 전의 결제 금액인 payment 와 결제 요청 결과의 결제 금액인 amount 같은지 체크		
+		//[2].결제 요청 전의 결제 금액인 payment 와 결제 요청 결과 파라미터의 amount 같은지 체크		
 		int reqBeforePayment = validReserveBean.getPayment();
 
 			//(2 결과 : false): 실패 페이지로 이동
@@ -186,30 +183,21 @@ public class TossController {
             return "redirect:/exhibition/exhibition_click?exhibition_id="+validReserveBean.getExhibition_id();  
 		}
 		
-			//(2 결과: true) :결제 승인 요청 전에 db 저장 
-		// System.out.println("reqBeforePayment==amount, 결제 승인 전");
-		
+			//(2 결과: true) 
+
 		//[3]. 결제 승인 
         ResponseEntity<String> paymentConfirmationResponse = completePayment(paymentKey, orderId, amount);
-		/*
-		 * System.out.println("결제 승인 후");
-		 * System.out.println("결제 승인 후, paymentConfirmationResponse 코드 확인 :" +
-		 * paymentConfirmationResponse.getStatusCode());
-		 * System.out.println("결제 승인 후, paymentConfirmationResponse 헤더 확인 :" +
-		 * paymentConfirmationResponse.getHeaders());
-		 * System.out.println("결제 승인 후, paymentConfirmationResponse 응답 본문 확인 :" +
-		 * paymentConfirmationResponse.getBody());
-		 */
- 
+
         //(3 결과 : 승인 실패 )
         if (!paymentConfirmationResponse.getStatusCode().is2xxSuccessful()) {
-        	System.out.println("승인 실패!");
+        	
         	// Response 바디에서 JSON 파싱
             String responseBody = paymentConfirmationResponse.getBody();
             JSONObject jsonObject = new JSONObject(responseBody);
             String code = jsonObject.optString("code", "Unknown"); // 기본값 설정
             String message = jsonObject.optString("message", "No message provided");
 
+            // 만약 이미 처리된 결제건이라면, 해당 사용자의 예매 내역 페이지로 이동
             if ("ALREADY_PROCESSED_PAYMENT".equals(code)) {
                 failmsg="이미 처리된 결제입니다.";
                 redirectAttributes.addFlashAttribute("failmsg", failmsg);
@@ -226,9 +214,7 @@ public class TossController {
         
         //(3 결과 : 승인 성공 )=> 핸드폰에서 '@@ 원 결제'  알림 뜨는거
         
-        	//#DB 저장 - orderId인 pay_approval_state : 승인 상태 true로 update &  paymentKey 저장 
-      	reserveService.approvalBefore(orderId,paymentKey); // !paymentKey 못잡는 이슈 발생 
-
+        
         //응답 본문 가져오기
         String responseBody = paymentConfirmationResponse.getBody();
         JSONObject jsonObject = new JSONObject(responseBody);
@@ -242,19 +228,18 @@ public class TossController {
         byte[] bytes = method.getBytes(StandardCharsets.ISO_8859_1);
         method = new String(bytes, StandardCharsets.UTF_8);
         
-		/*
-		 * System.out.println("orderName: " + method); System.out.println("approvedAt: "
-		 * + approvedAt); System.out.println("requestedAt: " + requestedAt);
-		 */
-        
-    
-    	// #DB 저장 ................................... 함수 ) 0원일때랑 합치기 
+    	//#DB 저장 - orderId인 pay_approval_state : 승인 상태 true로 update &  paymentKey 저장 
+      	reserveService.approvalBefore(orderId,paymentKey); 
+
+      	
+    	// #DB 저장 
 	        // 1.orderId인 예매가 정말로 되었음 
         		// 결제 방법 저장 
     			//pay_state 결제 상태 :true 로 update &  state(0:예매,1: 예매 취소) 예매가 되었음을 0으로 저장,예매한 날짜
 	     		//requestAt 주문 날짜 + 시간 저장 
         		// approvedAt 결제 승인 날짜+시간 저장
-        reserveService.realReserveState(orderId,requestedAt,approvedAt,method  ); 
+        
+        reserveService.realReserveState(orderId,requestedAt,approvedAt,method); 
 
         	// 2.나머지 db 처리
         addService(validReserveBean);
@@ -262,22 +247,12 @@ public class TossController {
         //결제된 예매 정보 가져오기 
         ReserveBean reserveInfoBean =reserveService.validcheckOrderId(orderId);
 		
-        // System.out.println("결제가 성공적으로 처리되었습니다.");
         
         ExhibitionBean exhibitionBean = exhibitionService.getExhibitionDetailInfo(reserveInfoBean.getExhibition_id());
        
-		/*
-		 * System.out.println("validReserveBean.getRequested_at() : "+reserveInfoBean.
-		 * getRequested_at());
-		 * System.out.println("validReserveBean.getReserve_date() : "+reserveInfoBean.
-		 * getReserve_date()); System.out.println("결제가 성공적으로 처리되었습니다.");
-		 */
-       
-        
         model.addAttribute("exhibitionBean", exhibitionBean);
         model.addAttribute("tempReserveBean",reserveInfoBean);
-       
-        
+             
         return "toss/success";
    
     }
@@ -287,55 +262,34 @@ public class TossController {
 		 //user_id 값
         int userid = reserveBean.getUser_id();
         int totalPrice =reserveBean.getTotal_price();
-		 // 2.사용자 포인트 내역 저장 
         
+		// 2.사용자 포인트 내역 저장 
         
 	    		// 2-1.무조건 포인트 적립
 			    // 포인트 적립 : 유저 등급의 적립율에 따른 포인트 지급 
-        //!! payment의 포인트 부분 겹침 -- 후에 처리하기 
-        /*
-        String level = userService.getLevel(userid);
-        
-        int reservePulsPoint=0;// 예매 시 적립되는 포인트
-        
-        
-        if(level.equals("level1")) // 레벨 1 일때 5%만큼 포인트 지급
-        {
-        	reservePulsPoint = (int)(totalPrice*0.05);
-        }
-        else if(level.equals("level2")) // 레벨 2 일때 10%만큼 포인트 지급
-        {
-        	reservePulsPoint = (int)(totalPrice*0.1);
-        }
-        else if(level.equals("level3")) // 레벨 3 일때 15%만큼 포인트 지급
-        {
-        	reservePulsPoint = (int)(totalPrice*0.15);
-        }
-        
-        plusPoint= reservePulsPoint; 
-        */
+       
         PointDetailBean pointDetailBean =new PointDetailBean(); 
         pointDetailBean.setPoint(reserveBean.getPoint_plus());
         pointDetailBean.setUser_id(userid);
-        pointDetailBean.setPoint_state_code(1);	// 포인트 1:+
-        pointDetailBean.setPoint_type_code(1);	// 예매에서 적립
+        pointDetailBean.setPoint_state_code(1);	// 포인트 적립 : 1
+        pointDetailBean.setPoint_type_code(1);	// 포인트 사용처 예매 : 1 
         
         
-		// 포인트 이용 내역 추가
+		// 포인트 내역 추가
 		pointDetailService.PointList(pointDetailBean);
         
         		// 2-2. point_deduction(=포인트 사용금액) >0 이면 사용 내역 추가 
-        		//  point_state_code NUMBER(1)- 사용 OR 적립 EX)0:-, 1:+ 
+		
 		if(reserveBean.getPoint_deduction() > 0)
 		{
 			 PointDetailBean pointUseDetailBean =new PointDetailBean();
 		     
 			 pointUseDetailBean.setPoint(reserveBean.getPoint_deduction());
 			 pointUseDetailBean.setUser_id(userid);
-			 pointUseDetailBean.setPoint_state_code(2);	// 포인트 1:+
-			 pointUseDetailBean.setPoint_type_code(1);	// 예매에서 적립
+			 pointUseDetailBean.setPoint_state_code(2);	// 포인트 차감 : 2
+			 pointUseDetailBean.setPoint_type_code(1);	// 포인트 사용처 예매 : 1 
 			 
-			// 포인트 이용 내역 추가
+			// 포인트 내역 추가
 			pointDetailService.PointList(pointUseDetailBean);
 		}
 
@@ -347,13 +301,11 @@ public class TossController {
         userService.point_expIncrease(userid,point);
         
         	// 4. 전시회에 대한 소감문 생성 
-        //
         reviewService.reserve_review_create(reserveBean.getReserve_id());
-    		// 5.전시회 티켓수를 사용자가 구매한 티켓수만큼 증가		
-        											// 예매한 전시회 id			       			//예매한 티켓 수 int 값
+        
+    		// 5.전시회 티켓수를 사용자가 구매한 티켓수만큼 증가												// 예매한 전시회 id			       			//예매한 티켓 수 int 값
         exhibitionService.increase_exhibitionTotalTicket(reserveBean.getExhibition_id(),reserveBean.getTicket_count());
  
-        //System.out.println("add service 처리 완료 ");
 	}
 	
 	private ResponseEntity<String> completePayment(String paymentKey, String orderId, int amount) {
@@ -374,19 +326,18 @@ public class TossController {
             requestBody.put("orderId", orderId);
             requestBody.put("amount", amount);
             
-            //System.out.println("Map");
             
+            // 설정한 Header와 Body를 가진 HttpEntity 객체 생성
             HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
-            // System.out.println("HTTP POST 요청 전");
             // HTTP POST 요청하기
             RestTemplate restTemplate = new RestTemplate();
+            //confirmUrl : 결제 승인 api 주소 
             return restTemplate.exchange(confirmUrl, HttpMethod.POST, requestEntity, String.class);
         } catch (Exception e) {
         	 return ResponseEntity
         	            .status(((HttpStatusCodeException) e).getStatusCode())
         	            .body(((RestClientResponseException) e).getResponseBodyAsString());
-            //return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error completing payment");
         }
 	}
 	

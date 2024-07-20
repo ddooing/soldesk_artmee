@@ -655,9 +655,9 @@ input[type="date"]::-webkit-calendar-picker-indicator{
                                     </li>
                                  </c:when>
                                  <c:otherwise>
-                                    <li class="pre-page"><a
-                                       href="#"
-                                       class="page-link">이전</a></li>
+                                    <li class="pre-page">
+                                    	<a href="#" class="page-link">이전</a>
+                                    </li>
                                  </c:otherwise>
                               </c:choose>
                               <script>

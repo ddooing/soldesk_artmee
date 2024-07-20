@@ -16,7 +16,7 @@ public interface ReserveMapper {
 	// /checkout 예매 정보 저장 
 	@Insert("INSERT INTO reserve (reserve_id, user_id, exhibition_id, reserve_date, total_price, point_deduction,"
 			+ "payment, ticket_count, order_id,pay_state,pay_approval_state,point_plus) "
-			+ "VALUES (reserve_id_seq.NEXTVAL, #{user_id}, #{exhibition_id},#{reserve_date, jdbcType=DATE},"
+			+ "VALUES (reserve_id_seq.NEXTVAL, #{user_id}, #{exhibition_id},TO_DATE(#{reserve_date, jdbcType=VARCHAR}, 'YYYY-MM-DD'),"
 			+ "#{total_price},#{point_deduction},#{payment},#{ticket_count},#{order_id},0,0,#{point_plus})")
 	void checkoutReserveInfo(ReserveBean checkoutReserveBean);
 	

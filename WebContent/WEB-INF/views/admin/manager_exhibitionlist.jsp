@@ -167,7 +167,7 @@
 					<div style="display: flex; margin-top: 20px; margin-bottom: 20px; float: right;">
 						<a href="${root }/admin/manager_exhibitionadd" class="btn btn-dark" style="margin-right:40px;">추가</a>
 					</div>
-
+ 					
 					<c:choose>
 						<c:when test="${!empty pageBean}">
 							<div class="d-none d-md-block" style="margin-top: 50px;">

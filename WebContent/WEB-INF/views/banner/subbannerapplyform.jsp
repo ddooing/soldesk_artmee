@@ -259,27 +259,27 @@
 			<div class="info__form">
 				<div class="content__wrap">
 				<form:form action="${root }/banner/checkout" method="post" modelAttribute="applybannerBean" enctype="multipart/form-data" id="application-form">
-				<form:hidden path="apply_person_id" value="${userinfoBean.user_id }"/>
+				<form:hidden path="apply_person_id" value="${galleryInfo.gallery_id }"/>
 				<form:hidden path="payment" id="payment" value=""/>	
 				<form:hidden path="banner_type" value="2"/>
 						<div id="canvas-target-1">
 							<div class="row">
 								<div class="input__title">성함</div>
 								<div class="input__wrap">
-									<input type="text" name="name" id="name" disabled="disabled" readonly="readonly" value="${userinfoBean.name }">
+									<input type="text" name="name" id="name" disabled="disabled" readonly="readonly" value="${galleryInfo.gallery_name }">
 								</div>
 							</div>
 							<div class="row">
 								<div class="input__title">연락처</div>
 								<div class="input__wrap">
-									<input type="text" name="hp" id="hp" disabled="disabled" readonly="readonly" value="${userinfoBean.telephone }">
+									<input type="text" name="hp" id="hp" disabled="disabled" readonly="readonly" value="${galleryInfo.gallery_telephone }">
 								</div>
 							</div>
 							<div class="row">
 								<div class="input__title">이메일</div>
 								<div class="input__wrap">
 									<input type="text" name="email" id="email" disabled="disabled" readonly="readonly"
-										value="${userinfoBean.email }">
+										value="${galleryInfo.gallery_email }">
 								</div>
 							</div>
 							<div class="row">

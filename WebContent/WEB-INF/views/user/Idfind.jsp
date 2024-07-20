@@ -207,75 +207,112 @@
 	<!-- 푸터-->
 	<c:import url="/WEB-INF/views/include/footer.jsp"/>
 	
-	<script>
-	$(document).ready(function() {
-	    $("#verificationCodeBtn").click(function() {
-	        var name1 = $("#name1").val();
-	        var email1 = $("#email1").val();
-
-	        // AJAX POST 요청 수행
-	        $.ajax({
-	            url: "${root}/user/Idfind_pro", // 필요에 따라 URL 조정
-	            type: "POST",
-	            contentType: "application/json", // Content-Type 설정 추가
-	            data: JSON.stringify({
-	                name1: name1,
-	                email1: email1
-	            }),
-	            success: function(response) {
-	                // 서버의 응답 처리
-	                Swal.fire({
-	                    icon: 'success',
-	                    title: '인증번호 발송 완료',
-	                    text: '이메일로 인증번호가 발송되었습니다.',
-	                    confirmButtonText: '확인'
-	                });
-	             // 타이머 추가
-	                var time = 5 * 60; // 5분을 초 단위로 변환
-	                var timerElement = document.getElementById('timer');
-
-	                var interval = setInterval(function() {
-	                    var minutes = parseInt(time / 60, 10);
-	                    var seconds = parseInt(time % 60, 10);
-
-	                    minutes = minutes < 10 ? "0" + minutes : minutes;
-	                    seconds = seconds < 10 ? "0" + seconds : seconds;
-
-	                    timerElement.textContent = minutes + ":" + seconds;
-
-	                    if (--time < 0) {
-	                        timerElement.textContent = "";
-	                        clearInterval(interval);
-	                    }
-	                }, 1000);
-	            },
-	            error: function(xhr, status, error) {
-	                if (xhr.status !== 200) {
-	                    console.log("Error: Status code is not 200");
-	                }
-	                if (xhr.getResponseHeader("Content-Type").indexOf("application/json") === -1) {
-	                    console.log("Error: Response is not JSON");
-	                    // 여기서 추가 처리를 할 수 있습니다.
-	                } else {
-	                    // JSON으로 안전하게 파싱할 수 있음
-	                    var response = JSON.parse(xhr.responseText);
-	                }
-	            
-
-	                // 사용자에게 오류 메시지 표시
-	                Swal.fire({
-	                    icon: 'error',
-	                    title: '오류 발생',
-	                    text: '인증번호 발송 중 오류가 발생했습니다.',
-	                    confirmButtonText: '닫기'
-	                });
-	            }
-	        });
-	    });
-	});
-
-</script>
 	
+<script>
+$(document).ready(function() {
+    // 타이머 변수 선언
+    var timerInterval;
+
+    // 인증번호 받기 버튼 클릭 이벤트 바인딩
+    $("#verificationCodeBtn").click(function() {
+        var name1 = $("#name1").val();
+        var email1 = $("#email1").val();
+
+        // 이름 또는 이메일이 입력되지 않았을 경우
+        if (!name1 || !email1) {
+            Swal.fire('입력 오류', '이름과 이메일을 모두 입력해주세요.', 'error');
+            return;
+        }
+
+        // 이전 타이머 중지
+        clearInterval(timerInterval);
+
+        // AJAX POST 요청 수행
+        $.ajax({
+            url: "${root}/user/Idfind_pro", // 필요에 따라 URL 조정
+            type: "POST",
+            contentType: "application/json", // Content-Type 설정 추가
+            data: JSON.stringify({
+                name1: name1,
+                email1: email1
+            }),
+            success: function(response) {
+                // 서버의 응답 처리
+                Swal.fire({
+                    icon: 'success',
+                    title: '인증번호 발송 완료',
+                    text: '이메일로 인증번호가 발송되었습니다.',
+                    confirmButtonText: '확인'
+                });
+                // 새로운 타이머 시작
+                startTimer();
+            },
+            error: function(xhr, status, error) {
+                if (xhr.status !== 200) {
+                    console.log("Error: Status code is not 200");
+                }
+                if (xhr.getResponseHeader("Content-Type").indexOf("application/json") === -1) {
+                    console.log("Error: Response is not JSON");
+                    // 여기서 추가 처리를 할 수 있습니다.
+                } else {
+                    // JSON으로 안전하게 파싱할 수 있음
+                    var response = JSON.parse(xhr.responseText);
+                }
+            
+                // 사용자에게 오류 메시지 표시
+                Swal.fire({
+                    icon: 'error',
+                    title: '오류 발생',
+                    text: '인증번호 발송 중 오류가 발생했습니다.',
+                    confirmButtonText: '닫기'
+                });
+            }
+        });
+    });
+
+    // 폼 제출 시 유효성 검사
+    $("form").on("submit", function(e) {
+        var name = $("#name1").val().trim();
+        var email = $("#email1").val().trim();
+        var verificationCode = $("input[name='verification_num']").val().trim();
+
+        // 필드가 비어 있는지 확인
+        if (!name) {
+            e.preventDefault();
+            Swal.fire('필수 정보', '이름을 입력해주세요.', 'warning');
+        } else if (!email) {
+            e.preventDefault();
+            Swal.fire('필수 정보', '이메일을 입력해주세요.', 'warning');
+        } else if (!verificationCode) {
+            e.preventDefault();
+            Swal.fire('필수 정보', '인증번호를 입력해주세요.', 'warning');
+        }
+    });
+
+    // 타이머 시작 함수
+    function startTimer() {
+        var time = 5 * 60; // 5분을 초 단위로 변환
+        var timerElement = document.getElementById('timer');
+
+        timerInterval = setInterval(function() {
+            var minutes = parseInt(time / 60, 10);
+            var seconds = parseInt(time % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            timerElement.textContent = minutes + ":" + seconds;
+
+            if (--time < 0) {
+                timerElement.textContent = "";
+                clearInterval(timerInterval); // 타이머 종료
+            }
+        }, 1000);
+    }
+});
+</script>
+
+
 
 
 

@@ -130,22 +130,7 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 				<div style="margin-top: 30px;">
 					<h3>전시회 추가</h3>
 				</div>
-				<div
-					style="position: relative; display: flex; justify-content: center; margin: 10px; height: 80px; align-items: center; border: 0.2px solid black; background-color: white; margin-top: 20px;">
-
-
-					<form action="${root }/admin/manager_exhibitionlist" method="get">
-						<select name="exhibitioncombo" id="exhibitioncombo"
-							style="width: 150px; height: 40px; margin-right: 30px;">
-							<option value="" disabled selected>검색조건선택</option>
-							<option value="author">작가</option>
-							<option value="title">제목</option>
-						</select> <input type="text" name="exhibitionsearch" id="exhibitionsearch"
-							style="width: 500px; height: 40px; margin-right: 30px;"
-							placeholder="검색어를 입력해주세요" />
-						<button class="btn btn-dark" style="width: 80px; height: 40px;">검색</button>
-					</form>
-				</div>
+				
 
 				<form:form action="${root }/admin/exhibition_exhibitionadd_pro" id="myForm"
 					method="post" modelAttribute="AddDetailExhibitionBean"

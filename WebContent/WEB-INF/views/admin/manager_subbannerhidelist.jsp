@@ -130,8 +130,9 @@
 							</tbody>
 						</table>
 						<div style="display:flex; margin-top: 20px; margin-bottom: 20px; float: right;">
-						
+							<!--  
 							<button class="btn btn-dark" onclick="location.href='${root}/admin/manager_subbanneradd'">추가</button>
+							-->
 						</div>
 
 					</div>

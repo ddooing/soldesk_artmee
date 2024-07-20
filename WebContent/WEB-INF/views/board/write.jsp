@@ -127,7 +127,8 @@ function confirmExit() {
 </script>
 <script>
   ClassicEditor
-    .create(document.querySelector('#editor'))
+    .create(document.querySelector('#editor'),{
+    	language:'ko',})
     .then(editor => {
       // The editor instance
     })
@@ -135,7 +136,7 @@ function confirmExit() {
       console.error(error);
     });
 </script>
- -->
+
 <!-- 푸터-->
 <c:import url="/WEB-INF/views/include/footer.jsp" />
 </body>

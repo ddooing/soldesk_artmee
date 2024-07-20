@@ -194,8 +194,9 @@ $(document).ready(function() {
 							</tbody>
 						</table>
 						<div style="display:flex; margin-top: 20px; margin-bottom: 20px; float: right;">
-						
+						<!--  
 							<button class="btn btn-dark" onclick="location.href='${root}/admin/manager_subbanneradd'">추가</button>
+						-->
 						<c:if test="${bannersearch == null }">
 							<button class="btn btn-dark" style="margin-left: 30px; margin-right: 30px;" id="saveButton">순서저장</button>
 						</c:if>

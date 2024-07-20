@@ -328,6 +328,19 @@ function checkIdExist() {
 							<form:input path="email" class="form-control" required="required" value="${tempLoginUserBean.email }"/>
 							<span id="emailError" style="color:red;"></span>
 						</td>
+						<td>
+							<button type="button" class="btn btn-dark" id="verificationCodeBtn" style="margin-left:15px;" >인증번호 받기</button>
+						</td>
+					</tr>
+					
+					<tr>
+						<th style="width:200px;"><form:label path="email" style="font-size: 20px;">인증번호</form:label></th>
+						<td>
+							<input name="verification_num" class="form-control" />
+						</td>
+						<td>
+							<div id="timer" style="position: relative; width:50px; margin-left:15px;">00:00</div>
+						</td>
 					</tr>
 					
 					<tr>
@@ -436,7 +449,7 @@ function checkIdExist() {
 				</table>
 			</div>
 			<!-- 여기서 부터 전시관 관리자 영역 -->
-			
+			<!--  
 			<hr style="margin: auto; margin-top: 50px; width: 600px;" />
 			<div style="position: flex; margin:auto; justify-content: center;">
 				
@@ -455,7 +468,7 @@ function checkIdExist() {
 					</script>
 					
 			</div>
-			
+			-->
 			
 			
 			<!-- 확인 버튼 -->
@@ -474,8 +487,84 @@ function checkIdExist() {
 	<!-- 푸터-->
 	<c:import url="/WEB-INF/views/include/footer.jsp" />
 	
-	
+	<script>
+	$(document).ready(function() {
+	    $("#verificationCodeBtn").click(function() {
+	        var email = $("#email").val();
 
+	        // AJAX POST 요청 수행
+	        $.ajax({
+	            url: "${root}/user/email_verification", // 필요에 따라 URL 조정
+	            type: "POST",
+	            contentType: "application/json", // Content-Type 설정 추가
+	            data: JSON.stringify({
+	                email: email
+	            }),
+	            success: function(response) {
+	                // 서버의 응답 처리
+	                Swal.fire({
+	                    icon: 'success',
+	                    title: '인증번호 발송 완료',
+	                    text: '이메일로 인증번호가 발송되었습니다.',
+	                    confirmButtonText: '확인'
+	                });
+	             // 타이머 추가
+	                var time = 5 * 60; // 5분을 초 단위로 변환
+	                var timerElement = document.getElementById('timer');
+
+	                var interval = setInterval(function() {
+	                    var minutes = parseInt(time / 60, 10);
+	                    var seconds = parseInt(time % 60, 10);
+
+	                    minutes = minutes < 10 ? "0" + minutes : minutes;
+	                    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+	                    timerElement.textContent = minutes + ":" + seconds;
+
+	                    if (--time < 0) {
+	                        timerElement.textContent = "";
+	                        clearInterval(interval);
+	                    }
+	                }, 1000);
+	            },
+	            error: function(xhr, status, error) {
+	                if (xhr.status !== 200) {
+	                    console.log("Error: Status code is not 200");
+	                }
+	                if (xhr.getResponseHeader("Content-Type").indexOf("application/json") === -1) {
+	                    console.log("Error: Response is not JSON");
+	                    // 여기서 추가 처리를 할 수 있습니다.
+	                } else {
+	                    // JSON으로 안전하게 파싱할 수 있음
+	                    var response = JSON.parse(xhr.responseText);
+	                }
+	            
+
+	                // 사용자에게 오류 메시지 표시
+	                Swal.fire({
+	                    icon: 'error',
+	                    title: '오류 발생',
+	                    text: '인증번호 발송 중 오류가 발생했습니다.',
+	                    confirmButtonText: '닫기'
+	                });
+	            }
+	        });
+	    });
+	});
+
+</script>
+
+
+<c:if test="${verificationError == '인증번호가 일치하지 않습니다.'}">
+        <script>
+        Swal.fire({
+            title: '오류',
+            text: '인증번호가 일치하지 않습니다.',
+            icon: 'error',
+            confirmButtonText: '확인'
+        });
+    </script>
+    </c:if>
 	
 	</body>
 

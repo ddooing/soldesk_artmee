@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,18 +118,52 @@ public class UserController {
 	
 	
 	@PostMapping("/signup_pro")
-	public String signup_pro(@ModelAttribute("joinUserBean")UserBean joinUserBean, 
-							RedirectAttributes redirectAttributes
-							,Model model)
-	{
-		userService.addUserInfo(joinUserBean,1);
-		
-		alertMap.put("title", "성공!");
-        alertMap.put("text", "회원가입에 성공했습니다!");
-        alertMap.put("icon", "success");
-        redirectAttributes.addFlashAttribute("alertMap", alertMap);
-    	return "redirect:login";
-	}
+	   public String signup_pro(@ModelAttribute("joinUserBean") UserBean joinUserBean, 
+	                            RedirectAttributes redirectAttributes, 
+	                            HttpServletRequest request, HttpServletResponse response, Model model) {
+
+	       // 폼에서 입력받은 인증번호. 폼 데이터로 전송되어야 함
+	       String inputVerificationCode = request.getParameter("verification_num");
+
+	       // 쿠키에서 인증번호 읽기
+	       Integer storedVerificationCode = null;
+	       Cookie[] cookies = request.getCookies();
+	       if (cookies != null) {
+	           for (Cookie cookie : cookies) {
+	               if ("verificationCode".equals(cookie.getName())) {
+	                   try {
+	                       storedVerificationCode = Integer.parseInt(cookie.getValue());
+	                   } catch (NumberFormatException e) {
+	                       // 쿠키 값이 정수로 변환될 수 없는 경우
+	                   }
+	                   break;
+	               }
+	           }
+	       }
+
+	       // 인증번호 검증
+	       if (storedVerificationCode != null && String.valueOf(storedVerificationCode).equals(inputVerificationCode)) {
+	           // 인증번호 일치, 회원가입 로직 계속 진행
+	           userService.addUserInfo(joinUserBean,1);
+	           
+	           // 성공 메시지 설정
+	           alertMap.put("title", "성공!");
+	           alertMap.put("text", "회원가입에 성공했습니다!");
+	           alertMap.put("icon", "success");
+	           redirectAttributes.addFlashAttribute("alertMap", alertMap);
+	           
+	           // 쿠키 삭제 로직 추가 (인증번호 사용 후 삭제)
+	           Cookie deleteCookie = new Cookie("verificationCode", null);
+	           deleteCookie.setMaxAge(0);
+	           response.addCookie(deleteCookie);
+	           
+	           return "redirect:login";
+	       } else {
+	           // 인증번호 불일치, 오류 메시지 설정
+	           model.addAttribute("verificationError", "인증번호가 일치하지 않습니다.");
+	           return "user/signup";
+	       }
+	   }
 	
 	// 전시관 회원가입
 	@GetMapping("/signup_gallery")
@@ -135,7 +172,7 @@ public class UserController {
 	    return "user/signup_gallery";
 	}
 	
-	
+	/*
 	@PostMapping("/signupGallery_pro")
 	public String signupGallery_pro(@ModelAttribute("joinUserGalleyBean")GalleySignFormBean joinUserGalleyBean, 
 							RedirectAttributes redirectAttributes
@@ -162,6 +199,71 @@ public class UserController {
         redirectAttributes.addFlashAttribute("alertMap", alertMap);
     	return "redirect:login";
 	}
+	*/
+	@PostMapping("/signupGallery_pro")
+	   public String signupGallery_pro(@ModelAttribute("joinUserGalleyBean") GalleySignFormBean joinUserGalleyBean,
+	                                   RedirectAttributes redirectAttributes,
+	                                   HttpServletRequest request, HttpServletResponse response,
+	                                   Model model) {
+
+	       // 폼에서 입력받은 인증번호
+	       String inputVerificationCode = request.getParameter("verification_num");
+
+	       // 쿠키에서 인증번호 읽기
+	       Integer storedVerificationCode = null;
+	       Cookie[] cookies = request.getCookies();
+	       if (cookies != null) {
+	           for (Cookie cookie : cookies) {
+	               if ("verificationCode".equals(cookie.getName())) {
+	                   try {
+	                       storedVerificationCode = Integer.parseInt(cookie.getValue());
+	                   } catch (NumberFormatException e) {
+	                       // Handle the exception, maybe log it?
+	                   }
+	                   break;
+	               }
+	           }
+	       }
+
+	       // 인증번호 검증
+	       if (storedVerificationCode != null && storedVerificationCode.equals(Integer.parseInt(inputVerificationCode))) {
+	           // 인증번호 일치, 회원가입 로직 계속 진행
+
+	           UserBean joinUserBean = new UserBean();
+	           joinUserBean.setName(joinUserGalleyBean.getName());
+	           joinUserBean.setId(joinUserGalleyBean.getId());
+	           joinUserBean.setPassword(joinUserGalleyBean.getPassword());
+	           joinUserBean.setTelephone(joinUserGalleyBean.getTelephone());
+	           joinUserBean.setEmail(joinUserGalleyBean.getEmail());
+
+	           // userService를 사용하여 정보 추가
+	           userService.addUserInfo(joinUserBean, 4);
+
+	           // user_table 등록 후, 해당 user_id를 gallery user_id와 연결
+	           int getUserId = userService.getUserId(joinUserGalleyBean.getId());
+	           joinUserGalleyBean.setUser_id(getUserId);
+	           galleryService.addUserGalleyInfo(joinUserGalleyBean);
+
+	           // 성공 메시지 설정
+	           alertMap.put("title", "성공!");
+	           alertMap.put("text", "갤러리 회원가입에 성공했습니다!");
+	           alertMap.put("icon", "success");
+	           redirectAttributes.addFlashAttribute("alertMap", alertMap);
+
+	           // 쿠키 삭제 로직 추가 (인증번호 사용 후 삭제)
+	           Cookie deleteCookie = new Cookie("verificationCode", null);
+	           deleteCookie.setMaxAge(0);
+	           response.addCookie(deleteCookie);
+
+	           // 로그인 페이지로 리다이렉션
+	           return "redirect:login";
+	       } else {
+	           // 인증번호 불일치, 오류 메시지 설정
+	           model.addAttribute("verificationError", "인증번호가 일치하지 않습니다.");
+	           return "user/signup_gallery";
+	       }
+	   }
+	
 	//사용자 - 정보 수정
 	
 	@GetMapping("/InfoChange")

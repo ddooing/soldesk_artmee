@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <c:set var="root" value="${pageContext.request.contextPath }"/>    
+    <c:set var="root" value="${pageContext.request.contextPath }"/>   
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+     
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -146,10 +148,10 @@ td > a{
 						    </tr>
 						 </thead>
 						 
-						 <c:forEach items="${boardList }" var="list">
+						 <c:forEach items="${boardList }" var="list"  varStatus="status">
 						 	<tbody >
 							    <tr >
-							        <td class="atagg">${list.rownum }</td>
+							        <td class="atagg">${fn:length(boardList) - status.index}</td>
 							        <td class="atagg"><a href="${root }/board/read?board_id=${list.board_id}">${list.title }</a></td>
 							        <td >${list.create_date }</td>   
 							    </tr>

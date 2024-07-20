@@ -8,7 +8,6 @@ import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,6 +42,30 @@ public class FindController {
 		return "user/Idfind";
 	}
 	
+	@PostMapping("/email_verification")
+    @ResponseBody
+    public ResponseEntity<?> email_verification(@RequestBody Map<String, String> userData, HttpServletResponse response) throws MessagingException {
+			String email1 = userData.get("email");
+	        	int verificationCode = generateVerificationCode();
+	        	 // 쿠키 생성
+	            Cookie verificationCookie = new Cookie("verificationCode", String.valueOf(verificationCode));
+	            verificationCookie.setHttpOnly(true); // 쿠키를 HTTP 전용으로 설정
+	            verificationCookie.setMaxAge(5 * 60); // 쿠키 유효 시간 설정 (예: 5분)
+	            response.addCookie(verificationCookie); // 응답에 쿠키 추가
+	            
+	            System.out.println("인증번호  : " + verificationCode);
+	            
+	            // 이메일 전송 메소드
+	            emailService.sendSimpleMessage(email1, "ARTMEE 인증번호", "귀하의 인증번호는 [" + verificationCode + "] 입니다.");
+	            /*String imagePath = "http://timtory.synology.me:8082/img/ARTMEE.png"; // 이미지 URL 예시
+	            emailService.sendEmailWithImage(email1, "ARTMEE 인증번호", "귀하의 인증번호는 " + verificationCode + " 입니다.", imagePath);*/
+	            
+	        	System.out.println("인증번호 메일 보내기 완료!");
+	            Map<String, String> response1 = new HashMap<>();
+	            response1.put("message", "인증 코드가 이메일로 전송되었습니다.");
+	            return ResponseEntity.ok(response1);
+	        
+	  }
 	@PostMapping("/Idfind_pro")
     @ResponseBody
     public ResponseEntity<?> idfindPro(@RequestBody Map<String, String> userData, HttpServletResponse response) throws MessagingException {

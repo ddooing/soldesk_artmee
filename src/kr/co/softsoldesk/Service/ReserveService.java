@@ -76,11 +76,7 @@ public class ReserveService {
 	{
 		int start = (page - 1) * admin_listcnt;
 		RowBounds rowBounds = new RowBounds(start, admin_listcnt);
-		
-		System.out.println("Service - startDate value:"+ startDate);
-		System.out.println("Service -  endDate value: "+ endDate);
-		
-		
+
 		return reserveDao.getReserveList(startDate,endDate,payment_method,exhibition_title,user_name,rowBounds);
 	}
 	

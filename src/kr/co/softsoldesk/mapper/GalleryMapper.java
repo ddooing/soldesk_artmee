@@ -16,7 +16,7 @@ public interface GalleryMapper {
 			+ "#{address},  #{open}, #{holiday}, #{site}, #{user_id})")
 	void addUserGalleyInfo(GalleySignFormBean joinUserGalleyBean);
 
-	// 전시회 등록 신청 시, 전시관 정보 가져오기 
+	// 전시회 등록/배너 신청 시, 전시관 정보 가져오기 
 	@Select("select gallery_id ,gallery_name,open,holiday ,address ,site "
 			+ "from gallery "
 			+ "where gallery_user_id =#{user_id} ")
