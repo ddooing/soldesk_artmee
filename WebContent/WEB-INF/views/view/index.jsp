@@ -362,8 +362,11 @@
 							style="font-size: 30px;">전시 예정</label>
 					</div>
 				</div>
+				<!--  곧 전시 카테고리 여부 확인
+				
 				<label id="morelook1" class="form-check-label" for="morelook1"
 					style="cursor: pointer; font-size: 20px;" onclick="window.location.href='${root}/exhibition/exhibition_popular'">더보기</label>
+				-->
 			</div>
 			<br /><br />
 			<div id="jcl-demo" class="entry-content">

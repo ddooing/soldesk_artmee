@@ -91,7 +91,7 @@ public class NoticeController {
       return "notice/main";
    }
    
-   @GetMapping("read")
+   @GetMapping("/read")
    public String read(@RequestParam("notice_id")int notice_id, Model model) {
       
       model.addAttribute("notice_id", notice_id);
