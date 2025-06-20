@@ -31,7 +31,7 @@
 |:-:|:-:|:-:|:-:|
 |[@ddooing](https://github.com/ddooing) |[@Timtory](https://github.com/Timtory)|[@starry067](https://github.com/starry067)|[@pore133](https://github.com/pore133)|
 
-ddooing - 결제 기능 ,장바구니 기능 , 결제 내역 관리 기능 <br/>
+ddooing - 결제 기능 ,장바구니 기능 , 결제 내역 관리 기능, 아카이브 <br/>
 starry067 - 게시판 기능 ( 관리자 페이지 포함) <br/>
 Timtory - 전시회 등록 신청, 배너 신청 ( 관리자 페이지 포함) <br/>
 pore133 - 공지사항 기능, 로그인, 회원가입 ( 관리자 페이지 포함) <br/>
