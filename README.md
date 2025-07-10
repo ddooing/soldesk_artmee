@@ -17,7 +17,8 @@
 <img src="https://github.com/ddooing/soldesk_artme/assets/118183105/4fe106c0-1289-4365-a2c8-61f1eb6aa09c" width="850" height="350"/>
 
 <br/><br/>
-💥  <b font-size="20">서버 업로드 후, 유지보수 중 </b> 24.03 ~ 
+💥  <b font-size="20"> 24.03 ~  서버 업로드 후, 유지보수 중 
+💥  <b font-size="20"> 25.07    NAS 문제로 해결 중 
 <br/><br/>
 
 <br/>
