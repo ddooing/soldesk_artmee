@@ -18,6 +18,7 @@
 
 <br/><br/>
 💥  <b font-size="20"> 24.03 ~  서버 업로드 후, 유지보수 중 
+<br/><br/>
 💥  <b font-size="20"> 25.07    NAS 문제로 해결 중 
 <br/><br/>
 
@@ -28,7 +29,7 @@
 
 ## 👨‍💻 팀원 구성
 ## Team
-|<img src="https://avatars.githubusercontent.com/u/118183105?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/101092238?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/55232668?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/94101325?v=4" width="150" height="150"/>|
+|<img src="https://avatars.githubusercontent.com/u/118183105?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/101092238?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/55232668?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/94101325?v=4" width="150" height="150"/><img src="https://img.shields.io/badge/docker-#2496ED?style=for-the-badge&logo=docker&logoColor=white">|
 |:-:|:-:|:-:|:-:|
 |[@ddooing](https://github.com/ddooing) |[@Timtory](https://github.com/Timtory)|[@starry067](https://github.com/starry067)|[@pore133](https://github.com/pore133)|
 
@@ -47,6 +48,7 @@ pore133 - 공지사항 기능, 로그인, 회원가입 ( 관리자 페이지 포
 ![Oracle](https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=black)
 
 Api - Toss Payments Api, Kakao Map Api
+
 
 
 <br/><br/>
