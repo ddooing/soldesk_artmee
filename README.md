@@ -29,7 +29,7 @@
 
 ## 👨‍💻 팀원 구성
 ## Team
-|<img src="https://avatars.githubusercontent.com/u/118183105?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/101092238?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/55232668?v=4" width="150" height="150"/>|<img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white"> |
+|<img src="https://avatars.githubusercontent.com/u/118183105?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/101092238?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/55232668?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/94101325?v=4" width="150" height="150"/> |
 |:-:|:-:|:-:|:-:|
 |[@ddooing](https://github.com/ddooing) |[@Timtory](https://github.com/Timtory)|[@starry067](https://github.com/starry067)|[@pore133](https://github.com/pore133)|
 
@@ -46,6 +46,7 @@ pore133 - 공지사항 기능, 로그인, 회원가입 ( 관리자 페이지 포
 ![Eclipse](https://img.shields.io/badge/Eclipse-2C2255?style=for-the-badge&logo=eclipse&logoColor=white)  ![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white) 
 ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white) ![CSS](https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white)  ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white) ![JQuery](https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white)
 ![Oracle](https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=black)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
 Api - Toss Payments Api, Kakao Map Api
 
