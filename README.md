@@ -29,8 +29,9 @@
 
 ## 👨‍💻 팀원 구성
 ## Team
-|<img src="https://avatars.githubusercontent.com/u/118183105?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/101092238?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/55232668?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/94101325?v=4" width="150" height="150"/><img src="https://img.shields.io/badge/docker-#2496ED?style=for-the-badge&logo=docker&logoColor=white">|
-|:-:|:-:|:-:|:-:|
+|<img src="https://avatars.githubusercontent.com/u/118183105?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/101092238?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/55232668?v=4" width="150" height="150"/>|<img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white"> 
+|
+|:-:|:-:|:-:|:-:|:-:|
 |[@ddooing](https://github.com/ddooing) |[@Timtory](https://github.com/Timtory)|[@starry067](https://github.com/starry067)|[@pore133](https://github.com/pore133)|
 
 ddooing - 결제 기능 ,장바구니 기능 , 결제 내역 관리 기능, 아카이브 <br/>
